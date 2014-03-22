@@ -14,6 +14,7 @@ Game::Game()
 	lion = LION_DEFAULT;
 	lionJumpSpeed = 0;
 	lionJumpHeight = 0;
+	crash = 0;
 	keyLeft = false;
 	keyRight = false;
 	keyUp = false;
@@ -27,6 +28,8 @@ void Game::update()
 	moveRings();
 	moveLion();
 	jumpLion();
+	checkJars();
+	checkRings();
 	moveCamera();
 }
 void Game::special( int key )
@@ -168,6 +171,69 @@ void Game::drawRingsRight( )
 }
 void Game::drawLion()
 {
-	setColor( BROWN );
+	if(crash > 0){
+		switch(crash%4){
+		case 0:
+		case 1:
+			setColor(BROWN);
+			break;
+		case 2:
+		case 3:
+			setColor(YELLOW);
+			break;
+		default:
+			setColor(BROWN);
+			break;
+		}
+		crash--;
+	}
+	else{
+		setColor(BROWN);
+	}
 	drawRectFill( lion - 30, 310 - lionJumpHeight, 60, 60 );
+}
+
+void Game::checkJars()
+{
+	float checkJarList[2] = {-200, -200};
+	for( auto jarIter = jars.begin(); jarIter != jars.end(); ++jarIter ){
+		float& jar = *jarIter;
+		if( jar + 15 < lion - 30)
+			continue;
+		else{
+			checkJarList[0] = jar;
+			checkJarList[1] = *(++jarIter);
+			break;
+		}
+	}
+	for(int i = 0; i < 2; i++){
+		if(  -45 <  lion - checkJarList[i] && lion - checkJarList[i] < 45 ){
+			if(lionJumpHeight <= 30){
+				//Ãæµ¹ÇÔ.
+				if(crash == 0){
+					crash = 23;
+				}
+			}
+		}
+	}
+}
+
+void Game::checkRings()
+{
+	float checkRing = -200;
+	for(auto ringIter = rings.begin(); ringIter != rings.end(); ++ringIter ){
+		float& ring = *ringIter;
+		if( lion - 30 <= ring && ring <= lion + 30 ){
+			checkRing = ring;
+			break;
+		}
+	}
+	if(checkRing > 0){
+		if( lionJumpHeight < 50 || lionJumpHeight > 190 ){
+			if(crash == 0){
+				crash = 23;
+			}
+		}
+	}
+
 }

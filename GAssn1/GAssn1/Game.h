@@ -25,6 +25,9 @@ private:
 	void drawRingsRight( );
 	void drawLion();
 
+	void checkJars();
+	void checkRings();
+
 	void moveLion();
 	void jumpLion();
 	void moveCamera();
@@ -35,6 +38,7 @@ private:
 	float lion;
 	float lionJumpSpeed;
 	float lionJumpHeight;
+	int crash;
 	bool keyLeft;
 	bool keyRight;
 	bool keyUp;
