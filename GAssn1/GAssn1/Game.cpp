@@ -86,15 +86,33 @@ void Game::moveCamera()
 }
 void Game::makeJars()
 {
+	/*
 	int jarNum = (JAR_NUM_MAX - JAR_NUM_MIN + 1) * rand() / ( RAND_MAX+1) + JAR_NUM_MIN;
 	for( float i = 0; i < jarNum; ++i )
 		jars.push_back( float((JAR_GEN_MAX - JAR_GEN_MIN + 1) * rand() / ( RAND_MAX+1) + JAR_GEN_MIN) );
+	*/
+	float currentDistance = JAR_GEN_MIN;
+	jars.push_back(currentDistance);
+	while(currentDistance < JAR_GEN_MAX){
+		//generate random value between JAR_DIST_MIN ~ JAR_DIST_MAX, which determines distance between
+		//ith and (i+1)th component.
+		currentDistance += (float)((JAR_DIST_MAX - JAR_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + JAR_DIST_MIN);
+		jars.push_back(currentDistance);
+	}
 }
 void Game::makeRings()
 {
+	/*
 	int ringNum = (RING_NUM_MAX - RING_NUM_MIN + 1) * rand() / ( RAND_MAX+1) + RING_NUM_MIN;
 	for( float i = 0; i < ringNum; ++i )
 		rings.push_back( float((RING_GEN_MAX - RING_GEN_MIN + 1) * rand() / ( RAND_MAX+1) + RING_GEN_MIN) );
+	*/
+	float currentDistance = RING_GEN_MIN;
+	rings.push_back(currentDistance);
+	while(currentDistance < RING_GEN_MAX){
+		currentDistance += (float)((RING_DIST_MAX - RING_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + RING_DIST_MIN);
+		rings.push_back(currentDistance);
+	}
 }
 void Game::moveRings()
 {

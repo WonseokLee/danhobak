@@ -20,12 +20,17 @@ const int JAR_NUM_MAX = 200;
 const int JAR_GEN_MIN = 500;
 const int JAR_GEN_MAX = 9900;
 
+const int JAR_DIST_MIN = 400;
+const int JAR_DIST_MAX = 700;
 
 const int RING_NUM_MIN = 100;
 const int RING_NUM_MAX = 200;
 
 const int RING_GEN_MIN = 1000;
 const int RING_GEN_MAX = 11000;
+
+const int RING_DIST_MIN = 320;
+const int RING_DIST_MAX = 640;
 
 const int RING_REMOVE = -100;
 const int RING_REGEN = 10900;
