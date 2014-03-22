@@ -81,6 +81,8 @@ void Game::moveCamera()
 	if( lion - LION_CAMERA > camera )
 	{
 		camera = lion - LION_CAMERA;
+	} else if( lion - LION_CAMERA_MIN < camera ){
+		camera = lion - LION_CAMERA_MIN;
 	}
 	setCamera( camera, 0 );
 }
