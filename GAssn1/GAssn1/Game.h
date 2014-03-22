@@ -21,7 +21,8 @@ private:
 	
 	void drawBG();
 	void drawJars();
-	void drawRings();
+	void drawRingsLeft( );
+	void drawRingsRight( );
 	void drawLion();
 
 	void moveLion();

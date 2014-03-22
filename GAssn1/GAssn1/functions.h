@@ -20,6 +20,9 @@ inline void drawElipse( float x, float y, float w, float h, bool fill );
 #define drawElipseFill( x, y, w, h ) drawElipse( x, y, w, h, true )
 #define drawElipseStroke( x, y, w, h ) drawElipse( x, y, w, h, false )
 
+inline void drawElipseLeft( float x, float y, float w, float h, bool fill );
+inline void drawElipseRight( float x, float y, float w, float h, bool fill );
+
 inline void drawCircle( float cx, float cy, float rad, bool fill );
 #define drawCircleFill( cx, cy, rad ) drawCircle( cx, cy, rad, true )
 #define drawCircleStroke( cx, cy, rad ) drawCircle( cx, cy, rad, false )
@@ -79,6 +82,42 @@ inline void drawElipse( float x, float y, float w, float h, bool fill )
         drawVertex2f( circleX, circleY );
     }
 	drawEnd();
+}
+inline void drawElipseLeft( float x, float y, float w, float h, bool fill )
+{
+	const int n = 32;
+	const float PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899348253421170679f;
+	float radX = w / 2;
+	float radY = h / 2;
+	float centerX = x + radX;
+	float centerY = y + radY;
+	GLenum mode = fill ? GL_POLYGON : GL_LINE_STRIP;
+	drawBegin( mode );
+	for( int k = 0; k <= n; k++ )
+	{
+		float circleX = centerX + radX * cos( -PI/2 + k * PI / n );
+		float circleY = centerY + radY * sin( -PI/2 + k * PI / n );
+		drawVertex2f( circleX, circleY );
+	}
+	drawEnd( );
+}
+inline void drawElipseRight( float x, float y, float w, float h, bool fill )
+{
+	const int n = 32;
+	const float PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899348253421170679f;
+	float radX = w / 2;
+	float radY = h / 2;
+	float centerX = x + radX;
+	float centerY = y + radY;
+	GLenum mode = fill ? GL_POLYGON : GL_LINE_STRIP;
+	drawBegin( mode );
+	for( int k = n; k <= 2*n; k++ )
+	{
+		float circleX = centerX + radX * cos( -PI/2 + k * PI / n );
+		float circleY = centerY + radY * sin( -PI/2 + k * PI / n );
+		drawVertex2f( circleX, circleY );
+	}
+	drawEnd( );
 }
 inline void drawCircle( float cx, float cy, float rad, bool fill )
 {

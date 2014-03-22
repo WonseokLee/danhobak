@@ -49,10 +49,11 @@ void Game::specialUp( int key )
 }
 void Game::display()
 {
-	drawBG();
-	drawLion();
+	drawBG( );
+	drawRingsRight( );
+	drawLion( );
+	drawRingsLeft( );
 	drawJars();
-	drawRings();
 }
 void Game::moveLion()
 {
@@ -124,16 +125,25 @@ void Game::drawJars()
 		drawRectFill( jar - 15, 340, 30, 30 );
 	}
 }
-void Game::drawRings()
+void Game::drawRingsLeft()
 {
 	for each( float ring in rings )
 	{
 		setLineWidth( 5 );
 		setColor( RED );
-		drawElipseStroke( ring-25, 120, 50, 200 );
+		drawElipseLeft( ring-25, 120, 50, 200, false );
 		
 		setColor( BLACK );
 		drawLine( ring, 110, ring, 125 );
+	}
+}
+void Game::drawRingsRight( )
+{
+	for each( float ring in rings )
+	{
+		setLineWidth( 5 );
+		setColor( RED );
+		drawElipseRight( ring - 25, 120, 50, 200, false );
 	}
 }
 void Game::drawLion()
