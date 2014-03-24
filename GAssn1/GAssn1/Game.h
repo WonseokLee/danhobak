@@ -25,6 +25,8 @@ private:
 	void drawRingsRight( );
 	void drawLion();
 
+	void drawLife();
+
 	void checkJars();
 	void checkRings();
 
@@ -38,6 +40,7 @@ private:
 	float lion;
 	float lionJumpSpeed;
 	float lionJumpHeight;
+	int life;
 	int crash;
 	bool keyLeft;
 	bool keyRight;

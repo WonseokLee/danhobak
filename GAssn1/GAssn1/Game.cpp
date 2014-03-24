@@ -6,12 +6,14 @@
 
 Game::Game()
 {
+	setWindowTitle( "사자야 우리 저거 사자" );
 	srand((unsigned)time(NULL));
 	makeJars();
 	makeRings();
 
 	camera = CAMERA_DEFAULT;
 	lion = LION_DEFAULT;
+	life = LIFE_DEFAULT;
 	lionJumpSpeed = 0;
 	lionJumpHeight = 0;
 	crash = 0;
@@ -57,6 +59,7 @@ void Game::display()
 	drawLion( );
 	drawRingsLeft( );
 	drawJars();
+	drawLife();
 }
 void Game::moveLion()
 {
@@ -91,11 +94,6 @@ void Game::moveCamera()
 }
 void Game::makeJars()
 {
-	/*
-	int jarNum = (JAR_NUM_MAX - JAR_NUM_MIN + 1) * rand() / ( RAND_MAX+1) + JAR_NUM_MIN;
-	for( float i = 0; i < jarNum; ++i )
-		jars.push_back( float((JAR_GEN_MAX - JAR_GEN_MIN + 1) * rand() / ( RAND_MAX+1) + JAR_GEN_MIN) );
-	*/
 	float currentDistance = JAR_GEN_MIN;
 	jars.push_back(currentDistance);
 	while(currentDistance < JAR_GEN_MAX){
@@ -107,11 +105,6 @@ void Game::makeJars()
 }
 void Game::makeRings()
 {
-	/*
-	int ringNum = (RING_NUM_MAX - RING_NUM_MIN + 1) * rand() / ( RAND_MAX+1) + RING_NUM_MIN;
-	for( float i = 0; i < ringNum; ++i )
-		rings.push_back( float((RING_GEN_MAX - RING_GEN_MIN + 1) * rand() / ( RAND_MAX+1) + RING_GEN_MIN) );
-	*/
 	float currentDistance = RING_GEN_MIN;
 	rings.push_back(currentDistance);
 	while(currentDistance < RING_GEN_MAX){
@@ -174,11 +167,6 @@ void Game::drawLion()
 	if(crash > 0){
 		switch(crash%4){
 		case 0:
-		case 1:
-			setColor(BROWN);
-			break;
-		case 2:
-		case 3:
 			setColor(YELLOW);
 			break;
 		default:
@@ -193,25 +181,30 @@ void Game::drawLion()
 	drawRectFill( lion - 30, 310 - lionJumpHeight, 60, 60 );
 }
 
+void Game::drawLife()
+{
+	for( int i = 0; i < life; ++i )
+	{
+		float x = SCREEN_WIDTH - ( 30 + i * 40.f );
+		float y = 30;
+		setColor( RED );
+		drawCircleFill( x + camera, y, 15 );
+	}
+}
+
 void Game::checkJars()
 {
-	float checkJarList[2] = {-200, -200};
 	for( auto jarIter = jars.begin(); jarIter != jars.end(); ++jarIter ){
 		float& jar = *jarIter;
-		if( jar + 15 < lion - 30)
-			continue;
-		else{
-			checkJarList[0] = jar;
-			checkJarList[1] = *(++jarIter);
-			break;
-		}
-	}
-	for(int i = 0; i < 2; i++){
-		if(  -45 <  lion - checkJarList[i] && lion - checkJarList[i] < 45 ){
-			if(lionJumpHeight <= 30){
+		if( -45 <  lion - jar && lion - jar < 45 )
+		{
+			if( lionJumpHeight <= JAR_HEIGHT )
+			{
 				//충돌함.
-				if(crash == 0){
-					crash = 23;
+				if( crash == 0 )
+				{
+					crash = LION_FLASH_TIME;
+					life--;
 				}
 			}
 		}
@@ -224,16 +217,15 @@ void Game::checkRings()
 	for(auto ringIter = rings.begin(); ringIter != rings.end(); ++ringIter ){
 		float& ring = *ringIter;
 		if( lion - 30 <= ring && ring <= lion + 30 ){
-			checkRing = ring;
+			if( lionJumpHeight < RING_BOTTOM || lionJumpHeight > RING_TOP )
+			{
+				if( crash == 0 )
+				{
+					crash = LION_FLASH_TIME;
+					life--;
+				}
+			}
 			break;
 		}
 	}
-	if(checkRing > 0){
-		if( lionJumpHeight < 50 || lionJumpHeight > 190 ){
-			if(crash == 0){
-				crash = 23;
-			}
-		}
-	}
-
 }

@@ -3,6 +3,8 @@
 #include "configurations.h"
 #include "colors.h"
 
+#define setWindowTitle(x) glutSetWindowTitle(x)
+
 #define drawBegin(x) glBegin(x)
 #define drawEnd() glEnd()
 
