@@ -42,6 +42,7 @@ private:
 	float lionJumpHeight;
 	int life;
 	int crash;
+	int walk_state;
 	bool keyLeft;
 	bool keyRight;
 	bool keyUp;

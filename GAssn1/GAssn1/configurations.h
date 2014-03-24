@@ -12,7 +12,7 @@ const float LION_JUMP_SPEED = 8.f;
 const float LION_JUMP_GRAVITY = -0.2f;
 const int LION_CAMERA = 150;
 const int LION_CAMERA_MIN = 100;
-const int LION_FLASH_TIME = 40;
+const int LION_FLASH_TIME = 100;
 
 const int LIFE_DEFAULT = 3;
 
