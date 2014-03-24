@@ -224,6 +224,7 @@ void Game::drawLion()
 		my_black = BLACK;
 		my_red = RED;
 	}
+	int head = 24;
 	if(walk_state < 10){
 		setColor(my_yellow_dark);
 		drawRectFill( lion - 30 + 10, 310 - lionJumpHeight + 45, 5, 12 );
@@ -238,15 +239,22 @@ void Game::drawLion()
 		setColor(my_brown);
 		drawRectFill( lion - 30 + 19, 310 - lionJumpHeight + 57, 8, 3 );
 		drawRectFill( lion - 30 + 41, 310 - lionJumpHeight + 57, 8, 3 );
+		drawCircleFill(lion - 30 + 39, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 58, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head+10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head+10, 6);
 		setColor(my_yellow);
-		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + 25, 9);
+		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + head, 9);
 		setColor(my_black);
-		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + 22, 2, 5);
+		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + head-3, 2, 5);
 		setColor(my_brown);
 		setLineWidth(3);
 		drawLine(lion - 30 + 2, 310 - lionJumpHeight + 41, lion - 30 + 9, 310 - lionJumpHeight + 38);
 	}
 	else if(walk_state < 20){
+		head--;
 		setColor(my_yellow_dark);
 		drawRectFill( lion - 30 + 16, 310 - lionJumpHeight + 45, 5, 12 );
 		drawRectFill( lion - 30 + 37, 310 - lionJumpHeight + 45, 5, 12 );
@@ -260,10 +268,16 @@ void Game::drawLion()
 		setColor(my_brown);
 		drawRectFill( lion - 30 + 18, 310 - lionJumpHeight + 57, 8, 3 );
 		drawRectFill( lion - 30 + 39, 310 - lionJumpHeight + 57, 8, 3 );
+		drawCircleFill(lion - 30 + 39, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 58, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head+10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head+10, 6);
 		setColor(my_yellow);
-		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + 25, 9);
+		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + head, 9);
 		setColor(my_black);
-		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + 22, 2, 5);
+		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + head-3, 2, 5);
 		setColor(my_brown);
 		setLineWidth(3);
 		drawLine(lion - 30 + 2, 310 - lionJumpHeight + 41, lion - 30 + 9, 310 - lionJumpHeight + 38);
@@ -282,15 +296,22 @@ void Game::drawLion()
 		setColor(my_brown);
 		drawRectFill( lion - 30 + 19, 310 - lionJumpHeight + 57, 8, 3 );
 		drawRectFill( lion - 30 + 41, 310 - lionJumpHeight + 57, 8, 3 );
+		drawCircleFill(lion - 30 + 39, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 58, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head+10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head+10, 6);
 		setColor(my_yellow);
-		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + 25, 9);
+		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + head, 9);
 		setColor(my_black);
-		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + 22, 2, 5);
+		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + head-3, 2, 5);
 		setColor(my_brown);
 		setLineWidth(3);
 		drawLine(lion - 30 + 2, 310 - lionJumpHeight + 35, lion - 30 + 9, 310 - lionJumpHeight + 38);
 	}
 	else{
+		head++;
 		setColor(my_yellow_dark);
 		drawRectFill( lion - 30 + 18, 310 - lionJumpHeight + 45, 5, 12 );
 		drawRectFill( lion - 30 + 37, 310 - lionJumpHeight + 45, 5, 12 );
@@ -304,19 +325,25 @@ void Game::drawLion()
 		setColor(my_brown);
 		drawRectFill( lion - 30 + 18, 310 - lionJumpHeight + 57, 8, 3 );
 		drawRectFill( lion - 30 + 39, 310 - lionJumpHeight + 57, 8, 3 );
+		drawCircleFill(lion - 30 + 39, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 58, 310 - lionJumpHeight + head, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head-10, 6);
+		drawCircleFill(lion - 30 + 45, 310 - lionJumpHeight + head+10, 6);
+		drawCircleFill(lion - 30 + 53, 310 - lionJumpHeight + head+10, 6);
 		setColor(my_yellow);
-		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + 25, 9);
+		drawCircleFill(lion - 30 + 49, 310 - lionJumpHeight + head, 9);
 		setColor(my_black);
-		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + 22, 2, 5);
+		drawElipseFill(lion - 30 + 53, 310 - lionJumpHeight + head-3, 2, 5);
 		setColor(my_brown);
 		setLineWidth(3);
 		drawLine(lion - 30 + 2, 310 - lionJumpHeight + 35, lion - 30 + 9, 310 - lionJumpHeight + 38);
 	}
 	setColor(my_black);
-	drawRectFill( lion - 30 + 45, 310 - lionJumpHeight, 10, 16 );
-	drawRectFill( lion - 30 + 40, 310 - lionJumpHeight + 14, 19, 3);
+	drawRectFill( lion - 30 + 45, 310 - lionJumpHeight + head - 25, 10, 16 );
+	drawRectFill( lion - 30 + 40, 310 - lionJumpHeight + head - 11, 19, 3);
 	setColor(my_red);
-	drawRectFill( lion - 30 + 44, 310 - lionJumpHeight + 11, 11, 2);
+	drawRectFill( lion - 30 + 44, 310 - lionJumpHeight + head - 14, 11, 2);
 	//drawRectFill( lion - 30, 310 - lionJumpHeight, 60, 60 );
 }
 
