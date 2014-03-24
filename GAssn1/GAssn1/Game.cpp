@@ -69,9 +69,13 @@ void Game::moveLion()
 	if( !keyLeft && keyRight )
 		lion += LION_SPEED;
 
-	if( walk_state < 40 && lionJumpHeight == 0)
+	if( lionJumpHeight == 0 &&
+		( keyLeft || keyRight ))
 		walk_state++;
 	else
+		walk_state = 9;
+
+	if( walk_state > 40 )
 		walk_state = 0;
 
 	if( lion - 30 < 0 )
@@ -146,9 +150,17 @@ void Game::drawBG()
 	setColor( LIME_GREEN );
 	drawRectFill( 0, 110, 11000, 370 );
 
+	setColor( YELLOW );
+	drawRectFill( (float)FINISH, 370, 10, 110 );
+
 	setLineWidth( 3 );
+	setColor( WHITE );
+	drawLine( 0, 95, 11000, 100 );
+	drawLine( 0, 105, 11000, 100 );
 	setColor( BLACK );
 	drawLine( 0, 370, 11000, 370 );
+
+	drawString( 220, 160, "REACH THE FINISH LINE!" );
 }
 void Game::drawJars()
 {
@@ -310,14 +322,27 @@ void Game::drawLion()
 
 void Game::drawLife()
 {
-	for( int i = 0; i < life; ++i )
+	for( int i = 0; i < LIFE_DEFAULT; ++i )
 	{
-		float x = SCREEN_WIDTH - ( 30 + i * 40.f ) - 15.f;
+		float x = SCREEN_WIDTH - ( 30 + i * 40.f ) - 15.f + camera;
 		float y = 30;
+		bool fill = i < life;
 		setColor( RED );
 		setLineWidth(1);
-		drawHeart(x + camera, y, true);
-		//drawCircleFill( x + camera, y, 15 );
+		GLenum mode = fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP;
+		drawBegin( mode );
+		drawVertex2f(x+15, y+5);
+		drawVertex2f(x+10, y+0);
+		drawVertex2f(x+5, y+0);
+		drawVertex2f(x+0, y+5);
+		drawVertex2f(x+0, y+15);
+		drawVertex2f(x+15, y+30);
+		drawVertex2f(x+30, y+15);
+		drawVertex2f(x+30, y+5);
+		drawVertex2f(x+25, y+0);
+		drawVertex2f(x+20, y+0);
+		drawVertex2f(x+15, y+5);
+		drawEnd();
 	}
 }
 

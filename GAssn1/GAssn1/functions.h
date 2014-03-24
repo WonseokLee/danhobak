@@ -22,23 +22,33 @@ inline void drawElipse( float x, float y, float w, float h, bool fill );
 #define drawElipseFill( x, y, w, h ) drawElipse( x, y, w, h, true )
 #define drawElipseStroke( x, y, w, h ) drawElipse( x, y, w, h, false )
 
-inline void drawElipseLeft( float x, float y, float w, float h, bool fill );
-inline void drawElipseRight( float x, float y, float w, float h, bool fill );
-
 inline void drawCircle( float cx, float cy, float rad, bool fill );
 #define drawCircleFill( cx, cy, rad ) drawCircle( cx, cy, rad, true )
 #define drawCircleStroke( cx, cy, rad ) drawCircle( cx, cy, rad, false )
+
+inline void drawString( float x, float y, char* textString );
 
 //#define RGB(r, g, b) ((r) << 16 | (g) << 8 | (b) | (0xFF) << 24)
 //#define RGBA(r, g, b, a) ((r) << 16 | (g) << 8 | (b) | (a) << 24)
 #define drawClearColor(x) glClearColor(x);
 #define setColor3f(r,g,b) glColor3f(r,g,b)
-inline void setColor( COLOR c );
 
+inline void setColor( COLOR c );
 inline void setCamera( float x, float y );
 
 ///////////////////////////////////////////////////////////////
 
+inline void drawString( float x, float y, char* textString )
+{
+	int textLength = (int)strlen(textString);
+	for(int count = 0; count < textLength; count++)
+	{
+		float glX = ( x + 9 * count ) / SCREEN_WIDTH;
+		float glY = 1 - y / SCREEN_HEIGHT;
+		glRasterPos2f(glX, glY);
+		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, textString[count]);
+	}
+}
 inline void drawVertex2f( float x, float y )
 {
 	float glX = x / SCREEN_WIDTH;
@@ -83,54 +93,6 @@ inline void drawElipse( float x, float y, float w, float h, bool fill )
         float circleY = centerY + radY * sin(k * PI*2/n);
         drawVertex2f( circleX, circleY );
     }
-	drawEnd();
-}
-
-inline void drawHeart( float x, float y, bool fill )
-{
-	GLenum mode = fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP;
-	drawBegin( mode );
-	drawVertex2f(x+15, y+15);
-	drawVertex2f(x+5, y+0);
-	drawVertex2f(x+4, y+1);
-	drawVertex2f(x+3, y+1);
-	drawVertex2f(x+1, y+3);
-	drawVertex2f(x+1, y+4);
-	drawVertex2f(x+0, y+5);
-
-	drawVertex2f(x+0, y+14);
-	drawVertex2f(x+1, y+15);
-	drawVertex2f(x+3, y+17);
-
-	drawVertex2f(x+14, y+29);
-	drawVertex2f(x+15, y+29);
-
-	drawVertex2f(x+27, y+17);
-	drawVertex2f(x+28, y+15);
-	drawVertex2f(x+29, y+14);
-
-	drawVertex2f(x+29, y+5);
-	drawVertex2f(x+28, y+4);
-	drawVertex2f(x+28, y+3);
-	drawVertex2f(x+26, y+1);
-	drawVertex2f(x+25, y+1);
-	drawVertex2f(x+24, y+0);
-
-	drawVertex2f(x+19, y+0);
-	drawVertex2f(x+18, y+1);
-	drawVertex2f(x+17, y+1);
-	drawVertex2f(x+16, y+2);
-	drawVertex2f(x+16, y+3);
-	drawVertex2f(x+15, y+4);
-
-	drawVertex2f(x+14, y+4);
-	drawVertex2f(x+13, y+3);
-	drawVertex2f(x+13, y+2);
-	drawVertex2f(x+12, y+1);
-	drawVertex2f(x+11, y+1);
-	drawVertex2f(x+10, y+0);
-	drawVertex2f(x+5, y+0);
-
 	drawEnd();
 }
 
