@@ -67,6 +67,11 @@ void Game::moveLion()
 		lion -= LION_SPEED;
 	if( !keyLeft && keyRight )
 		lion += LION_SPEED;
+
+	if( lion - 30 < 0 )
+		lion = 30;
+	if( lion + 30 > 11000 )
+		lion = 11000 - 30;
 }
 void Game::jumpLion()
 {
@@ -90,6 +95,12 @@ void Game::moveCamera()
 	} else if( lion - LION_CAMERA_MIN < camera ){
 		camera = lion - LION_CAMERA_MIN;
 	}
+
+	if( camera < 0 )
+		camera = 0;
+
+	if( camera + SCREEN_WIDTH > 11000 )
+		camera = 11000 - SCREEN_WIDTH;
 	setCamera( camera, 0 );
 }
 void Game::makeJars()
