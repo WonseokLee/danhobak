@@ -85,6 +85,55 @@ inline void drawElipse( float x, float y, float w, float h, bool fill )
     }
 	drawEnd();
 }
+
+inline void drawHeart( float x, float y, bool fill )
+{
+	GLenum mode = fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP;
+	drawBegin( mode );
+	drawVertex2f(x+15, y+15);
+	drawVertex2f(x+5, y+0);
+	drawVertex2f(x+4, y+1);
+	drawVertex2f(x+3, y+1);
+	drawVertex2f(x+1, y+3);
+	drawVertex2f(x+1, y+4);
+	drawVertex2f(x+0, y+5);
+
+	drawVertex2f(x+0, y+14);
+	drawVertex2f(x+1, y+15);
+	drawVertex2f(x+3, y+17);
+
+	drawVertex2f(x+14, y+29);
+	drawVertex2f(x+15, y+29);
+
+	drawVertex2f(x+27, y+17);
+	drawVertex2f(x+28, y+15);
+	drawVertex2f(x+29, y+14);
+
+	drawVertex2f(x+29, y+5);
+	drawVertex2f(x+28, y+4);
+	drawVertex2f(x+28, y+3);
+	drawVertex2f(x+26, y+1);
+	drawVertex2f(x+25, y+1);
+	drawVertex2f(x+24, y+0);
+
+	drawVertex2f(x+19, y+0);
+	drawVertex2f(x+18, y+1);
+	drawVertex2f(x+17, y+1);
+	drawVertex2f(x+16, y+2);
+	drawVertex2f(x+16, y+3);
+	drawVertex2f(x+15, y+4);
+
+	drawVertex2f(x+14, y+4);
+	drawVertex2f(x+13, y+3);
+	drawVertex2f(x+13, y+2);
+	drawVertex2f(x+12, y+1);
+	drawVertex2f(x+11, y+1);
+	drawVertex2f(x+10, y+0);
+	drawVertex2f(x+5, y+0);
+
+	drawEnd();
+}
+
 inline void drawElipseLeft( float x, float y, float w, float h, bool fill )
 {
 	const int n = 32;

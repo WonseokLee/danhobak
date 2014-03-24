@@ -196,10 +196,12 @@ void Game::drawLife()
 {
 	for( int i = 0; i < life; ++i )
 	{
-		float x = SCREEN_WIDTH - ( 30 + i * 40.f );
+		float x = SCREEN_WIDTH - ( 30 + i * 40.f ) - 15.f;
 		float y = 30;
 		setColor( RED );
-		drawCircleFill( x + camera, y, 15 );
+		setLineWidth(1);
+		drawHeart(x + camera, y, true);
+		//drawCircleFill( x + camera, y, 15 );
 	}
 }
 
