@@ -8,21 +8,7 @@ Game::Game()
 {
 	setWindowTitle( "사자야 우리 저거 사자" );
 	srand((unsigned)time(NULL));
-	makeJars();
-	makeRings();
-
-	camera = CAMERA_DEFAULT;
-	lion = LION_DEFAULT;
-	life = LIFE_DEFAULT;
-	lionJumpSpeed = 0;
-	lionJumpHeight = 0;
-	game_state = GAME_START;
-	crash = 0;
-	walk_state = 0;
-	keyLeft = false;
-	keyRight = false;
-	keyUp = false;
-	keyF1 = false;
+	resetMap();
 }
 Game::~Game()
 {
@@ -38,9 +24,9 @@ void Game::update()
 		jumpLion();
 		checkJars();
 		checkRings();
-		moveCamera();
 		break;
 	}
+	moveCamera();
 }
 void Game::special( int key )
 {
@@ -66,35 +52,85 @@ void Game::specialUp( int key )
 }
 void Game::display()
 {
+	drawBG( );
+
 	switch(game_state){
 	case GAME_START:
-		drawBG( );
+		setColor( BLACK );
+		drawString( 220, 140, "===================");
+		drawString( 220, 160, "Press 'F1' to start");
+		drawString( 220, 180, "===================");
 		break;
 	case GAME_ING:
-		drawBG( );
-		drawRingsRight( );
-		drawLion( );
-		drawRingsLeft( );
-		drawJars();
-		drawLife();
+		setColor( BLACK );
+		drawString( 220, 140, ">>>>>>>>>>>>>>>>>>>>>>");
+		drawString( 220, 160, "REACH THE FINISH LINE!" );
+		drawString( 220, 180, ">>>>>>>>>>>>>>>>>>>>>>");
 		break;
 	case GAME_CLEAR:
+		setColor( BLACK );
+		drawString( 220 + camera, 140, "-------------------");
+		drawString( 220 + camera, 160, "GAME CLEAR!");
+		drawString( 220 + camera, 180, "Press 'F1' to retry");
+		drawString( 220 + camera, 200, "-------------------");
 		break;
 	case GAME_OVER:
+		setColor( BLACK );
+		drawString( 220 + camera, 140, "-------------------");
+		drawString( 220 + camera, 160, "GAME OVER!");
+		drawString( 220 + camera, 180, "Press 'F1' to retry");
+		drawString( 220 + camera, 200, "-------------------");
 		break;
 	}
-	
+	drawRingsRight( );
+	drawLion( );
+	drawRingsLeft( );
+	drawJars();
+	drawLife();
 }
 
+void Game::resetMap()
+{
+	makeJars();
+	makeRings();
+
+	camera = CAMERA_DEFAULT;
+	lion = LION_DEFAULT;
+	life = LIFE_DEFAULT;
+	lionJumpSpeed = 0;
+	lionJumpHeight = 0;
+	game_state = GAME_START;
+	crash = 0;
+	walk_state = 0;
+	keyLeft = false;
+	keyRight = false;
+	keyUp = false;
+	keyF1 = false;
+}
 void Game::moveState()
 {
-	if( keyF1 ){
-		switch(game_state){
-		case GAME_START:
+	switch(game_state){
+	case GAME_START:
+		if( keyF1 )
 			game_state = GAME_ING;
-			break;
+		break;
+	case GAME_ING:
+		if( lion > FINISH &&
+			lionJumpHeight == 0 &&
+			crash == 0 )
+			game_state = GAME_CLEAR;
+		if( life == 0 )
+			game_state = GAME_OVER;
+		break;
+	case GAME_OVER:
+	case GAME_CLEAR:
+		if( keyF1 )
+		{
+			resetMap();
+			game_state = GAME_START;
 		}
 	}
+	
 }
 
 void Game::moveLion()
@@ -151,6 +187,7 @@ void Game::moveCamera()
 void Game::makeJars()
 {
 	float currentDistance = JAR_GEN_MIN;
+	jars.clear();
 	jars.push_back(currentDistance);
 	while(currentDistance < JAR_GEN_MAX){
 		//generate random value between JAR_DIST_MIN ~ JAR_DIST_MAX, which determines distance between
@@ -162,6 +199,7 @@ void Game::makeJars()
 void Game::makeRings()
 {
 	float currentDistance = RING_GEN_MIN;
+	rings.clear();
 	rings.push_back(currentDistance);
 	while(currentDistance < RING_GEN_MAX){
 		currentDistance += (float)((RING_DIST_MAX - RING_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + RING_DIST_MIN);
@@ -180,17 +218,6 @@ void Game::moveRings()
 }
 void Game::drawBG()
 {
-	switch(game_state){
-	case GAME_START:
-		drawColor( BLACK );
-
-		setColor( BLACK );
-		drawRectFill( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-		setColor( WHITE );
-		drawString(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "Press 'F1' to start");
-		break;
-	case GAME_ING:
-	case GAME_CLEAR:
 		drawColor( TAN );
 
 		setColor( LIME_GREEN );
@@ -201,17 +228,13 @@ void Game::drawBG()
 
 		setLineWidth( 3 );
 		setColor( WHITE );
-		drawLine( 0, 95, 11000, 100 );
-		drawLine( 0, 105, 11000, 100 );
+		drawLine( 0, 94, 11000, 94 );
+		drawLine( 0, 102, 11000, 102 );
 		setColor( BLACK );
 		drawLine( 0, 370, 11000, 370 );
-
-		drawString( 220, 160, "REACH THE FINISH LINE!" );
-		break;
-	case GAME_OVER:
-		break;
-	}
-	
+		
+		setLineWidth( 1 );
+		drawLine( 0, 375, 11000, 375 );
 }
 void Game::drawJars()
 {
