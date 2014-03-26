@@ -40,6 +40,7 @@ private:
 	float lion;
 	float lionJumpSpeed;
 	float lionJumpHeight;
+	int game_state;
 	int life;
 	int crash;
 	int walk_state;

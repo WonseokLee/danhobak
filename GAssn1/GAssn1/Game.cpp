@@ -16,6 +16,7 @@ Game::Game()
 	life = LIFE_DEFAULT;
 	lionJumpSpeed = 0;
 	lionJumpHeight = 0;
+	game_state = GAME_START;
 	crash = 0;
 	walk_state = 0;
 	keyLeft = false;
@@ -28,12 +29,16 @@ Game::~Game()
 }
 void Game::update()
 {
-	moveRings();
-	moveLion();
-	jumpLion();
-	checkJars();
-	checkRings();
-	moveCamera();
+	switch(game_state){
+	case GAME_ING:
+		moveRings();
+		moveLion();
+		jumpLion();
+		checkJars();
+		checkRings();
+		moveCamera();
+		break;
+	}
 }
 void Game::special( int key )
 {
@@ -55,12 +60,24 @@ void Game::specialUp( int key )
 }
 void Game::display()
 {
-	drawBG( );
-	drawRingsRight( );
-	drawLion( );
-	drawRingsLeft( );
-	drawJars();
-	drawLife();
+	switch(game_state){
+	case GAME_START:
+		drawBG( );
+		break;
+	case GAME_ING:
+		drawBG( );
+		drawRingsRight( );
+		drawLion( );
+		drawRingsLeft( );
+		drawJars();
+		drawLife();
+		break;
+	case GAME_CLEAR:
+		break;
+	case GAME_OVER:
+		break;
+	}
+	
 }
 void Game::moveLion()
 {
@@ -109,8 +126,8 @@ void Game::moveCamera()
 	if( camera < 0 )
 		camera = 0;
 
-	if( camera + SCREEN_WIDTH > 11000 )
-		camera = 11000 - SCREEN_WIDTH;
+	if( camera + SCREEN_WIDTH > FINISH + 120 )
+		camera = FINISH + 120 - SCREEN_WIDTH;
 	setCamera( camera, 0 );
 }
 void Game::makeJars()
@@ -145,22 +162,38 @@ void Game::moveRings()
 }
 void Game::drawBG()
 {
-	drawColor( TAN );
+	switch(game_state){
+	case GAME_START:
+		drawColor( BLACK );
 
-	setColor( LIME_GREEN );
-	drawRectFill( 0, 110, 11000, 370 );
+		setColor( BLACK );
+		drawRectFill( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		setColor( WHITE );
+		drawString(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "Press 'R' to start");
+		break;
+	case GAME_ING:
+	case GAME_CLEAR:
+		drawColor( TAN );
 
-	setColor( YELLOW );
-	drawRectFill( (float)FINISH, 370, 10, 110 );
+		setColor( LIME_GREEN );
+		drawRectFill( 0, 110, 11000, 370 );
 
-	setLineWidth( 3 );
-	setColor( WHITE );
-	drawLine( 0, 95, 11000, 100 );
-	drawLine( 0, 105, 11000, 100 );
-	setColor( BLACK );
-	drawLine( 0, 370, 11000, 370 );
+		setColor( YELLOW );
+		drawRectFill( (float)FINISH, 370, 10, 110 );
 
-	drawString( 220, 160, "REACH THE FINISH LINE!" );
+		setLineWidth( 3 );
+		setColor( WHITE );
+		drawLine( 0, 95, 11000, 100 );
+		drawLine( 0, 105, 11000, 100 );
+		setColor( BLACK );
+		drawLine( 0, 370, 11000, 370 );
+
+		drawString( 220, 160, "REACH THE FINISH LINE!" );
+		break;
+	case GAME_OVER:
+		break;
+	}
+	
 }
 void Game::drawJars()
 {

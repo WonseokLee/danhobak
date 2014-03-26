@@ -14,6 +14,11 @@ const int LION_CAMERA = 150;
 const int LION_CAMERA_MIN = 100;
 const int LION_FLASH_TIME = 100;
 
+const int GAME_START = 0;
+const int GAME_ING = 1;
+const int GAME_OVER = 2;
+const int GAME_CLEAR = 3;
+
 const int LIFE_DEFAULT = 3;
 
 const int CAMERA_DEFAULT = 0;
