@@ -30,6 +30,7 @@ private:
 	void checkJars();
 	void checkRings();
 
+	void moveState();
 	void moveLion();
 	void jumpLion();
 	void moveCamera();
@@ -47,4 +48,5 @@ private:
 	bool keyLeft;
 	bool keyRight;
 	bool keyUp;
+	bool keyF1;
 };

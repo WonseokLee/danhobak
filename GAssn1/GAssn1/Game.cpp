@@ -22,6 +22,7 @@ Game::Game()
 	keyLeft = false;
 	keyRight = false;
 	keyUp = false;
+	keyF1 = false;
 }
 Game::~Game()
 {
@@ -29,6 +30,7 @@ Game::~Game()
 }
 void Game::update()
 {
+	moveState();
 	switch(game_state){
 	case GAME_ING:
 		moveRings();
@@ -48,6 +50,8 @@ void Game::special( int key )
 		keyRight = true;
 	if ( key == GLUT_KEY_UP )
 		keyUp = true;
+	if ( key == GLUT_KEY_F1 )
+		keyF1 = true;
 }
 void Game::specialUp( int key )
 {
@@ -57,6 +61,8 @@ void Game::specialUp( int key )
 		keyRight = false;
 	if ( key == GLUT_KEY_UP )
 		keyUp = false;
+	if ( key == GLUT_KEY_F1 )
+		keyF1 = false;
 }
 void Game::display()
 {
@@ -79,6 +85,18 @@ void Game::display()
 	}
 	
 }
+
+void Game::moveState()
+{
+	if( keyF1 ){
+		switch(game_state){
+		case GAME_START:
+			game_state = GAME_ING;
+			break;
+		}
+	}
+}
+
 void Game::moveLion()
 {
 	if( keyLeft && !keyRight )
@@ -169,7 +187,7 @@ void Game::drawBG()
 		setColor( BLACK );
 		drawRectFill( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 		setColor( WHITE );
-		drawString(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "Press 'R' to start");
+		drawString(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, "Press 'F1' to start");
 		break;
 	case GAME_ING:
 	case GAME_CLEAR:
