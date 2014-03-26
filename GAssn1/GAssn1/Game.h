@@ -15,6 +15,8 @@ public:
 	void display();
 
 private:
+	void resetMap();
+
 	void makeJars();
 	void makeRings();
 	void moveRings();
