@@ -12,7 +12,7 @@ public:
 	void update();
 	void special( int key );
 	void specialUp( int key );
-	void display();
+	void draw();
 
 private:
 	void resetMap();

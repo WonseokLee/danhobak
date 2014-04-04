@@ -30,6 +30,12 @@
     <ClCompile Include="GL.cpp">
       <Filter>소스 파일\CORE</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>소스 파일\GAME</Filter>
     </ClCompile>
@@ -39,9 +45,6 @@
       <Filter>소스 파일\CORE</Filter>
     </ClInclude>
     <ClInclude Include="configurations.h">
-      <Filter>소스 파일\GAME</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
       <Filter>소스 파일\GAME</Filter>
     </ClInclude>
     <ClInclude Include="GameTemplate.h">
@@ -55,6 +58,15 @@
     </ClInclude>
     <ClInclude Include="functions.h">
       <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>소스 파일\GAME</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

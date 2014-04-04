@@ -1,6 +1,7 @@
 #pragma once
+#include "GameObject.h"
 
-class GameTemplate
+class GameTemplate : private GameObject
 {
 public:
 	GameTemplate(){};
@@ -10,7 +11,9 @@ public:
 	virtual void keyboardUp( unsigned char key ){};
 	virtual void special( int key ){};
 	virtual void specialUp( int key ){};
-	virtual void display() = 0;
-private:
 	
+	void display()
+	{
+		this->drawAll();
+	}
 };

@@ -1,7 +1,6 @@
 #include "GL.h"
 #include <GL/freeglut.h>
 #include "configurations.h"
-#include "Game.h"
 
 GL* GL::gl = nullptr;
 
@@ -40,10 +39,10 @@ GL::GL( int argc, char* args[ ] ) : game( nullptr )
 
 	//Set main loop
 	glutTimerFunc( 1000 / SCREEN_FPS, mainLoopF, 0 );
-
-	game = new Game();
-
-	//Start GLUT main loop
+}
+void GL::start( GameTemplate& game )
+{
+	this->game = &game;
 	glutMainLoop( );
 }
 GL::~GL()

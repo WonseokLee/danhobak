@@ -6,6 +6,8 @@ class GL
 public:
 	GL( int argc, char* args[ ] );
 	~GL();
+	void start( GameTemplate& game );
+
 	bool initGL();
 	void mainLoop( int );
 	void update();

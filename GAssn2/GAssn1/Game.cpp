@@ -50,7 +50,7 @@ void Game::specialUp( int key )
 	if ( key == GLUT_KEY_F1 )
 		keyF1 = false;
 }
-void Game::display()
+void Game::draw()
 {
 	drawBG( );
 
