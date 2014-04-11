@@ -90,7 +90,7 @@ inline void drawElipse( float x, float y, float w, float h, bool fill )
 	drawEnd();
 }
 
-inline void drawElipseLeft( float x, float y, float w, float h, bool fill )
+inline void drawElipseRight( float x, float y, float w, float h, bool fill )
 {
 	const int n = 32;
 	const float PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899348253421170679f;
@@ -108,7 +108,7 @@ inline void drawElipseLeft( float x, float y, float w, float h, bool fill )
 	}
 	drawEnd( );
 }
-inline void drawElipseRight( float x, float y, float w, float h, bool fill )
+inline void drawElipseLeft( float x, float y, float w, float h, bool fill )
 {
 	const int n = 32;
 	const float PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899348253421170679f;

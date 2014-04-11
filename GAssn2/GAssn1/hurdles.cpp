@@ -1,5 +1,6 @@
 #include "hurdles.h"
 #include "frame.h"
+#include "Game.h"
 
 Jar::Jar( GameObject* parent, float x )
 	: GameObject( parent, Vector2( x, 0 ) )
@@ -16,10 +17,14 @@ RingLeft::RingLeft( GameObject* parent, float x )
 }
 void RingLeft::update()
 {
-	double& x = pos.x;
-	x -= RING_SPEED;
-	if( x < RING_REMOVE )
-		x = RING_REGEN;
+	Game* parent = static_cast<Game*>( getAncestor() );
+	if( parent->game_state == GAME_ING )
+	{
+		double& x = pos.x;
+		x -= RING_SPEED;
+		if( x < RING_REMOVE )
+			x = RING_REGEN;
+	}
 }
 void RingLeft::draw()
 {
@@ -35,10 +40,14 @@ RingRight::RingRight( GameObject* parent, float x )
 }
 void RingRight::update()
 {
-	double& x = pos.x;
-	x -= RING_SPEED;
-	if( x < RING_REMOVE )
-		x = RING_REGEN;
+	Game* parent = static_cast<Game*>( getAncestor() );
+	if( parent->game_state == GAME_ING )
+	{
+		double& x = pos.x;
+		x -= RING_SPEED;
+		if( x < RING_REMOVE )
+			x = RING_REGEN;
+	}
 }
 void RingRight::draw()
 {
