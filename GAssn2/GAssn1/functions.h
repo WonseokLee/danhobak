@@ -10,7 +10,7 @@
 
 #define setLineWidth(x) glLineWidth(x)
 
-inline void drawVertex2f( float x, float y );
+#define drawVertex2f(x,y) glVertex2f(x,y)
 
 inline void drawLine( float x1, float y1, float x2, float y2 );
 
@@ -43,17 +43,11 @@ inline void drawString( float x, float y, char* textString )
 	int textLength = (int)strlen(textString);
 	for(int count = 0; count < textLength; count++)
 	{
-		float glX = ( x + 9 * count ) / SCREEN_WIDTH;
-		float glY = 1 - y / SCREEN_HEIGHT;
+		float glX = ( x + 9 * count );
+		float glY = y;
 		glRasterPos2f(glX, glY);
 		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, textString[count]);
 	}
-}
-inline void drawVertex2f( float x, float y )
-{
-	float glX = x / SCREEN_WIDTH;
-	float glY = 1 - y / SCREEN_HEIGHT;
-	glVertex2f( glX, glY );
 }
 
 inline void drawLine( float x1, float y1, float x2, float y2 )
@@ -153,10 +147,19 @@ inline void setColor( COLOR c )
 }
 inline void setCamera( float x, float y )
 {
+	/*
 	float xf = x / SCREEN_WIDTH + 0.5f;
 	float yf = y / SCREEN_HEIGHT + 0.5f;
+
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
-	glOrtho( -0.5f, 0.5f, -0.5f, 0.5f, 0.0f, 1.0f);
+
+	glOrtho( 0.5f, 0.5f, -0.5f, 0.5f, 0.0f, 1.0f);
 	gluLookAt( xf, yf, 0.0f, xf, yf, -1.0f, 0.0f, 1.0f, 0.0f );
+	*/
+
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity( );
+	glOrtho(  -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, 1.0f);
+	gluLookAt( SCREEN_WIDTH/2.f + x , SCREEN_HEIGHT/2.f + y, 0.0f, SCREEN_WIDTH/2.f + x , SCREEN_HEIGHT/2.f + y, -1.0f, 0.0f, 1.0f, 0.0f );
 }

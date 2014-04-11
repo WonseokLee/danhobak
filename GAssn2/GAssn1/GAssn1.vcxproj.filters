@@ -39,6 +39,12 @@
     <ClCompile Include="Game.cpp">
       <Filter>소스 파일\GAME</Filter>
     </ClCompile>
+    <ClCompile Include="hurdles.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="Lion.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL.h">
@@ -66,6 +72,12 @@
       <Filter>소스 파일\FRAME</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="hurdles.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Lion.h">
       <Filter>소스 파일\GAME</Filter>
     </ClInclude>
   </ItemGroup>

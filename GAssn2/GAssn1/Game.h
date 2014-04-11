@@ -1,6 +1,6 @@
 #pragma once
-#include "GameTemplate.h"
 #include <vector>
+#include "GameTemplate.h"
 
 using namespace std;
 
@@ -18,13 +18,10 @@ private:
 	void resetMap();
 
 	void makeJars();
-	void makeRings();
-	void moveRings();
+	/// ringLayerRight ∏¶ ∏Æ≈œ
+	GameObject* makeRings();
 	
 	void drawBG();
-	void drawJars();
-	void drawRingsLeft( );
-	void drawRingsRight( );
 	void drawLion();
 
 	void drawLife();
@@ -37,8 +34,6 @@ private:
 	void jumpLion();
 	void moveCamera();
 	
-	vector<float> jars;
-	vector<float> rings;
 	float camera;
 	float lion;
 	float lionJumpSpeed;

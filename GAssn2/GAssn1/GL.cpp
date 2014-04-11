@@ -56,9 +56,6 @@ bool GL::initGL()
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
 	
-	glOrtho( -0.5f, 0.5f, -0.5f, 0.5f, 0.0f, 1.0f);
-	gluLookAt( 0.5f, 0.5f, 0.0f, 0.5f, 0.5f, -1.0f, 0.0f, 1.0f, 0.0f );
-
 	//Initialize Modelview Matrix
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity( );
@@ -79,13 +76,13 @@ void GL::mainLoop( int val )
 	//Frame logic
 	update( );
 	display( );
-
+	
 	//Run frame one more time
 	glutTimerFunc( 1000 / SCREEN_FPS, mainLoopF, val );
 }
 void GL::update()
 {
-	game->update();
+	game->updateAll();
 }
 void GL::display()
 {
@@ -96,7 +93,7 @@ void GL::display()
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable (GL_LINE_SMOOTH);
 	
-	game->display();
+	game->drawAll();
 
 	glDisable (GL_BLEND);
 

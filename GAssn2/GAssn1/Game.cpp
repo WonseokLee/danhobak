@@ -1,8 +1,8 @@
 #include "Game.h"
-#include "frame.h"
-
 #include <stdlib.h>
 #include <time.h>
+#include "frame.h"
+#include "hurdles.h"
 
 Game::Game()
 {
@@ -19,7 +19,6 @@ void Game::update()
 	moveState();
 	switch(game_state){
 	case GAME_ING:
-		moveRings();
 		moveLion();
 		jumpLion();
 		checkJars();
@@ -82,17 +81,19 @@ void Game::draw()
 		drawString( 220 + camera, 200, "-------------------");
 		break;
 	}
-	drawRingsRight( );
 	drawLion( );
-	drawRingsLeft( );
-	drawJars();
 	drawLife();
 }
 
 void Game::resetMap()
 {
+	deleteChildren();
+
+	GameObject* rightRingLayer;
+
 	makeJars();
-	makeRings();
+	rightRingLayer = makeRings();
+	addChild( rightRingLayer );
 
 	camera = CAMERA_DEFAULT;
 	lion = LION_DEFAULT;
@@ -186,35 +187,29 @@ void Game::moveCamera()
 }
 void Game::makeJars()
 {
+	GameObject* jarLayer = new GameObject( this, Vector2( 0, 370 ) );
+	addChild( jarLayer );
+
 	float currentDistance = JAR_GEN_MIN;
-	jars.clear();
-	jars.push_back(currentDistance);
 	while(currentDistance < JAR_GEN_MAX){
-		//generate random value between JAR_DIST_MIN ~ JAR_DIST_MAX, which determines distance between
-		//ith and (i+1)th component.
 		currentDistance += (float)((JAR_DIST_MAX - JAR_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + JAR_DIST_MIN);
-		jars.push_back(currentDistance);
+		jarLayer->addChild( new Jar(jarLayer, currentDistance) );
 	}
 }
-void Game::makeRings()
+GameObject* Game::makeRings()
 {
-	float currentDistance = RING_GEN_MIN;
-	rings.clear();
-	rings.push_back(currentDistance);
+	GameObject* ringLayerLeft = new GameObject( this, Vector2( 0, 120 ) );
+	GameObject* ringLayerRight = new GameObject( this, Vector2( 0, 120 ) );
+	addChild( ringLayerLeft );
+
+	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < RING_GEN_MAX){
 		currentDistance += (float)((RING_DIST_MAX - RING_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + RING_DIST_MIN);
-		rings.push_back(currentDistance);
+		ringLayerLeft->addChild( new RingLeft(ringLayerLeft, currentDistance) );
+		ringLayerRight->addChild( new RingRight(ringLayerRight, currentDistance) );
 	}
-}
-void Game::moveRings()
-{
-	for( auto ringIter = rings.begin(); ringIter != rings.end(); ++ringIter )
-	{
-		float& ring = *ringIter;
-		ring -= RING_SPEED;
-		if( ring < RING_REMOVE )
-			ring = RING_REGEN;
-	}
+
+	return ringLayerRight;
 }
 void Game::drawBG()
 {
@@ -235,35 +230,6 @@ void Game::drawBG()
 		
 		setLineWidth( 1 );
 		drawLine( 0, 375, 11000, 375 );
-}
-void Game::drawJars()
-{
-	for each( float jar in jars )
-	{
-		setColor( GOLD );
-		drawRectFill( jar - 15, 340, 30, 30 );
-	}
-}
-void Game::drawRingsLeft()
-{
-	for each( float ring in rings )
-	{
-		setLineWidth( 5 );
-		setColor( RED );
-		drawElipseLeft( ring-25, 120, 50, 200, false );
-		
-		setColor( BLACK );
-		drawLine( ring, 110, ring, 125 );
-	}
-}
-void Game::drawRingsRight( )
-{
-	for each( float ring in rings )
-	{
-		setLineWidth( 5 );
-		setColor( RED );
-		drawElipseRight( ring - 25, 120, 50, 200, false );
-	}
 }
 void Game::drawLion()
 {
@@ -449,6 +415,7 @@ void Game::drawLife()
 
 void Game::checkJars()
 {
+	/*
 	for( auto jarIter = jars.begin(); jarIter != jars.end(); ++jarIter ){
 		float& jar = *jarIter;
 		if( -45 <  lion - jar && lion - jar < 45 )
@@ -464,10 +431,12 @@ void Game::checkJars()
 			}
 		}
 	}
+	*/
 }
 
 void Game::checkRings()
 {
+	/*
 	float checkRing = -200;
 	for(auto ringIter = rings.begin(); ringIter != rings.end(); ++ringIter ){
 		float& ring = *ringIter;
@@ -483,4 +452,5 @@ void Game::checkRings()
 			break;
 		}
 	}
+	*/
 }
