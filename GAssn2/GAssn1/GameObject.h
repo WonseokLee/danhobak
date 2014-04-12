@@ -12,9 +12,10 @@ private:
 
 protected:
 	Vector2 position;
+	double rotation;
 
 public:
-	GameObject( GameObject* parent = NULL, Vector2& pos = Vector2() );
+	GameObject( GameObject* parent = NULL, Vector2& pos = Vector2(), double rot = 0 );
 	virtual ~GameObject();
 
 	void updateAll();
@@ -31,4 +32,6 @@ public:
 
 	Vector2& pos();
 	Vector2 absPos();
+	double& rot();
+	double absRot();
 };

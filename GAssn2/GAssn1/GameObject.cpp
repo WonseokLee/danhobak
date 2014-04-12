@@ -1,10 +1,10 @@
 #include "GameObject.h"
 #include <GL/freeglut.h>
 
-GameObject::GameObject( GameObject* parent, Vector2& position )
-	: parent( parent ), position( position )
+GameObject::GameObject( GameObject* parent, Vector2& position, double rotation )
+	: parent( parent ), position( position ), rotation( rotation )
 {
-
+	
 }
 GameObject::~GameObject()
 {
@@ -27,6 +27,7 @@ void GameObject::drawAll()
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
 	glTranslated( pos().x, pos().y, 0 );
+	glRotated( rotation, 0, 0, -1 );
 	this->draw();
 	for( auto objectIter = children.begin(); objectIter != children.end(); ++objectIter )
 	{
@@ -92,5 +93,16 @@ Vector2 GameObject::absPos()
 	Vector2 abs = position;
 	if( parent != NULL )
 		abs += parent->absPos();
+	return abs;
+}
+double& GameObject::rot()
+{
+	return rotation;
+}
+double GameObject::absRot()
+{
+	double abs = rotation;
+	if( parent != NULL )
+		abs += parent->absRot();
 	return abs;
 }
