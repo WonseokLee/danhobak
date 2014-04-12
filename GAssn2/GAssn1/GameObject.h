@@ -10,6 +10,9 @@ private:
 	virtual void update(){}
 	virtual void draw(){}
 
+protected:
+	Vector2 position;
+
 public:
 	GameObject( GameObject* parent = NULL, Vector2& pos = Vector2() );
 	virtual ~GameObject();
@@ -24,6 +27,8 @@ public:
 
 	GameObject* getParent();
 	GameObject* getAncestor();
+	std::vector<GameObject*>* getChildren();
 
-	Vector2 pos;
+	Vector2& pos();
+	Vector2 absPos();
 };

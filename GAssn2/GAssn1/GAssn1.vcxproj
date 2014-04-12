@@ -91,15 +91,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HelpText.cpp" />
     <ClCompile Include="hurdles.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GL.cpp" />
+    <ClCompile Include="LifeContainer.cpp" />
     <ClCompile Include="Lion.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BG.hpp" />
     <ClInclude Include="hurdles.h" />
     <ClInclude Include="colors.h" />
     <ClInclude Include="configurations.h" />
@@ -109,6 +112,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameTemplate.h" />
     <ClInclude Include="GL.h" />
+    <ClInclude Include="HelpText.h" />
+    <ClInclude Include="LifeContainer.h" />
     <ClInclude Include="Lion.h" />
     <ClInclude Include="Vector2.h" />
   </ItemGroup>

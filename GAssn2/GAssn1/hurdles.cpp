@@ -20,7 +20,7 @@ void RingLeft::update()
 	Game* parent = static_cast<Game*>( getAncestor() );
 	if( parent->game_state == GAME_ING )
 	{
-		double& x = pos.x;
+		float& x = pos().x;
 		x -= RING_SPEED;
 		if( x < RING_REMOVE )
 			x = RING_REGEN;
@@ -43,7 +43,7 @@ void RingRight::update()
 	Game* parent = static_cast<Game*>( getAncestor() );
 	if( parent->game_state == GAME_ING )
 	{
-		double& x = pos.x;
+		float& x = pos().x;
 		x -= RING_SPEED;
 		if( x < RING_REMOVE )
 			x = RING_REGEN;

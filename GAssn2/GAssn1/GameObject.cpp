@@ -1,8 +1,8 @@
 #include "GameObject.h"
 #include <GL/freeglut.h>
 
-GameObject::GameObject( GameObject* parent, Vector2& pos )
-	: parent( parent ), pos( pos )
+GameObject::GameObject( GameObject* parent, Vector2& position )
+	: parent( parent ), position( position )
 {
 
 }
@@ -26,7 +26,7 @@ void GameObject::drawAll()
 {
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
-	glTranslated( pos.x, pos.y, 0 );
+	glTranslated( pos().x, pos().y, 0 );
 	this->draw();
 	for( auto objectIter = children.begin(); objectIter != children.end(); ++objectIter )
 	{
@@ -78,4 +78,19 @@ GameObject* GameObject::getAncestor()
 	while( object->getParent() != NULL )
 		object = object->parent;
 	return object;
+}
+std::vector<GameObject*>* GameObject::getChildren()
+{
+	return &children;
+}
+Vector2& GameObject::pos()
+{
+	return position;
+}
+Vector2 GameObject::absPos()
+{
+	Vector2 abs = position;
+	if( parent != NULL )
+		abs += parent->absPos();
+	return abs;
 }

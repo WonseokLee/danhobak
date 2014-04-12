@@ -45,6 +45,12 @@
     <ClCompile Include="Lion.cpp">
       <Filter>소스 파일\GAME</Filter>
     </ClCompile>
+    <ClCompile Include="HelpText.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeContainer.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL.h">
@@ -78,6 +84,15 @@
       <Filter>소스 파일\GAME</Filter>
     </ClInclude>
     <ClInclude Include="Lion.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpText.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeContainer.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="BG.hpp">
       <Filter>소스 파일\GAME</Filter>
     </ClInclude>
   </ItemGroup>

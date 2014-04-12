@@ -23,7 +23,7 @@ const int LIFE_DEFAULT = 3;
 
 const int CAMERA_DEFAULT = 0;
 
-const int JAR_GEN_MIN = 500;
+const int JAR_GEN_MIN = 700;
 const int JAR_GEN_MAX = FINISH - 100;
 
 const int JAR_HEIGHT = 30;

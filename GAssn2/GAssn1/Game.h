@@ -14,30 +14,24 @@ public:
 	void update();
 	void special( int key );
 	void specialUp( int key );
-	void draw();
 	
 	int game_state;
+	float camera;
 
 	bool keyLeft;
 	bool keyRight;
 	bool keyUp;
 	bool keyF1;
+	
+	GameObject* ringLayer;
+	GameObject* jarLayer;
+	Lion* lion;
 
 private:
 	void resetMap();
-
-	void makeLion();
-	void makeJars();
-
-	/// ringLayerRight ∏¶ ∏Æ≈œ
+	GameObject* makeJars();
 	GameObject* makeRings();
 	
-	void drawBG();
-	void drawLife();
-
 	void moveState();
 	void moveCamera();
-	
-	Lion* lion;
-	float camera;
 };

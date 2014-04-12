@@ -23,6 +23,48 @@ void Lion::update()
 		checkRings();
 	}
 }
+
+void Lion::moveLion()
+{
+	Game* parent = static_cast<Game*>( getParent() );
+	bool& keyLeft = parent->keyLeft;
+	bool& keyRight = parent->keyRight;
+
+	if( keyLeft && !keyRight )
+		pos().x -= LION_SPEED;
+	if( !keyLeft && keyRight )
+		pos().x += LION_SPEED;
+
+	if( lionJumpHeight == 0 &&
+		( keyLeft || keyRight ))
+		walk_state++;
+	else
+		walk_state = 9;
+
+	if( walk_state > 40 )
+		walk_state = 0;
+
+	if( pos().x - 30 < 0 )
+		pos().x = 30;
+	if( pos().x + 30 > 11000 )
+		pos().x = 11000 - 30;
+}
+void Lion::jumpLion()
+{
+	Game* parent = static_cast<Game*>( getParent() );
+
+	lionJumpSpeed += LION_JUMP_GRAVITY;
+	lionJumpHeight += lionJumpSpeed;
+	if( lionJumpHeight <= 0 )
+	{
+		lionJumpHeight = 0;
+		lionJumpSpeed = 0;
+		if( parent->keyUp )
+		{
+			lionJumpSpeed = LION_JUMP_SPEED;
+		}
+	}
+}
 void Lion::draw()
 {
 	COLOR my_yellow_dark;
@@ -178,54 +220,15 @@ void Lion::draw()
 	drawRectFill( -30 + 44, -lionJumpHeight + head - 14, 11, 2);
 	//drawRectFill( 30, -lionJumpHeight, 60, 60 );
 }
-void Lion::moveLion()
-{
-	Game* parent = static_cast<Game*>( getParent() );
-	bool& keyLeft = parent->keyLeft;
-	bool& keyRight = parent->keyRight;
-
-	if( keyLeft && !keyRight )
-		pos.x -= LION_SPEED;
-	if( !keyLeft && keyRight )
-		pos.x += LION_SPEED;
-
-	if( lionJumpHeight == 0 &&
-		( keyLeft || keyRight ))
-		walk_state++;
-	else
-		walk_state = 9;
-
-	if( walk_state > 40 )
-		walk_state = 0;
-
-	if( pos.x - 30 < 0 )
-		pos.x = 30;
-	if( pos.x + 30 > 11000 )
-		pos.x = 11000 - 30;
-}
-void Lion::jumpLion()
-{
-	Game* parent = static_cast<Game*>( getParent() );
-
-	lionJumpSpeed += LION_JUMP_GRAVITY;
-	lionJumpHeight += lionJumpSpeed;
-	if( lionJumpHeight <= 0 )
-	{
-		lionJumpHeight = 0;
-		lionJumpSpeed = 0;
-		if( parent->keyUp )
-		{
-			lionJumpSpeed = LION_JUMP_SPEED;
-		}
-	}
-}
-
 void Lion::checkJars()
 {
-	/*
-	for( auto jarIter = jars.begin(); jarIter != jars.end(); ++jarIter ){
-		float& jar = *jarIter;
-		if( -45 <  lion - jar && lion - jar < 45 )
+	Game* parent = static_cast<Game*>( getParent() );
+	auto jarLayer = parent->jarLayer->getChildren();
+	for( auto jarIter = jarLayer->begin(); jarIter != jarLayer->end(); ++jarIter ){
+		GameObject* jar = *jarIter;
+		float x = absPos().x;
+		float jarX = jar->absPos().x;
+		if( x - 45 <= jarX && jarX <= x + 45 )
 		{
 			if( lionJumpHeight <= JAR_HEIGHT )
 			{
@@ -238,16 +241,17 @@ void Lion::checkJars()
 			}
 		}
 	}
-	*/
 }
 
 void Lion::checkRings()
 {
-	/*
-	float checkRing = -200;
-	for(auto ringIter = rings.begin(); ringIter != rings.end(); ++ringIter ){
-		float& ring = *ringIter;
-		if( lion - 30 <= ring && ring <= lion + 30 ){
+	Game* parent = static_cast<Game*>( getParent() );
+	auto ringLayer = parent->ringLayer->getChildren();
+	for(auto ringIter = ringLayer->begin(); ringIter != ringLayer->end(); ++ringIter ){
+		GameObject* ring = *ringIter;
+		float x = absPos().x;
+		float ringX = ring->absPos().x;
+		if( x - 30 <= ringX && ringX <= x + 30 ){
 			if( lionJumpHeight < RING_BOTTOM || lionJumpHeight > RING_TOP )
 			{
 				if( crash == 0 )
@@ -259,5 +263,4 @@ void Lion::checkRings()
 			break;
 		}
 	}
-	*/
 }
