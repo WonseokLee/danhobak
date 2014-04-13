@@ -3,88 +3,135 @@
 #include "frame.h"
 #include "configurations.h"
 
-LionLeg::LionLeg( GameObject* parent, Vector2 pos, int type) 
-	: GameObject( parent, pos)
+LionLeg::LionLeg( GameObject* parent, Vector2 pos, int type, int color ) 
+	: GameObject( parent, pos )
 {
 	legType = type;
-		/*
-	switch(legType){
-	case 0:
-		tick = 32;
-		break;
-	case 1:
-		tick = 2;
-	}
-	*/
-	addChild(new LionUnderLeg(this, Vector2(0, 10), legType));
+	this->color = color;
+	addChild(new LionUnderLeg(this, Vector2(0, 10), legType, color ));
 }
 
 void LionLeg::update()
 {
 	Lion* parent = static_cast<Lion*>( getParent() );
-	
+	tick = -parent->walk_state;
+
 	switch(legType){
-	case 0:
-		tick = -parent->walk_state;
+	case 0: // 앞다리
+		rotation = 30 * cos( tick*3.14/30 ) + 20;
 		break;
-	case 1:
-		tick = parent->walk_state;
+	case 1: // 뒷다리
+		rotation = -25 * cos( tick*3.14/30 ) + 15;
 		break;
 	}
-	/*
-	if(++tick == 60)
-		tick = 0;
-		*/
-	rotation = 60 * sin( tick*3.14/60);
 }
 
 void LionLeg::draw()
 {
-	setColor(YELLOW);
+	setColor( static_cast<COLOR>(color) );
 	drawRectFill(-3, 0, 6, 10);
 }
 
-LionUnderLeg::LionUnderLeg( GameObject* parent, Vector2 pos, int type)
-	: GameObject( parent, pos)
+LionUnderLeg::LionUnderLeg( GameObject* parent, Vector2 pos, int type, int color )
+	: GameObject( parent, pos )
 {
 	legType = type;
+	this->color = color;
 }
 
 void LionUnderLeg::update()
 {
 	LionLeg* parent = static_cast<LionLeg*>( getParent() );
-	int parentRotation = 60 * sin((parent->tick)*3.14/30);
+	int tick = parent->tick;
+
 	switch(legType){
-	case 0:
-		if(parentRotation < 0){
-			rotation = -10;
-		}
-		else if(parentRotation < 20){
-			rotation = -0.5*parentRotation - 10;
-		}
-		else if(parentRotation < 45){
-			rotation = 0.8*parentRotation - 36;
-		}
-		else{
-			rotation = 0.4*parentRotation - 18;
-		}
+	case 0: // 앞다리
+		rotation = 40 * cos( tick*3.14/30 ) - 40;
 		break;
-	case 1:
-		if(parentRotation < 10){
-			rotation = -(parentRotation + 60)/7;
-		}
-		else{
-			rotation = -(1.4*parentRotation - 4);
-		}
+	case 1: // 뒷다리
+		rotation = -30 * cos( tick*3.14/30 ) - 30;
 		break;
 	}
 }
 
 void LionUnderLeg::draw()
 {
+	setColor( static_cast<COLOR>(color) );
 	drawRectFill(-3,0, 6, 10);
 }
+LionTail::LionTail( GameObject* parent, Vector2 pos )
+	: GameObject( parent, pos )
+{
+}
+void LionTail::update()
+{
+	Lion* parent = static_cast<Lion*>( getParent() );
+	int tick = -parent->walk_state - 5;
+	rotation = 30 * cos( tick*3.14/30 ) + 15;
+}
+void LionTail::draw()
+{
+	setColor( BROWN );
+	setLineWidth( 3 );
+	drawLine( -2, 0, -10, 0 );
 
+}
+LionBody::LionBody( GameObject* parent, Vector2 pos )
+	: GameObject( parent, pos )
+{
+}
+void LionBody::draw()
+{
+	Lion* parent = static_cast<Lion*>( getParent() );
+	int& crash = parent->crash;
+
+	COLOR my_yellow;
+	COLOR my_brown;
+	COLOR my_black;
+	COLOR my_red;
+	if(crash > 0){
+		switch(crash%4){
+		case 0:
+			my_yellow = YELLOW;
+			my_brown = BROWN;
+			my_black = BLACK;
+			my_red = RED;
+			break;
+		default:
+			my_yellow = YELLOW_TRANS;
+			my_brown = BROWN_TRANS;
+			my_black = BLACK_TRANS;
+			my_red = RED_TRANS;
+			break;
+		}
+		crash--;
+	}
+	else{
+		my_yellow = YELLOW;
+		my_brown = BROWN;
+		my_black = BLACK;
+		my_red = RED;
+	}
+	int head = 24;
+		setColor(my_yellow);
+		drawRectFill( -30 + 8, 27, 41, 18 );
+		setColor(my_brown);
+		drawCircleFill( -30 + 39, head, 6);
+		drawCircleFill( -30 + 58,  head, 6);
+		drawCircleFill( -30 + 45, head-10, 6);
+		drawCircleFill( -30 + 53, head-10, 6);
+		drawCircleFill( -30 + 45, head+10, 6);
+		drawCircleFill( -30 + 53, head+10, 6);
+		setColor(my_yellow);
+		drawCircleFill( -30 + 49, head, 9);
+		setColor(my_black);
+		drawElipseFill( -30 + 53, head-3, 2, 5);
+	setColor(my_black);
+	drawRectFill( -30 + 45, head - 25, 10, 16 );
+	drawRectFill( -30 + 40, head - 11, 19, 3);
+	setColor(my_red);
+	drawRectFill( -30 + 44, head - 14, 11, 2);
+}
 Lion::Lion( GameObject* parent )
 	: GameObject( parent, Vector2( LION_DEFAULT, 310 ) )
 {
@@ -93,8 +140,12 @@ Lion::Lion( GameObject* parent )
 	lionJumpHeight = 0;
 	crash = 0;
 	walk_state = 0;
-	addChild( new LionLeg(this, Vector2(-30 + 41, 40), 0));
-	addChild( new LionLeg(this, Vector2(-30 + 10, 40), 1));
+	addChild( new LionLeg(this, Vector2(+10, 40), 1, YELLOW_DARK) );
+	addChild( new LionLeg(this, Vector2(-20, 40), 1, YELLOW_DARK) );
+	addChild( new LionLeg(this, Vector2(-20, 40), 0, YELLOW) );
+	addChild( new LionLeg(this, Vector2(+10, 40), 0, YELLOW) );
+	addChild( new LionBody( this, Vector2(0, 0) ) );
+	addChild( new LionTail( this, Vector2(-20, 36) ) );
 }
 void Lion::update()
 {
@@ -149,63 +200,6 @@ void Lion::jumpLion()
 		}
 	}
 	pos().y = 310 - lionJumpHeight;
-}
-void Lion::draw()
-{
-	COLOR my_yellow_dark;
-	COLOR my_yellow;
-	COLOR my_brown;
-	COLOR my_black;
-	COLOR my_red;
-	if(crash > 0){
-		switch(crash%4){
-		case 0:
-			my_yellow_dark = YELLOW_DARK;
-			my_yellow = YELLOW;
-			my_brown = BROWN;
-			my_black = BLACK;
-			my_red = RED;
-			break;
-		default:
-			my_yellow_dark = YELLOW_DARK_TRANS;
-			my_yellow = YELLOW_TRANS;
-			my_brown = BROWN_TRANS;
-			my_black = BLACK_TRANS;
-			my_red = RED_TRANS;
-			break;
-		}
-		crash--;
-	}
-	else{
-		my_yellow_dark = YELLOW_DARK;
-		my_yellow = YELLOW;
-		my_brown = BROWN;
-		my_black = BLACK;
-		my_red = RED;
-	}
-	int head = 24;
-		setColor(my_yellow);
-		drawRectFill( -30 + 8, 27, 41, 18 );
-		setColor(my_brown);
-		drawCircleFill( -30 + 39, head, 6);
-		drawCircleFill( -30 + 58,  head, 6);
-		drawCircleFill( -30 + 45, head-10, 6);
-		drawCircleFill( -30 + 53, head-10, 6);
-		drawCircleFill( -30 + 45, head+10, 6);
-		drawCircleFill( -30 + 53, head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, 41, -30 + 9, 38);
-	setColor(my_black);
-	drawRectFill( -30 + 45, head - 25, 10, 16 );
-	drawRectFill( -30 + 40, head - 11, 19, 3);
-	setColor(my_red);
-	drawRectFill( -30 + 44, head - 14, 11, 2);
-	//drawRectFill( 30, -lionJumpHeight, 60, 60 );
 }
 void Lion::checkJars()
 {

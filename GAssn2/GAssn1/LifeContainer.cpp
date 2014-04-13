@@ -1,4 +1,5 @@
 #include "LifeContainer.h"
+#include <cmath>
 #include "Game.h"
 #include "Lion.h"
 
@@ -7,23 +8,38 @@ Heart::Heart( GameObject* parent, Vector2 position )
 {
 	fill = true;
 }
+void Heart::update()
+{
+	if( ++tick == 60 )
+		tick = 0;
+
+	scale = Vector2( 1.1 + 0.1 * cos( tick * 3.14 / 60 ) );
+}
 void Heart::draw()
 {
-	setColor( RED );
+	if( fill )
+	{
+		setColor( RED );
+		drawHeart( GL_TRIANGLE_FAN );
+	}
+	setColor( WHITE );
 	setLineWidth(1);
-	GLenum mode = fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP;
+	drawHeart( GL_LINE_LOOP );
+}
+void Heart::drawHeart( GLenum mode )
+{
 	drawBegin( mode );
+	drawVertex2f(0, -5);
+	drawVertex2f(-5, -10);
+	drawVertex2f(-10, -10);
+	drawVertex2f(-15, -5);
+	drawVertex2f(-15, 5);
+	drawVertex2f(0, 20);
 	drawVertex2f(15, 5);
-	drawVertex2f(10, 0);
-	drawVertex2f(5, 0);
-	drawVertex2f(0, 5);
-	drawVertex2f(0, 15);
-	drawVertex2f(15, 30);
-	drawVertex2f(30, 15);
-	drawVertex2f(30, 5);
-	drawVertex2f(25, 0);
-	drawVertex2f(20, 0);
-	drawVertex2f(+15, 5);
+	drawVertex2f(15, -5);
+	drawVertex2f(10, -10);
+	drawVertex2f(5, -10);
+	drawVertex2f(0, -5);
 	drawEnd();
 }
 LifeContainer::LifeContainer( GameObject* parent )

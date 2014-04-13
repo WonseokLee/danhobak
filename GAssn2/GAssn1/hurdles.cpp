@@ -40,8 +40,28 @@ Jar::Jar( GameObject* parent, float x )
 }
 void Jar::draw()
 {
+	setColor( GOLDENROD );
+	drawBegin( GL_POLYGON );
+	drawVertex2f( -12, -30 );
+	drawVertex2f( -18, -15 );
+	drawVertex2f( -12, 0 );
+	drawVertex2f( +12, 0 );
+	drawVertex2f( +18, -15 );
+	drawVertex2f( +12, -30 );
+	drawEnd();
+	setColor( BROWN );
+	drawBegin( GL_POLYGON );
+	drawVertex2f( -12, -30 );
+	drawVertex2f( 0, -27 );
+	drawVertex2f( +12, -30 );
+	drawEnd();
 	setColor( GOLD );
-	drawRectFill( -15, -30, 30, 30 );
+	setLineWidth( 5 );
+	drawBegin( GL_LINE_STRIP );
+	drawVertex2f( -18, -15 );
+	drawVertex2f( 0, -10 );
+	drawVertex2f( +18, -15 );
+	drawEnd();
 }
 RingLeft::RingLeft( GameObject* parent, float x )
 	: GameObject( parent, Vector2( x, 0 ) )

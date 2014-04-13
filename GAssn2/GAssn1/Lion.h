@@ -4,21 +4,37 @@
 class LionLeg : public GameObject
 {
 public:
-	LionLeg( GameObject* parent, Vector2 pos, int type);
+	LionLeg( GameObject* parent, Vector2 pos, int type, int color);
 	void update();
 	void draw();
 	int legType;//앞다리는 0, 뒷다리는 1
 	int tick;
+	int color;
 };
 
 class LionUnderLeg : public GameObject
 {
 public:
-	LionUnderLeg( GameObject* parent, Vector2 pos, int type);
+	LionUnderLeg( GameObject* parent, Vector2 pos, int type, int color);
 	void update();
 	void draw();
 private:
 	int legType;
+	int color;
+};
+
+class LionTail : public GameObject
+{
+public:
+	LionTail( GameObject* parent, Vector2 pos );
+	void update();
+	void draw();
+};
+class LionBody : public GameObject
+{
+public:
+	LionBody( GameObject* parent, Vector2 pos );
+	void draw();
 };
 
 class Lion : public GameObject
@@ -26,7 +42,6 @@ class Lion : public GameObject
 public:
 	Lion( GameObject* parent );
 	void update();
-	void draw();
 	
 	void moveLion();
 	void jumpLion();
