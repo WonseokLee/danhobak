@@ -3,10 +3,10 @@
 #include "Game.h"
 #include <cmath>
 
-JarFire::JarFire( GameObject* parent, Vector2& position )
-	: GameObject( parent, position )
+JarFire::JarFire( GameObject* parent, Vector2& position, int color, double fireScale )
+	: GameObject( parent, position ),
+	color( color ), fireScale( fireScale ), tick( 0 )
 {
-	tick = 0;
 }
 void JarFire::update()
 {
@@ -17,11 +17,11 @@ void JarFire::update()
 
 	int t = tick<30?tick:60-tick;
 	double s = sin(t / 300.0) + 1;
-	scale = Vector2( s, s );
+	scale = fireScale * Vector2( s );
 }
 void JarFire::draw()
 {
-	setColor( RED );
+	setColor( static_cast<COLOR>(color) );
 	drawBegin( GL_POLYGON );
 	drawVertex2f( 0, -30 );
 	drawVertex2f( -7, -15 );
@@ -31,21 +31,12 @@ void JarFire::draw()
 	drawVertex2f( +10, -6 );
 	drawVertex2f( +7, -15 );
 	drawEnd();
-	setColor( WHITE );
-	drawBegin( GL_POLYGON );
-	drawVertex2f( 0, -15 );
-	drawVertex2f( -3, -10 );
-	drawVertex2f( -6, -3 );
-	drawVertex2f( -3, 0 );
-	drawVertex2f( +3, 0 );
-	drawVertex2f( +6, -3 );
-	drawVertex2f( +3, -10 );
-	drawEnd();
 }
 Jar::Jar( GameObject* parent, float x )
 	: GameObject( parent, Vector2( x, 0 ) )
 {
-	addChild( new JarFire( this, Vector2( 0, -30 ) ) );
+	addChild( new JarFire( this, Vector2( 0, -30 ), RED , 1 ) );
+	addChild( new JarFire( this, Vector2( 0, -30 ), WHITE , 0.55 ) );
 }
 void Jar::draw()
 {

@@ -1,5 +1,13 @@
 #include "Vector2.h"
 
+Vector2::Vector2()
+{
+	this->x = this->y = 0;
+}
+Vector2::Vector2( double xy )
+{
+	this->x = this->y = (float)xy;
+}
 Vector2::Vector2( double x, double y )
 {
 	this->x = (float)x;
