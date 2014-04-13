@@ -130,6 +130,7 @@ inline void drawCircle( float cx, float cy, float rad, bool fill )
 {
 	drawElipse( cx - rad, cy - rad, rad * 2, rad * 2, fill );
 }
+
 inline void drawColor( COLOR c ){
 	float af = ((c & 0xFF000000) >> 24) / 255.f;
 	float rf = ((c & 0x00FF0000) >> 16) / 255.f;

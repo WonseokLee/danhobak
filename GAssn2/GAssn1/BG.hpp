@@ -12,7 +12,7 @@ public:
 	{
 		drawColor( TAN );
 
-		setColor( LIME_GREEN );
+		setColor( GREEN_DARK );
 		drawRectFill( 0, 110, 11000, 370 );
 
 		setColor( YELLOW );

@@ -20,6 +20,19 @@ public:
 	void draw();
 };
 
+class RingFire : public GameObject
+{
+public:
+	RingFire( GameObject* parent, Vector2& position, int color, double fireScale, int tick, int derivation);
+	void update();
+	void draw();
+private:
+	int tick;
+	int color;
+	int derivation;
+	double fireScale;
+};
+
 class RingLeft : public GameObject
 {
 public:
