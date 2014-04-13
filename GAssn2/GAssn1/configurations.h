@@ -30,7 +30,7 @@ const int JAR_HEIGHT = 30;
 const int JAR_DIST_MIN = 400;
 const int JAR_DIST_MAX = 700;
 
-const int RING_TOP = 190;
+const int RING_TOP = 180;
 const int RING_BOTTOM = 50;
 const int RING_GEN_MIN = 1000;
 const int RING_GEN_MAX = FINISH + 1000;

@@ -10,6 +10,7 @@ public:
 	int legType;//앞다리는 0, 뒷다리는 1
 	int tick;
 	int color;
+	bool jump;
 };
 
 class LionUnderLeg : public GameObject

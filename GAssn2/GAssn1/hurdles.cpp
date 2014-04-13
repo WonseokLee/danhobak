@@ -82,7 +82,7 @@ void RingLeft::draw()
 {
 	setLineWidth( 5 );
 	setColor( RED );
-	drawElipseLeft( -25, 0, 50, 200, false );
+	drawElipseLeft( -25, 0, 50, 180, false );
 	setColor( BLACK );
 	drawLine( 0, -10, 0, 5 );
 }
@@ -105,5 +105,5 @@ void RingRight::draw()
 {
 	setLineWidth( 5 );
 	setColor( RED );
-	drawElipseRight( -25, 0, 50, 200, false );
+	drawElipseRight( -25, 0, 50, 180, false );
 }
