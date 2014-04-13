@@ -8,7 +8,7 @@ const int FINISH = 5000;
 
 const int LION_DEFAULT = 100;
 const float LION_SPEED = 2.5f;
-const float LION_JUMP_SPEED = 8.f;
+const float LION_JUMP_SPEED = 7.2f;
 const float LION_JUMP_GRAVITY = -0.2f;
 const int LION_CAMERA = 150;
 const int LION_CAMERA_MIN = 100;
