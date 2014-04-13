@@ -116,6 +116,7 @@ void Game::moveState()
 		{
 			resetMap();
 			game_state = GAME_START;
+			keyF1 = false;
 		}
 	}
 }
