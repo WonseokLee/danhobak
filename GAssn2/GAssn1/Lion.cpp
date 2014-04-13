@@ -3,6 +3,88 @@
 #include "frame.h"
 #include "configurations.h"
 
+LionLeg::LionLeg( GameObject* parent, Vector2 pos, int type) 
+	: GameObject( parent, pos)
+{
+	legType = type;
+		/*
+	switch(legType){
+	case 0:
+		tick = 32;
+		break;
+	case 1:
+		tick = 2;
+	}
+	*/
+	addChild(new LionUnderLeg(this, Vector2(0, 10), legType));
+}
+
+void LionLeg::update()
+{
+	Lion* parent = static_cast<Lion*>( getParent() );
+	
+	switch(legType){
+	case 0:
+		tick = -parent->walk_state;
+		break;
+	case 1:
+		tick = parent->walk_state;
+		break;
+	}
+	/*
+	if(++tick == 60)
+		tick = 0;
+		*/
+	rotation = 60 * sin( tick*3.14/60);
+}
+
+void LionLeg::draw()
+{
+	setColor(YELLOW);
+	drawRectFill(-3, 0, 6, 10);
+}
+
+LionUnderLeg::LionUnderLeg( GameObject* parent, Vector2 pos, int type)
+	: GameObject( parent, pos)
+{
+	legType = type;
+}
+
+void LionUnderLeg::update()
+{
+	LionLeg* parent = static_cast<LionLeg*>( getParent() );
+	int parentRotation = 60 * sin((parent->tick)*3.14/30);
+	switch(legType){
+	case 0:
+		if(parentRotation < 0){
+			rotation = -10;
+		}
+		else if(parentRotation < 20){
+			rotation = -0.5*parentRotation - 10;
+		}
+		else if(parentRotation < 45){
+			rotation = 0.8*parentRotation - 36;
+		}
+		else{
+			rotation = 0.4*parentRotation - 18;
+		}
+		break;
+	case 1:
+		if(parentRotation < 10){
+			rotation = -(parentRotation + 60)/7;
+		}
+		else{
+			rotation = -(1.4*parentRotation - 4);
+		}
+		break;
+	}
+}
+
+void LionUnderLeg::draw()
+{
+	drawRectFill(-3,0, 6, 10);
+}
+
 Lion::Lion( GameObject* parent )
 	: GameObject( parent, Vector2( LION_DEFAULT, 310 ) )
 {
@@ -11,6 +93,8 @@ Lion::Lion( GameObject* parent )
 	lionJumpHeight = 0;
 	crash = 0;
 	walk_state = 0;
+	addChild( new LionLeg(this, Vector2(-30 + 41, 40), 0));
+	addChild( new LionLeg(this, Vector2(-30 + 10, 40), 1));
 }
 void Lion::update()
 {
@@ -41,7 +125,7 @@ void Lion::moveLion()
 	else
 		walk_state = 9;
 
-	if( walk_state > 40 )
+	if( walk_state > 120 )
 		walk_state = 0;
 
 	if( pos().x - 30 < 0 )
@@ -64,6 +148,7 @@ void Lion::jumpLion()
 			lionJumpSpeed = LION_JUMP_SPEED;
 		}
 	}
+	pos().y = 310 - lionJumpHeight;
 }
 void Lion::draw()
 {
@@ -99,125 +184,27 @@ void Lion::draw()
 		my_red = RED;
 	}
 	int head = 24;
-	if(walk_state < 10){
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 10, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 45, 5, 12 );
-		setColor(my_brown);
-		drawRectFill( -30 + 10, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 57, 8, 3 );
 		setColor(my_yellow);
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		drawRectFill( -30 + 19, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 45, 5, 15 );
+		drawRectFill( -30 + 8, 27, 41, 18 );
 		setColor(my_brown);
-		drawRectFill( -30 + 19, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
+		drawCircleFill( -30 + 39, head, 6);
+		drawCircleFill( -30 + 58,  head, 6);
+		drawCircleFill( -30 + 45, head-10, 6);
+		drawCircleFill( -30 + 53, head-10, 6);
+		drawCircleFill( -30 + 45, head+10, 6);
+		drawCircleFill( -30 + 53, head+10, 6);
 		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
+		drawCircleFill( -30 + 49, head, 9);
 		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
+		drawElipseFill( -30 + 53, head-3, 2, 5);
 		setColor(my_brown);
 		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 41, -30 + 9, -lionJumpHeight + 38);
-	}
-	else if(walk_state < 20){
-		head--;
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 16, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 37, -lionJumpHeight + 45, 5, 12 );
-		setColor(my_brown);
-		drawRectFill( -30 + 16, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 37, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow);
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		drawRectFill( -30 + 18, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 39, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 18, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 39, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 41, -30 + 9, -lionJumpHeight + 38);
-	}
-	else if(walk_state < 30){
-		setColor(my_yellow);
-		drawRectFill( -30 + 10, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		setColor(my_brown);
-		drawRectFill( -30 + 10, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 19, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 19, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 35, -30 + 9, -lionJumpHeight + 38);
-	}
-	else{
-		head++;
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 18, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 37, -lionJumpHeight + 45, 5, 12 );
-		setColor(my_brown);
-		drawRectFill( -30 + 15, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 34, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow);
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		drawRectFill( -30 + 15, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 34, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 18, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 39, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 35, -30 + 9, -lionJumpHeight + 38);
-	}
+		drawLine( -30 + 2, 41, -30 + 9, 38);
 	setColor(my_black);
-	drawRectFill( -30 + 45, -lionJumpHeight + head - 25, 10, 16 );
-	drawRectFill( -30 + 40, -lionJumpHeight + head - 11, 19, 3);
+	drawRectFill( -30 + 45, head - 25, 10, 16 );
+	drawRectFill( -30 + 40, head - 11, 19, 3);
 	setColor(my_red);
-	drawRectFill( -30 + 44, -lionJumpHeight + head - 14, 11, 2);
+	drawRectFill( -30 + 44, head - 14, 11, 2);
 	//drawRectFill( 30, -lionJumpHeight, 60, 60 );
 }
 void Lion::checkJars()
