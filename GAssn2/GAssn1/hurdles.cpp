@@ -85,7 +85,7 @@ RingFire::RingFire( GameObject* parent, Vector2& position, int color, double fir
 	: GameObject( parent, position ), fireScale( fireScale ), tick( tick ), derivation(derivation)
 {
 	addChild( new RingFireGraphic( this, color, 1 ) );
-	addChild( new RingFireGraphic( this, WHITE, 0.55 ) );
+	addChild( new RingFireGraphic( this, FIRE_BRIGHT, 0.55 ) );
 }
 void RingFire::update()
 {
@@ -106,13 +106,13 @@ RingLeft::RingLeft( GameObject* parent, float x )
 	float radX = 50 / 2;
 	float radY = 200 / 2;
 	float centerX = -25 + radX;
-	float centerY = 0 + radY;
-
+	float centerY = 0 + radY; 
     for(int k = 3*n; k > n; k--)
     {
         float circleX = centerX + radX * cos(k * PI/(2*n));
         float circleY = centerY + radY * sin(k * PI/(2*n));
-			addChild( new RingFire( this, Vector2(circleX, circleY), FIRE_RED, 0.70, rand()%30, 15));
+		
+		addChild( new RingFire( this, Vector2(circleX, circleY), FIRE_RED, 0.70, rand()%30, 15));
 	}
 }
 void RingLeft::update()
@@ -148,7 +148,7 @@ RingRight::RingRight( GameObject* parent, float x )
     {
         float circleX = centerX + radX * cos(k * PI/(2*n));
         float circleY = centerY + radY * sin(k * PI/(2*n));
-		addChild( new RingFire( this, Vector2(circleX, circleY), FIRE_RED, 0.85, rand()%30, -15));
+		addChild( new RingFire( this, Vector2(circleX, circleY), FIRE, 0.85, rand()%30, -15));
 	}
 }
 void RingRight::update()
