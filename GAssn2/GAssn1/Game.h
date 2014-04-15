@@ -16,6 +16,7 @@ public:
 	void specialUp( int key );
 	
 	int game_state;
+	int stage;
 	float camera;
 
 	bool keyLeft;
@@ -29,6 +30,7 @@ public:
 
 private:
 	void resetMap();
+	void stageUpMap();
 	GameObject* makeJars();
 	GameObject* makeRings();
 	

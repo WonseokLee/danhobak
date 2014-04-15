@@ -11,8 +11,21 @@ public:
 	void draw()
 	{
 		drawColor( TAN );
-
-		setColor( GREEN_DARK );
+		Game* game = static_cast<Game*>( getParent() );
+		switch(game->stage){
+		case 0:
+			setColor(LIME_GREEN);
+			break;
+		case 1:
+			setColor(GREEN_DARK);
+			break;
+		case 2:
+			setColor(BLUE);
+			break;
+		case 3:
+			setColor(BLUE_VIOLET);
+			break;
+		}
 		drawRectFill( 0, 110, 11000, 370 );
 
 		setColor( YELLOW );

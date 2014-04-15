@@ -23,12 +23,39 @@ void HelpText::update()
 }
 void HelpText::draw()
 {
-	setColor( BLACK );
+	
 	Game* parent = static_cast<Game*>( getAncestor() );
+	switch(parent->stage){
+		case 0:
+			setColor( BLACK );
+			break;
+		case 1:
+			setColor( WHITE );
+			break;
+		case 2:
+			setColor( WHITE );
+			break;
+		case 3:
+			setColor( YELLOW );
+			break;
+		}
 	switch(parent->game_state){
 	case GAME_START:
+		switch(parent->stage){
+		case 0:
+			drawString( 0, 20, "Stage 1. Press 'F1' to start");
+			break;
+		case 1:
+			drawString( 0, 20, "Stage 2. Press 'F1' to start");
+			break;
+		case 2:
+			drawString( 0, 20, "Stage 3. Press 'F1' to start");
+			break;
+		case 3:
+			drawString( 0, 20, "Stage 4. Press 'F1' to start");
+			break;
+		}
 		drawString( 0, 0, "===================");
-		drawString( 0, 20, "Press 'F1' to start");
 		drawString( 0, 40, "===================");
 		break;
 	case GAME_ING:
@@ -38,8 +65,24 @@ void HelpText::draw()
 		break;
 	case GAME_CLEAR:
 		drawString( 0, 0, "-------------------");
-		drawString( 0, 20, "GAME CLEAR!");
-		drawString( 0, 40, "Press 'F1' to retry");
+		switch(parent->stage){
+		case 0:
+			drawString( 0, 20, "Stage 1 Clear!");
+			drawString( 0, 40, "Press 'F1' to go to next stage");
+			break;
+		case 1:
+			drawString( 0, 20, "Stage 2 Clear!");
+			drawString( 0, 40, "Press 'F1' to go to next stage");
+			break;
+		case 2:
+			drawString( 0, 20, "Stage 3 Clear!");
+			drawString( 0, 40, "Press 'F1' to go to next stage");
+			break;
+		case 3:
+			drawString( 0, 20, "GAME CLEAR!");
+			drawString( 0, 40, "Press 'F1' to retry");
+			break;
+		}
 		drawString( 0, 60, "-------------------");
 		break;
 	case GAME_OVER:

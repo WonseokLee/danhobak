@@ -55,7 +55,7 @@ void Game::specialUp( int key )
 void Game::resetMap()
 {
 	deleteChildren();
-
+	stage = 0;
 	addChild( new BG( this ) );
 	addChild( new LifeContainer( this ) );
 	addChild( new HelpText( this ) );
@@ -69,11 +69,53 @@ void Game::resetMap()
 	camera = CAMERA_DEFAULT;
 	game_state = GAME_START;
 }
+
+void Game::stageUpMap()
+{
+	deleteChildren();
+
+	addChild( new BG( this ) );
+	addChild( new LifeContainer( this ) );
+	addChild( new HelpText( this ) );
+	stage++;
+	if(stage > 3)
+		stage = 0;
+	jarLayer = makeJars();
+	addChild( jarLayer );
+	ringLayer = makeRings();
+	lion = new Lion( this );
+	addChild( lion );
+	addChild( ringLayer );
+
+	camera = CAMERA_DEFAULT;
+	game_state = GAME_START;
+}
+
 GameObject* Game::makeJars()
 {
 	GameObject* jarLayer = new GameObject( this, Vector2( 0, 370 ) );
 
 	float currentDistance = JAR_GEN_MIN;
+	float JAR_DIST_MIN = 0;
+	float JAR_DIST_MAX = 0;
+	switch(stage){
+	case 0:
+		JAR_DIST_MIN = JAR_DIST_MIN_0;
+		JAR_DIST_MAX = JAR_DIST_MAX_0;
+		break;
+	case 1:
+		JAR_DIST_MIN = JAR_DIST_MIN_1;
+		JAR_DIST_MAX = JAR_DIST_MAX_1;
+		break;
+	case 2:
+		JAR_DIST_MIN = JAR_DIST_MIN_2;
+		JAR_DIST_MAX = JAR_DIST_MAX_2;
+		break;
+	case 3:
+		JAR_DIST_MIN = JAR_DIST_MIN_3;
+		JAR_DIST_MAX = JAR_DIST_MAX_3;
+		break;
+	}
 	while(currentDistance < JAR_GEN_MAX){
 		jarLayer->addChild( new Jar(jarLayer, currentDistance) );
 		currentDistance += (float)((JAR_DIST_MAX - JAR_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + JAR_DIST_MIN);
@@ -87,6 +129,26 @@ GameObject* Game::makeRings()
 	addChild( ringLayerLeft );
 
 	float currentDistance = JAR_GEN_MIN;
+	float RING_DIST_MIN = 0;
+	float RING_DIST_MAX = 0;
+	switch(stage){
+	case 0:
+		RING_DIST_MIN = RING_DIST_MIN_0;
+		RING_DIST_MAX = RING_DIST_MAX_0;
+		break;
+	case 1:
+		RING_DIST_MIN = RING_DIST_MIN_1;
+		RING_DIST_MAX = RING_DIST_MAX_1;
+		break;
+	case 2:
+		RING_DIST_MIN = RING_DIST_MIN_2;
+		RING_DIST_MAX = RING_DIST_MAX_2;
+		break;
+	case 3:
+		RING_DIST_MIN = RING_DIST_MIN_3;
+		RING_DIST_MAX = RING_DIST_MAX_3;
+		break;
+	}
 	while(currentDistance < RING_GEN_MAX){
 		currentDistance += (float)((RING_DIST_MAX - RING_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + RING_DIST_MIN);
 		ringLayerLeft->addChild( new RingLeft(ringLayerLeft, currentDistance) );
@@ -111,10 +173,17 @@ void Game::moveState()
 			game_state = GAME_OVER;
 		break;
 	case GAME_OVER:
-	case GAME_CLEAR:
 		if( keyF1 )
 		{
 			resetMap();
+			game_state = GAME_START;
+			keyF1 = false;
+		}
+		break;
+	case GAME_CLEAR:
+		if( keyF1 )
+		{
+			stageUpMap();
 			game_state = GAME_START;
 			keyF1 = false;
 		}

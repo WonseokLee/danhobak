@@ -27,16 +27,28 @@ const int JAR_GEN_MIN = 700;
 const int JAR_GEN_MAX = FINISH - 100;
 
 const int JAR_HEIGHT = 30;
-const int JAR_DIST_MIN = 400;
-const int JAR_DIST_MAX = 700;
+const int JAR_DIST_MIN_0 = 400;
+const int JAR_DIST_MAX_0 = 700;
+const int JAR_DIST_MIN_1 = 350;
+const int JAR_DIST_MAX_1 = 650;
+const int JAR_DIST_MIN_2 = 300;
+const int JAR_DIST_MAX_2 = 600;
+const int JAR_DIST_MIN_3 = 250;
+const int JAR_DIST_MAX_3 = 550;
 
 const int RING_TOP = 180;
 const int RING_BOTTOM = 50;
 const int RING_GEN_MIN = 1000;
 const int RING_GEN_MAX = FINISH + 1000;
 
-const int RING_DIST_MIN = 320;
-const int RING_DIST_MAX = 640;
+const int RING_DIST_MIN_0 = 320;
+const int RING_DIST_MAX_0 = 640;
+const int RING_DIST_MIN_1 = 280;
+const int RING_DIST_MAX_1 = 600;
+const int RING_DIST_MIN_2 = 240;
+const int RING_DIST_MAX_2 = 560;
+const int RING_DIST_MIN_3 = 200;
+const int RING_DIST_MAX_3 = 520;
 
 const int RING_REMOVE = -100;
 const int RING_REGEN = RING_GEN_MAX + RING_REMOVE;

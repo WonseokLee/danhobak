@@ -97,7 +97,7 @@ void RingFire::draw()
 RingLeft::RingLeft( GameObject* parent, float x )
 	: GameObject( parent, Vector2( x, 0 ) )
 {
-	const int n = 9;
+	const int n = 5;
 	const float PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899348253421170679f;
 	float radX = 50 / 2;
 	float radY = 180 / 2;
@@ -108,9 +108,7 @@ RingLeft::RingLeft( GameObject* parent, float x )
     {
         float circleX = centerX + radX * cos(k * PI/(2*n));
         float circleY = centerY + radY * sin(k * PI/(2*n));
-			addChild( new RingFire( this, Vector2(circleX, circleY), FIRE_RED, 0.55, rand()%60, 30));
-	
-		
+			addChild( new RingFire( this, Vector2(circleX, circleY), FIRE_RED, 0.70, rand()%60, 30));
 	}
 	/*
 	for(int k = 2*n; k < 3*n; k++)
@@ -143,7 +141,7 @@ void RingLeft::draw()
 RingRight::RingRight( GameObject* parent, float x )
 	: GameObject( parent, Vector2( x, 0 ) )
 {
-	const int n = 9;
+	const int n = 5;
 	const float PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899348253421170679f;
 	float radX = 50 / 2;
 	float radY = 180 / 2;
@@ -154,9 +152,7 @@ RingRight::RingRight( GameObject* parent, float x )
     {
         float circleX = centerX + radX * cos(k * PI/(2*n));
         float circleY = centerY + radY * sin(k * PI/(2*n));
-			addChild( new RingFire( this, Vector2(circleX, circleY), FIRE, 0.55, rand()%60, -30));
-
-		
+		addChild( new RingFire( this, Vector2(circleX, circleY), FIRE, 0.85, rand()%60, -30));
 	}
 }
 void RingRight::update()
