@@ -11,6 +11,8 @@ public:
 	Vector2( double x, double y );
 	Vector2& operator=( Vector2& );
 
+	float size();
+
 	friend Vector2 operator+( Vector2&, Vector2& );
 	friend Vector2 operator+=( Vector2&, Vector2& );
 	friend Vector2 operator-( Vector2&, Vector2& );

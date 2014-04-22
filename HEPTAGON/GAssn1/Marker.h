@@ -14,5 +14,5 @@ protected:
 	Game* getParent();
 
 private:
-	bool leftKeyHidden;
+	bool leftKey;
 };

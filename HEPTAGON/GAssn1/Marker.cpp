@@ -5,23 +5,28 @@
 Marker::Marker( GameObject* parent )
 	: GameObject( parent )
 {
-	leftKeyHidden = false;
+	leftKey = false;
 }
 void Marker::update()
 {
 	Game* game = getParent();
 
-	if( game->keyLeft && !game->keyRight ||
-		game->keyLeft && game->keyRight && !leftKeyHidden )
+	if( game->keyLeft && !game->keyRight )
 	{
-		leftKeyHidden = false;
+		leftKey = true;
 		rotation -= 10;
 	}
-	if( game->keyRight && !game->keyLeft ||
-		game->keyRight && game->keyLeft && leftKeyHidden )
+	if( game->keyRight && !game->keyLeft )
 	{
-		leftKeyHidden = true;
+		leftKey = false;
 		rotation += 10;
+	}
+	if( game->keyLeft && game->keyRight )
+	{
+		if( leftKey )
+			rotation += 10;
+		else
+			rotation -= 10;
 	}
 	if( rotation < 0 )
 		rotation += 360;
@@ -41,7 +46,7 @@ void Marker::draw()
 int Marker::getLane()
 {
 	double r = rotation;
-	r = r + 210;
+	r = r + 30;
 	return ( int(r) % 360 ) / 60;
 }
 Game* Marker::getParent()

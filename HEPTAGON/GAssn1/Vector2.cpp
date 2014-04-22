@@ -1,4 +1,5 @@
 #include "Vector2.h"
+#include <cmath>
 
 Vector2::Vector2()
 {
@@ -12,6 +13,10 @@ Vector2::Vector2( double x, double y )
 {
 	this->x = (float)x;
 	this->y = (float)y;
+}
+float Vector2::size()
+{
+	return sqrt(x*x+y*y);
 }
 Vector2& Vector2::operator=( Vector2& other )
 {

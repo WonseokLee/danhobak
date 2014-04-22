@@ -36,11 +36,15 @@ public:
 	int bgColor;
 	int bgColor2;
 	int foreColor;
+	int foreColor2;
 	
 private:
+	void setSpeed();
 	void setCamera();
 	void showScore();
+	void setDifficulty();
 
+	float difficulty;
 	float bgHue;
 	float speedTick;
 	float nowSpeed;

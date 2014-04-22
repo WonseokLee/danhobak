@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "frame.h"
 #include "Game.h"
+#include <cmath>
 
 Block::Block( GameObject* parent, int lane, float z )
 	: GameObject( parent )
@@ -21,13 +22,16 @@ void Block::draw()
 	if( z < 0 )
 		return;
 
+	float thick = 1 + 36/scale.size()*sqrt(2.f);
+
 	setColor( getParent()->foreColor );
 	drawBegin( GL_POLYGON );
-	drawVertex2f( -0.57735f, 1.0f );
-	drawVertex2f( +0.57735f, 1.0f );
-	drawVertex2f( +1.2f * 0.57735f, 1.2f );
-	drawVertex2f( -1.2f * 0.57735f, 1.2f );
+	drawVertex2f( -0.57735f, -1.0f );
+	drawVertex2f( +0.57735f, -1.0f );
+	drawVertex2f( +thick* 0.57735f, -thick );
+	drawVertex2f( -thick* 0.57735f, -thick );
 	drawEnd();
+	
 }
 Game* Block::getParent()
 {

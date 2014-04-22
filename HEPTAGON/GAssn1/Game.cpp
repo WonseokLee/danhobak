@@ -6,9 +6,11 @@
 #include "Obstacle.h"
 #include "CenterBlock.h"
 
+//#define DIFFICULTY_MAX
+
 Game::Game()
 {
-	setWindowTitle( "HEPTAGON" );
+	setWindowTitle( "0x06" );
 
 	srand((unsigned)time(NULL));
 	
@@ -22,16 +24,14 @@ void Game::initialize()
 {
 	bgHue = 0;
 	z = 0;
-	speedTick = 0;
 	nowSpeed = 0;
 	smoothSpeed = 0;
 	viewRot = 0;
 	viewRotSpeed = 0;
-	viewRotTick = 0;
 	centerBase = 0;
-	centerBaseTick = 0;
-	base = 60;
+	base = 36;
 	highScore = 0;
+	difficulty = 0;
 
 	position = Vector2( SCREEN_WIDTH/2, SCREEN_HEIGHT/2 );
 
@@ -42,14 +42,17 @@ void Game::initialize()
 void Game::newGame()
 {
 	z = 0;
+	speedTick = 0;
+	viewRotTick = 0;
+	centerBaseTick = 0;
 
 	popChild( marker );
 
 	obstacles.clear();
 	deleteChildren();
 
-	float z = 600.f;
-	for( int i = 0; i < 100; i++ )
+	float z = 500.f;
+	for( int i = 0; i < 200; i++ )
 	{
 		makeObstacles( z );
 	}
@@ -57,7 +60,7 @@ void Game::newGame()
 		addChild( new CenterBlock( this, k ) );
 	addChild( marker );
 	
-	textScore = new Text( this, Vector2( SCREEN_WIDTH/2 - 140, SCREEN_HEIGHT/2 - 20 ) );
+	textScore = new Text( this, Vector2( SCREEN_WIDTH/2 - 160, SCREEN_HEIGHT/2 - 20 ) );
 	textHigh =  new Text( this, Vector2( -SCREEN_WIDTH/2 + 20, SCREEN_HEIGHT/2 - 20 ) );
 	addChild( textScore );
 	addChild( textHigh );
@@ -68,12 +71,12 @@ void Game::makeObstacles( float& z )
 {
 	int k, r, d;
 	
-	switch( rand() % 3 )
+	switch( rand() % 6 )
 	{
 	case 0:
 		z += 40;
 		k = rand() % 2;
-		r = rand() % 4 + 4;
+		r = rand() % 4 + 3;
 		for( int i = 0; i < r; i++ )
 		{
 			z += 60;
@@ -94,14 +97,14 @@ void Game::makeObstacles( float& z )
 			z += 40;
 			newObstacle( 3+k, z );
 			newObstacle( 0+k, z );
-			k = (k + d +6) % 6;
+			k = (k + d + 6) % 6;
 			z += 40;
 		}
 		break;
 	case 2:
 		z += 40;
 		k = rand() % 6;
-		r = rand() % 4 + 2;
+		r = rand() % 3 + 2;
 		for( int i = 0; i < r; i++ )
 		{
 			z += 80;
@@ -111,6 +114,55 @@ void Game::makeObstacles( float& z )
 			k = (k + 3) % 6;
 			z += 80;
 		}
+		break;
+	case 3:
+		z += 60;
+		d = (rand() % 2) * 2 - 1;
+		k = rand() % 6;
+		r = rand() % 2 + 3;
+		for( int i = 0; i < r; i++ )
+		{
+			z += 60;
+			for( int lane = 0; lane < 6; lane++ )
+			if( k != lane )
+				newObstacle( lane, z );
+			k = (k + d + 6) % 6;
+			d *= -1;
+			z += 60;
+		}
+		break;
+	case 4:
+		z += 60;
+		d = (rand() % 2) * 2 - 1;
+		k = rand() % 3;
+		r = rand() % 4 + 3;
+		for( int i = 0; i < r; i++ )
+		{
+			z += 60;
+			newObstacle( 0+k, z );
+			newObstacle( 1+k, z );
+			newObstacle( 3+k, z );
+			newObstacle( 4+k, z );
+			k = (k + d + 6) % 6;
+			z += 60;
+		}
+		break;
+	case 5:
+		z += 60;
+		d = (rand() % 2) * 2 - 1;
+		k = rand() % 6;
+		r = rand() % 4 + 3;
+		for( int i = 0; i < r; i++ )
+		{
+			z += 30;
+			newObstacle( 0+k, z );
+			newObstacle( 1+k, z );
+			newObstacle( 2+k, z );
+			newObstacle( 3+k, z );
+			k = (k + d + 6) % 6;
+			z += 30;
+		}
+		z += 30;
 		break;
 	}
 }
@@ -126,15 +178,38 @@ Game::~Game()
 }
 void Game::update()
 {
+	setDifficulty();
 	setCamera();
 	showScore();
+	setSpeed();
 	checkCollision();
+	
+	centerBaseTick += 0.3f * difficulty;
+	centerBase = ( 1 + sin(float(rand()))) * sin(centerBaseTick) * 5;
 
-	z += 4;
-
-	bgHue += 0.1f;
+	bgHue += 0.1f * difficulty * difficulty * difficulty;
 	if( bgHue > 2*PI )
 		bgHue -= 2*PI;
+}
+void Game::setDifficulty()
+{
+#ifdef DIFFICULTY_MAX
+	difficulty = 1.f;
+	return;
+#endif
+	int ms = GetTickCount()-begin;
+	if( ms < 6000 )
+		difficulty = 0.5f;
+	else if( ms < 36000)
+	{
+		difficulty = (ms-6000) * 0.5f / 30000 + 0.5f;
+	}
+	else
+		difficulty = 1.f;
+}
+void Game::setSpeed()
+{
+	z += 4 * difficulty;
 
 	if( smoothSpeed > nowSpeed )
 		smoothSpeed -= 0.6f;
@@ -146,23 +221,24 @@ void Game::update()
 
 	if( --speedTick <= 0 )
 	{
-		speedTick = 60;
+		speedTick = 60 / difficulty;
 		int rotateDirection = rand()%2 ? 1 : -1;
 		nowSpeed = rotateDirection * 6 + sin(float(rand()));
+		nowSpeed *= difficulty * difficulty * difficulty * difficulty;
 	}
-	if( --viewRotTick <= 60 )
+	if( --viewRotTick <= 0 )
 	{
-		viewRotTick = 60;
-		viewRotSpeed = sin(float(rand())) * 0.1f;
+		viewRotTick = 60 / difficulty;
+		int rotateDirection = rand()%2 ? 1 : -1;
+		viewRotSpeed = rotateDirection * 0.04f + sin(float(rand())) * 0.01f;
+		viewRotSpeed *= difficulty * difficulty * difficulty;
 	}
 	viewRot += viewRotSpeed;
-	centerBaseTick += 0.3f;
-	centerBase = ( 1 + sin(float(rand()))) * sin(centerBaseTick) * 3;
 }
 void Game::setCamera()
 {
 	float theta = PI + viewRot;
-	float phi = 16.f;
+	float phi = 15.f * difficulty * difficulty;
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
 	gluPerspective( 60, 1, 0, SCREEN_HEIGHT*2 );
@@ -171,23 +247,27 @@ void Game::setCamera()
 }
 void Game::showScore()
 {
-	char a[100], b[100], c[3], d[3];
+	char a[10], b[10], c[3], d[3];
 	DWORD score = GetTickCount()-begin;
 	if( score > highScore )
 		highScore = score;
-	_itoa_s( score/1000, a, 10 );
-	_itoa_s( highScore/1000, b, 10 );
-	_itoa_s( (score/10%100), c, 10 );
-	_itoa_s( (highScore/10%100), d, 10 );
-	textScore->setText( std::string("SCORE: ") + a + "." + c );
-	textHigh->setText( std::string("HIGH: ") + b + "." + d );
+	_itoa_s( score/1000, a, 16 );
+	_itoa_s( highScore/1000, b, 16 );
+	_itoa_s( (score*256/1000%256), c, 16 );
+	_itoa_s( (highScore*256/1000%256), d, 16 );
+	_strupr_s( (char*)a, 10 );
+	_strupr_s( (char*)b, 10 );
+	_strupr_s( (char*)c, 3 );
+	_strupr_s( (char*)d, 3 );
+	textScore->setText( std::string("SCORE: 0x") + (score<10000?"0":"") + a + "." + c );
+	textHigh->setText( std::string("HIGH: 0x") + (highScore<10000?"0":"")  + b + "." + d );
 }
 void Game::checkCollision()
 {
 	for( auto obstacleIter = obstacles.begin(); obstacleIter != obstacles.end(); ++obstacleIter )
 	{
 		auto obstacle = static_cast<Obstacle*>( *obstacleIter );
-		if( obstacle->z < 27 && obstacle->bluffable )
+		if( obstacle->z < 50 && obstacle->bluffable )
 		{
 			int lane = marker->getLane();
 			if( obstacle->lane == lane )
@@ -207,6 +287,7 @@ void Game::draw()
 	bgColor = HSIToRGB( bgHue, 1.f, 0.6f );
 	bgColor2 = HSIToRGB( bgHue, 1.f, 0.55f );
 	foreColor = HSIToRGB( bgHue, 0.3f, 2.f );
+	foreColor2 = HSIToRGB( bgHue, 1.f, 0.4f );
 	drawColor( bgColor );
 	
 	setColor( bgColor2 );
