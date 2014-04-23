@@ -72,7 +72,7 @@ void Game::makeObstacles( float& z )
 {
 	int k, r, d;
 	
-	switch( rand() % 6 )
+	switch( rand() % 10 )
 	{
 	case 0:
 		z += 40;
@@ -96,8 +96,8 @@ void Game::makeObstacles( float& z )
 		for( int i = 0; i < r; i++ )
 		{
 			z += 40;
-			newObstacle( 0+k, z, 80 );
-			newObstacle( 3+k, z, 80 );
+			newObstacle( 0+k, z );
+			newObstacle( 3+k, z );
 			k = (k + d + 6) % 6;
 			z += 40;
 		}
@@ -118,16 +118,16 @@ void Game::makeObstacles( float& z )
 		}
 		break;
 	case 3:
-		z += 40;
+		z += 60;
 		d = (rand() % 2) * 2 - 1;
 		k = rand() % 6;
 		r = rand() % 3 + 6;
 		for( int i = 0; i < r; i++ )
 		{
 			z += 30;
-			newObstacle( 0+k, z, 60 );
-			newObstacle( 1+k, z, 60 );
-			newObstacle( 2+k, z, 60 );
+			newObstacle( 0+k, z );
+			newObstacle( 1+k, z );
+			newObstacle( 2+k, z );
 			k = (k + d + 6) % 6;
 			z += 30;
 		}
@@ -150,21 +150,93 @@ void Game::makeObstacles( float& z )
 		}
 		break;
 	case 5:
-		z += 60;
+		z += 80;
 		d = (rand() % 2) * 2 - 1;
 		k = rand() % 6;
 		r = rand() % 3 + 6;
 		for( int i = 0; i < r; i++ )
 		{
 			z += 40;
-			newObstacle( 0+k, z, 80 );
-			newObstacle( 1+k, z, 80 );
-			newObstacle( 2+k, z, 80 );
-			newObstacle( 3+k, z, 80 );
+			newObstacle( 0+k, z );
+			newObstacle( 1+k, z );
+			newObstacle( 2+k, z );
+			newObstacle( 3+k, z );
 			k = (k + d + 6) % 6;
 			z += 40;
 		}
 		z += 60;
+		break;
+	case 6:
+		z += 60;
+		d = (rand() % 2) * 2 - 1;
+		k = rand() % 3;
+		r = rand() % 10 + 5;
+		for( int i = 0; i < r; i++ )
+		{
+			z += 20;
+			newObstacle( 0+k, z, 40 );
+			newObstacle( 3+k, z, 40 );
+			k = (k + d + 6) % 6;
+			z += 20;
+		}
+		z += 60;
+		break;
+	case 7:
+		z += 60;
+		d = (rand() % 2) * 2 - 1;
+		k = rand() % 6;
+		r = rand() % 6 + 6;
+		for( int i = 0; i < r; i++ )
+		{
+			z += 20;
+			newObstacle( 0+k, z, 40 );
+			newObstacle( 1+k, z, 40 );
+			newObstacle( 2+k, z, 40 );
+			k = (k + d + 6) % 6;
+			z += 20;
+		}
+		z += 60;
+		break;
+	case 8:
+		z += 80;
+		d = (rand() % 2) * 2 - 1;
+		k = rand() % 6;
+		r = rand() % 6 + 6;
+		for( int i = 0; i < r; i++ )
+		{
+			z += 20;
+			newObstacle( 0+k, z, 40 );
+			newObstacle( 1+k, z, 40);
+			newObstacle( 2+k, z, 40 );
+			newObstacle( 3+k, z, 40 );
+			k = (k + d + 6) % 6;
+			z += 20;
+		}
+		z += 60;
+	case 9:
+		z += 40;
+		d = rand() % 2;
+		k = rand() % 6;
+		r = rand() % 3 + 2;
+		for( int i = 0; i < r; i++ )
+		{
+			float thick = BLOCK_SCALE;
+			if( i != r-1 )
+				thick = 200.f;
+
+			z += 100;
+			newObstacle( 0+k, z, thick );
+			if( d ){
+				newObstacle( 1+k, z );
+			}else{
+				newObstacle( 5+k, z );
+			}
+			newObstacle( 2+k, z );
+			newObstacle( 3+k, z );
+			newObstacle( 4+k, z );
+			d = !d;
+			z += 100;
+		}
 		break;
 	}
 }
@@ -273,17 +345,17 @@ void Game::showScore()
 	_strupr_s( (char*)b, 10 );
 	_strupr_s( (char*)c, 3 );
 	_strupr_s( (char*)d, 3 );
-	textScore->setText( std::string("SCORE: 0x") + (score<16000?"0":"") + a + "." + c );
-	textHigh->setText( std::string("HIGH: 0x") + (highScore<16000?"0":"")  + b + "." + d );
+	textScore->setText( std::string("SCORE: 0x") + (score<16000?"0":"") + a + "." + c + (c[1]=='\0'?"0":"") );
+	textHigh->setText( std::string("HIGH: 0x") + (highScore<16000?"0":"")  + b + "." + d + (d[1]=='\0'?"0":"") );
 }
 void Game::checkCollision()
 {
+	int lane = marker->getLane();
 	for( auto obstacleIter = obstacles.begin(); obstacleIter != obstacles.end(); ++obstacleIter )
 	{
 		auto obstacle = static_cast<Obstacle*>( *obstacleIter );
 		if( obstacle->z < 54/speedMultiplier && obstacle->bluffable )
 		{
-			int lane = marker->getLane();
 			if( obstacle->lane == lane )
 			{
 				newGame();

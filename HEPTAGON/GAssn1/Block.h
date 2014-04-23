@@ -5,7 +5,7 @@ class Game;
 class Block : public GameObject
 {
 public:
-	Block( GameObject* parent, int lane, float z, int thick );
+	Block( GameObject* parent, int lane, float z, float thick );
 	void update();
 	void draw();
 

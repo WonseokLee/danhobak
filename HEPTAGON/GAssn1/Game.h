@@ -38,6 +38,7 @@ public:
 	int bgColor2;
 	int foreColor;
 	int foreColor2;
+	vector<GameObject*> obstacles;
 	
 private:
 	void setSpeed();
@@ -58,7 +59,6 @@ private:
 	Marker* marker;
 	Text* textScore;
 	Text* textHigh;
-	vector<GameObject*> obstacles;
 	DWORD begin;
 	DWORD highScore;
 

@@ -3,9 +3,9 @@
 #include "Game.h"
 #include <cmath>
 
-Block::Block( GameObject* parent, int lane, float z, int thick )
+Block::Block( GameObject* parent, int lane, float z, float thick )
 	: GameObject( parent )
-	, z( z ), thick( (float)thick )
+	, z( z ), thick( thick )
 {
 	rotation = 360 * lane / 6.f;
 	while( lane < 0 )

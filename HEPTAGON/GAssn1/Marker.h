@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Obstacle.h"
 
 class Game;
 class Marker : public GameObject
@@ -14,5 +15,9 @@ protected:
 	Game* getParent();
 
 private:
+	void checkWall();
+	void checkObstacle( Obstacle* obstacle, int lane );
+
 	bool leftKey;
+	double lastRot;
 };

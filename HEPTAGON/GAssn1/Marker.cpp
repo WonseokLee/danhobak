@@ -7,6 +7,7 @@ Marker::Marker( GameObject* parent )
 {
 	leftKey = false;
 	rotation = CURSOR_SPEED / 2;
+	lastRot = rotation;
 }
 void Marker::update()
 {
@@ -33,6 +34,38 @@ void Marker::update()
 		rotation += 360;
 	if( 360 <= rotation )
 		rotation -= 360;
+
+	checkWall();
+
+	lastRot = rotation;
+}
+void Marker::checkWall()
+{
+	auto& obstacles = getParent()->obstacles;
+	auto lane = getLane();
+	
+	for each( auto obstacleObject in obstacles )
+	{
+		auto obstacle = static_cast<Obstacle*>( obstacleObject );
+		checkObstacle(obstacle, lane);
+	}
+}
+void Marker::checkObstacle( Obstacle* obstacle, int lane )
+{
+	auto speedMultiplier = getParent()->speedMultiplier;
+	if( obstacle->z < 54/speedMultiplier )
+	if( obstacle->z >= (54-obstacle->thick)/speedMultiplier )
+	{
+		obstacle -> lastBlockable = true;
+		if( obstacle->lane == lane )
+			rotation = lastRot;
+	}
+	else if( obstacle->lastBlockable )
+	{
+		obstacle->lastBlockable = false;
+		if( obstacle->lane == lane )
+			rotation = lastRot;
+	}
 }
 void Marker::draw()
 {
