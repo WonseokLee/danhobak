@@ -21,7 +21,7 @@ public:
 	void initialize();
 	void newGame();
 	void checkCollision();
-	void newObstacle( int lane, float z );
+	void newObstacle( int lane, float z, float thick = BLOCK_SCALE );
 
 	bool keyLeft;
 	bool keyRight;
@@ -32,6 +32,7 @@ public:
 	
 	float centerBase;
 	float centerBaseTick;
+	float speedMultiplier;
 
 	int bgColor;
 	int bgColor2;

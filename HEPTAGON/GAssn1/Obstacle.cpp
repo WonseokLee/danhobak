@@ -2,8 +2,8 @@
 #include "frame.h"
 #include "Game.h"
 
-Obstacle::Obstacle( GameObject* parent, int lane, float z )
-	: Block( parent, lane, z )
+Obstacle::Obstacle( GameObject* parent, int lane, float z, int thick )
+	: Block( parent, lane, z, thick )
 	, startZ( z ), bluffable( true )
 {
 }

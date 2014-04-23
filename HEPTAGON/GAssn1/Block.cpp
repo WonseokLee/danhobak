@@ -3,9 +3,9 @@
 #include "Game.h"
 #include <cmath>
 
-Block::Block( GameObject* parent, int lane, float z )
+Block::Block( GameObject* parent, int lane, float z, int thick )
 	: GameObject( parent )
-	, z( z )
+	, z( z ), thick( (float)thick )
 {
 	rotation = 360 * lane / 6.f;
 	while( lane < 0 )
@@ -15,23 +15,28 @@ Block::Block( GameObject* parent, int lane, float z )
 }
 void Block::update()
 {
-	scale = Vector2( z + getParent()->base );
+	//Game* game = getParent();
+	//scale = Vector2( z * game->speedMultiplier + game->base );
 }
 void Block::draw()
 {
-	if( scale.x < 0 )
+	Game* game = getParent();
+	float scale = z * game->speedMultiplier + game->base;
+	float scale2 = (z+thick) * game->speedMultiplier + game->base;
+	if( scale < game->base )
+		scale = game->base;
+	if( scale2 < game->base )
 		return;
-
-	float thick = 1 + 36/scale.size()*sqrt(2.f);
 
 	setColor( getParent()->foreColor );
 	drawBegin( GL_POLYGON );
-	drawVertex2f( -0.57735f, -1.0f );
-	drawVertex2f( +0.57735f, -1.0f );
-	drawVertex2f( +thick* 0.57735f, -thick );
-	drawVertex2f( -thick* 0.57735f, -thick );
+
+	drawVertex2f( -0.57735f * scale, -1.0f * scale );
+	drawVertex2f( +0.57735f * scale, -1.0f * scale );
+	drawVertex2f( +0.57735f * scale2, -1.0f * scale2 );
+	drawVertex2f( -0.57735f * scale2, -1.0f * scale2 );
+
 	drawEnd();
-	
 }
 Game* Block::getParent()
 {

@@ -29,7 +29,8 @@ void Game::initialize()
 	viewRot = 0;
 	viewRotSpeed = 0;
 	centerBase = 0;
-	base = 36;
+	base = CENTER_SIZE;
+	speedMultiplier = 1.f;
 	highScore = 0;
 	difficulty = 0;
 
@@ -51,7 +52,7 @@ void Game::newGame()
 	obstacles.clear();
 	deleteChildren();
 
-	float z = 500.f;
+	float z = BLOCK_START;
 	for( int i = 0; i < 200; i++ )
 	{
 		makeObstacles( z );
@@ -91,15 +92,16 @@ void Game::makeObstacles( float& z )
 		z += 40;
 		d = (rand() % 2) * 2 - 1;
 		k = rand() % 3;
-		r = rand() % 4 + 4;
+		r = rand() % 4 + 5;
 		for( int i = 0; i < r; i++ )
 		{
 			z += 40;
-			newObstacle( 3+k, z );
-			newObstacle( 0+k, z );
+			newObstacle( 0+k, z, 80 );
+			newObstacle( 3+k, z, 80 );
 			k = (k + d + 6) % 6;
 			z += 40;
 		}
+		z += 40;
 		break;
 	case 2:
 		z += 40;
@@ -116,26 +118,26 @@ void Game::makeObstacles( float& z )
 		}
 		break;
 	case 3:
-		z += 60;
+		z += 40;
 		d = (rand() % 2) * 2 - 1;
 		k = rand() % 6;
-		r = rand() % 2 + 3;
+		r = rand() % 3 + 6;
 		for( int i = 0; i < r; i++ )
 		{
-			z += 60;
-			for( int lane = 0; lane < 6; lane++ )
-			if( k != lane )
-				newObstacle( lane, z );
+			z += 30;
+			newObstacle( 0+k, z, 60 );
+			newObstacle( 1+k, z, 60 );
+			newObstacle( 2+k, z, 60 );
 			k = (k + d + 6) % 6;
-			d *= -1;
-			z += 60;
+			z += 30;
 		}
+		z += 20;
 		break;
 	case 4:
 		z += 60;
 		d = (rand() % 2) * 2 - 1;
 		k = rand() % 3;
-		r = rand() % 4 + 3;
+		r = rand() % 3 + 3;
 		for( int i = 0; i < r; i++ )
 		{
 			z += 60;
@@ -151,24 +153,24 @@ void Game::makeObstacles( float& z )
 		z += 60;
 		d = (rand() % 2) * 2 - 1;
 		k = rand() % 6;
-		r = rand() % 4 + 3;
+		r = rand() % 3 + 6;
 		for( int i = 0; i < r; i++ )
 		{
-			z += 30;
-			newObstacle( 0+k, z );
-			newObstacle( 1+k, z );
-			newObstacle( 2+k, z );
-			newObstacle( 3+k, z );
+			z += 40;
+			newObstacle( 0+k, z, 80 );
+			newObstacle( 1+k, z, 80 );
+			newObstacle( 2+k, z, 80 );
+			newObstacle( 3+k, z, 80 );
 			k = (k + d + 6) % 6;
-			z += 30;
+			z += 40;
 		}
-		z += 30;
+		z += 60;
 		break;
 	}
 }
-void Game::newObstacle( int lane, float z )
+void Game::newObstacle( int lane, float z, float thick )
 {
-	Obstacle* obstacle = new Obstacle( this, lane, z );
+	Obstacle* obstacle = new Obstacle( this, lane, z, thick );
 	obstacles.push_back( obstacle );
 	addChild( obstacle );
 }
@@ -199,13 +201,25 @@ void Game::setDifficulty()
 #endif
 	int ms = GetTickCount()-begin;
 	if( ms < 6000 )
+	{
 		difficulty = 0.5f;
+		speedMultiplier = 1.f;
+	}
 	else if( ms < 36000)
 	{
 		difficulty = (ms-6000) * 0.5f / 30000 + 0.5f;
+		speedMultiplier = 1.f;
+	}
+	else if( ms < 216000)
+	{
+		difficulty = 1.f;
+		speedMultiplier = 1 + (ms-36000) / 180000.f;
 	}
 	else
+	{
 		difficulty = 1.f;
+		speedMultiplier = 2.f;
+	}
 }
 void Game::setSpeed()
 {
@@ -267,7 +281,7 @@ void Game::checkCollision()
 	for( auto obstacleIter = obstacles.begin(); obstacleIter != obstacles.end(); ++obstacleIter )
 	{
 		auto obstacle = static_cast<Obstacle*>( *obstacleIter );
-		if( obstacle->z < 50 && obstacle->bluffable )
+		if( obstacle->z < 54/speedMultiplier && obstacle->bluffable )
 		{
 			int lane = marker->getLane();
 			if( obstacle->lane == lane )
@@ -287,7 +301,7 @@ void Game::draw()
 	bgColor = HSIToRGB( bgHue, 1.f, 0.6f );
 	bgColor2 = HSIToRGB( bgHue, 1.f, 0.55f );
 	foreColor = HSIToRGB( bgHue, 0.3f, 2.f );
-	foreColor2 = HSIToRGB( bgHue, 1.f, 0.4f );
+	foreColor2 = HSIToRGB( bgHue, 1.f, 0.35f );
 	drawColor( bgColor );
 	
 	setColor( bgColor2 );

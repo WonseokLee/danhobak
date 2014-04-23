@@ -5,12 +5,13 @@ class Game;
 class Block : public GameObject
 {
 public:
-	Block( GameObject* parent, int lane, float z );
+	Block( GameObject* parent, int lane, float z, int thick );
 	void update();
 	void draw();
 
 	Game* getParent();
 	
 	int lane;
+	float thick;
 	float z;
 };

@@ -1,7 +1,8 @@
 #include "CenterBlock.h"
 #include "Game.h"
-CenterBlock::CenterBlock( GameObject* parent, int lane )
-	: Block( parent, lane, 0 )
+
+CenterBlock::CenterBlock( GameObject* parent, int lane, int thick )
+	: Block( parent, lane, 0, thick )
 {
 }
 void CenterBlock::update()
