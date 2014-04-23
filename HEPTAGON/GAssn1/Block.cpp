@@ -19,7 +19,7 @@ void Block::update()
 }
 void Block::draw()
 {
-	if( z < 0 )
+	if( scale.x < 0 )
 		return;
 
 	float thick = 1 + 36/scale.size()*sqrt(2.f);

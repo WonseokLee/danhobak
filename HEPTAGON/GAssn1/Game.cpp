@@ -211,10 +211,10 @@ void Game::setSpeed()
 {
 	z += 4 * difficulty;
 
-	if( smoothSpeed > nowSpeed )
-		smoothSpeed -= 0.6f;
-	if( smoothSpeed < nowSpeed )
-		smoothSpeed += 0.6f;
+	if( smoothSpeed > nowSpeed + ROTATE_SMOOTH )
+		smoothSpeed -= ROTATE_SMOOTH;
+	else if( smoothSpeed < nowSpeed - ROTATE_SMOOTH )
+		smoothSpeed += ROTATE_SMOOTH;
 	else
 		smoothSpeed = nowSpeed;
 	rotation += smoothSpeed;
@@ -259,8 +259,8 @@ void Game::showScore()
 	_strupr_s( (char*)b, 10 );
 	_strupr_s( (char*)c, 3 );
 	_strupr_s( (char*)d, 3 );
-	textScore->setText( std::string("SCORE: 0x") + (score<10000?"0":"") + a + "." + c );
-	textHigh->setText( std::string("HIGH: 0x") + (highScore<10000?"0":"")  + b + "." + d );
+	textScore->setText( std::string("SCORE: 0x") + (score<16000?"0":"") + a + "." + c );
+	textHigh->setText( std::string("HIGH: 0x") + (highScore<16000?"0":"")  + b + "." + d );
 }
 void Game::checkCollision()
 {

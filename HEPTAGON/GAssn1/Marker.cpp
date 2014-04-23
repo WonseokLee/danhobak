@@ -6,6 +6,7 @@ Marker::Marker( GameObject* parent )
 	: GameObject( parent )
 {
 	leftKey = false;
+	rotation = CURSOR_SPEED / 2;
 }
 void Marker::update()
 {
@@ -14,19 +15,19 @@ void Marker::update()
 	if( game->keyLeft && !game->keyRight )
 	{
 		leftKey = true;
-		rotation -= 10;
+		rotation -= CURSOR_SPEED;
 	}
 	if( game->keyRight && !game->keyLeft )
 	{
 		leftKey = false;
-		rotation += 10;
+		rotation += CURSOR_SPEED;
 	}
 	if( game->keyLeft && game->keyRight )
 	{
 		if( leftKey )
-			rotation += 10;
+			rotation += CURSOR_SPEED;
 		else
-			rotation -= 10;
+			rotation -= CURSOR_SPEED;
 	}
 	if( rotation < 0 )
 		rotation += 360;
