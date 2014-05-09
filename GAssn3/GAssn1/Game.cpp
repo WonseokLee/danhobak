@@ -14,15 +14,15 @@ Game::Game()
 
 	srand((unsigned)time(NULL));
 	
-	keyLeft = false;
-	keyRight = false;
 	keyUp = false;
+	keyDown = false;
+	keySpace = false;
 	keyF1 = false;
-
 	keyF2 = false;
 	keyF3 = false;
 	keyF4 = false;
 	keyF5 = false;
+
 	resetMap();
 }
 Game::~Game()
@@ -35,20 +35,28 @@ void Game::update()
 	moveState();
 	
 }
+void Game::keyboard( unsigned char key )
+{
+	if ( key == 32 )
+		keySpace = true;
+}
+void Game::keyboardUp( unsigned char key )
+{
+	if ( key == 32 )
+		keySpace = false;
+}
 void Game::special( int key )
 {
-	if ( key == GLUT_KEY_LEFT )
-		keyLeft = true;
-	if ( key == GLUT_KEY_RIGHT )
-		keyRight = true;
 	if ( key == GLUT_KEY_UP )
 		keyUp = true;
+	if ( key == GLUT_KEY_DOWN )
+		keyDown = true;
 	if ( key == GLUT_KEY_F1 )
 		keyF1 = true;
 	if ( key == GLUT_KEY_F2 )
 		keyF2 = true;
 	if ( key == GLUT_KEY_F3 )
-		keyF3 =true;
+		keyF3 = true;
 	if ( key == GLUT_KEY_F4 )
 		keyF4 = true;
 	if ( key == GLUT_KEY_F5 )
@@ -56,12 +64,10 @@ void Game::special( int key )
 }
 void Game::specialUp( int key )
 {
-	if ( key == GLUT_KEY_LEFT )
-		keyLeft = false;
-	if ( key == GLUT_KEY_RIGHT )
-		keyRight = false;
 	if ( key == GLUT_KEY_UP )
 		keyUp = false;
+	if ( key == GLUT_KEY_DOWN )
+		keyDown = false;
 	if ( key == GLUT_KEY_F1 )
 		keyF1 = false;
 	if ( key == GLUT_KEY_F2 )
@@ -78,11 +84,11 @@ void Game::resetMap()
 	deleteChildren();
 	
 	addChild( new BG3D( this ) );
-
-	rockLayer = makeRocks();
-	addChild( rockLayer );
+	
 	ringLayer = makeRings();
 	addChild( ringLayer );
+	rockLayer = makeRocks();
+	addChild( rockLayer );
 	lion = new Lion( this );
 	addChild( lion );
 	
@@ -144,14 +150,13 @@ void Game::moveState()
 
 void Game::moveCamera()
 {
-	float z = lion->pos().z;
-	if( z - LION_CAMERA > camera )
-	{
-		camera = z - LION_CAMERA;
-	} else if( z - LION_CAMERA_MIN < camera ){
-		camera = z - LION_CAMERA_MIN;
-	}
+	camera = lion->pos().z;
 
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity( );
+	
+	//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
+	
 	if( keyF2 )
 		view_state = VIEW_FIRST;
 	if( keyF3 ) 
@@ -161,42 +166,32 @@ void Game::moveCamera()
 	if( keyF5 )
 		view_state = VIEW_RIGHT;
 
-	glMatrixMode( GL_PROJECTION );
-	glLoadIdentity( );
 	switch(view_state){
 	case VIEW_FIRST:
 	default:
-		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 100 );
+			gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 2000 );
 		//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
-	
+
 		//µ¥Çò
 		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f , 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
-		glTranslated( 0, -100, -camera );
+		glTranslated( 0, -lion->lionJumpHeight-45, -camera-45 );
 		break;
 	case VIEW_THIRD:
-		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 100 );
+		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 2000 );
 		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
-		glTranslated(0, -100, -camera + 200);
+		glTranslated(0, -150, -camera + 200);
 		break;
 	case VIEW_TOP:
-		glOrtho(-SCREEN_WIDTH/2, SCREEN_WIDTH/2, 0, 5500, 0, 400);
-		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+		//glOrtho(-SCREEN_WIDTH/2, SCREEN_WIDTH/2, 0, 5500, 0, 400);
+		glOrtho( SCREEN_WIDTH, -SCREEN_WIDTH, -SCREEN_HEIGHT, SCREEN_HEIGHT , 0.0f, 2000 );
+		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f , -1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+		glTranslated( 0, -1000, -camera-200 );
 		//glTranslated(0, -200, 5000);
 		break;
 	case VIEW_RIGHT:
-		//glOrtho(0, 5500, -SCREEN_WIDTH/2, SCREEN_WIDTH/2,0, 400);
-		glOrtho(-100, 5500, -300, 500, 0, 400);
-		gluLookAt( 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		//glTranslated(0, 2000, 0);
+		glOrtho( SCREEN_WIDTH, -SCREEN_WIDTH, -SCREEN_HEIGHT, SCREEN_HEIGHT , 0.0f, 2000 );
+		gluLookAt( 0.0f, 0.0f, 0.0f, -1.0f , 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+		glTranslated( -500, -200, -camera-500 );
 		break;
 	}
-	
-	/*
-	if( camera < 0 )
-		camera = 0;
-
-	if( camera + SCREEN_WIDTH > FINISH + 120 )
-		camera = FINISH + 120 - SCREEN_WIDTH;
-	setCamera( camera, 0 );
-	*/
 }

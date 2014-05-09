@@ -10,19 +10,14 @@ const int LION_DEFAULT = 0;
 const float LION_SPEED = 2.5f;
 const float LION_JUMP_SPEED = 8.f;
 const float LION_JUMP_GRAVITY = -0.2f;
-const int LION_CAMERA = 0;
-const int LION_CAMERA_MIN = 0;
+const int LION_CAMERA = 100;
+const int LION_CAMERA_MIN = LION_CAMERA;
 const int LION_FLASH_TIME = 100;
 
 const int GAME_START = 0;
 const int GAME_ING = 1;
 const int GAME_OVER = 2;
 const int GAME_CLEAR = 3;
-
-const int VIEW_FIRST = 2;
-const int VIEW_THIRD = 3;
-const int VIEW_TOP = 4;
-const int VIEW_RIGHT = 5;
 
 const int LIFE_DEFAULT = 3;
 
@@ -47,6 +42,11 @@ const int RING_REMOVE = -100;
 const int RING_REGEN = RING_GEN_MAX + RING_REMOVE;
 
 const int RING_HEIGHT = 140;
-const int RING_RADIUS = 180;//100;
+const int RING_RADIUS = 100;//100;
 
 const float RING_SPEED = 1.0f;
+
+const int VIEW_FIRST = 2;
+const int VIEW_THIRD = 3;
+const int VIEW_TOP = 4;
+const int VIEW_RIGHT = 5;

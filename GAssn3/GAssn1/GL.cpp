@@ -27,8 +27,8 @@ GL::GL( int argc, char* args[ ] ) : game( nullptr )
 	glutReshapeFunc( reshapeF );
 
 	//Set keyboard function
-	//glutKeyboardFunc( keyboardF );
-	//glutKeyboardUpFunc( keyboardUpF );
+	glutKeyboardFunc( keyboardF );
+	glutKeyboardUpFunc( keyboardUpF );
 
 	//Set special function
 	glutSpecialFunc( specialF );

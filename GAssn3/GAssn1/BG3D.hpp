@@ -10,13 +10,13 @@ public:
 		: GameObject( parent )
 	{
 		addChild( new CubeSolid( parent,
-			Vector3( 0, 0, 5000),
+			Vector3( 0, -5, 5000),
 			Vector3( 200, 5, 10000 ),
 			TAN ) );
 
 		addChild( new CubeSolid( parent,
-			Vector3(0, 0, FINISH+200),
-			Vector3( 400, 5, 400 ),
+			Vector3(0, -5, FINISH+250),
+			Vector3( 400, 5.1, 400 ),
 			YELLOW ) );
 	}
 };

@@ -13,17 +13,17 @@ void Heart::draw()
 	setLineWidth(1);
 	GLenum mode = fill ? GL_TRIANGLE_FAN : GL_LINE_LOOP;
 	drawBegin( mode );
-	drawVertex2f(15, 5);
+	drawVertex2f(15, -5);
 	drawVertex2f(10, 0);
 	drawVertex2f(5, 0);
-	drawVertex2f(0, 5);
-	drawVertex2f(0, 15);
-	drawVertex2f(15, 30);
-	drawVertex2f(30, 15);
-	drawVertex2f(30, 5);
+	drawVertex2f(0, -5);
+	drawVertex2f(0, -15);
+	drawVertex2f(15, -30);
+	drawVertex2f(30, -15);
+	drawVertex2f(30, -5);
 	drawVertex2f(25, 0);
 	drawVertex2f(20, 0);
-	drawVertex2f(+15, 5);
+	drawVertex2f(+15, -5);
 	drawEnd();
 }
 LifeContainer::LifeContainer( GameObject* parent )
@@ -39,8 +39,7 @@ LifeContainer::LifeContainer( GameObject* parent )
 void LifeContainer::update()
 {
 	Game* game = static_cast<Game*>( getAncestor() );
-	position = Vector3( 250, -50, game->camera );
-	
+	position = Vector3( 280, 280, game->camera + 300 );	
 	Lion* lion = game->lion;
 	for( int i = 0; i < LIFE_DEFAULT; ++i )
 	{

@@ -12,18 +12,19 @@ public:
 	Game();
 	~Game();
 	void update();
+	void keyboard( unsigned char key );
+	void keyboardUp( unsigned char key );
 	void special( int key );
 	void specialUp( int key );
 	
 	int game_state;
 	int view_state;
 	float camera;
-
-	bool keyLeft;
-	bool keyRight;
+	
 	bool keyUp;
+	bool keyDown;
+	bool keySpace;
 	bool keyF1;
-
 	bool keyF2;
 	bool keyF3;
 	bool keyF4;

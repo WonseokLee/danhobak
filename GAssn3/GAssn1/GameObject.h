@@ -12,11 +12,12 @@ private:
 
 protected:
 	Vector3 position;
-	Vector3 rotation;
+	double rotation;
+	Vector3 rotationV;
 	Vector3 scale;
 
 public:
-	GameObject( GameObject* parent = NULL, Vector3& pos = Vector3(), Vector3& scale = Vector3( 1, 1, 1 ) );
+	GameObject( GameObject* parent = NULL, Vector3& pos = Vector3(), Vector3& scale = Vector3( 1, 1, 1 ), double rot = 0, Vector3& rotv = Vector3() );
 	virtual ~GameObject();
 
 	void updateAll();
@@ -34,4 +35,6 @@ public:
 	Vector3& pos();
 	Vector3 absPos();
 	Vector3& sc();
+	double& rot();
+	Vector3& rotv();
 };

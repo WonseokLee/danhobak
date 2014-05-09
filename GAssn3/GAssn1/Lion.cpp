@@ -2,21 +2,178 @@
 #include "Game.h"
 #include "frame.h"
 #include "configurations.h"
+#include "polygons.hpp"
 
+LionLeg::LionLeg( GameObject* parent, Vector3 pos, int type, int color ) 
+	: GameObject( parent, pos )
+{
+	legType = type;
+	this->color = color;
+	jump = false;
+	addChild( new CubeSolid( this,
+		Vector3( 0, -8, 0 ),
+		Vector3( 6, 8, 6 ),
+		YELLOW, 2 ) );
+	addChild(new LionUnderLeg(this, Vector3(0, -15, 0), legType, color ));
+	rotationV = Vector3( -1, 0, 0 );
+}
+
+void LionLeg::update()
+{
+	Lion* parent = static_cast<Lion*>( getParent() );
+	tick = -parent->walk_state;
+
+	switch(legType){
+	case 0: // µÞ¾Õ´Ù¸®
+		if(parent->lionJumpHeight == 0){
+			//pos().z = -20;
+			rotation = 30 * cos( tick*3.14/30 ) + 20;
+			jump = false;
+		}
+		else{
+			//pos().z = -10;
+			rotation = -50;
+			jump = true;
+		}
+		break;
+	case 1: // µÞµÞ´Ù¸®
+		if(parent->lionJumpHeight == 0){
+			rotation = -25 * cos( tick*3.14/30 ) + 15;
+			jump = false;
+		}
+		else{
+			rotation = -50;
+			jump = true;
+		}
+		break;
+	case 2: //¾Õ¾Õ´Ù¸®
+		if(parent->lionJumpHeight == 0){
+			pos().z = 10;
+			rotation = 30 * cos( tick*3.14/30 ) + 20;
+			jump = false;
+		}
+		else{
+			pos().z = 20;
+			rotation = 50;
+			jump = true;
+		}
+		break;
+	case 3: //¾ÕµÞ´Ù¸®
+		if(parent->lionJumpHeight == 0){
+			rotation = -25 * cos( tick*3.14/30 ) + 15;
+			jump = false;
+		}
+		else{
+			rotation = 50;
+			jump = true;
+		}
+		break;
+	}
+	
+}
+LionUnderLeg::LionUnderLeg( GameObject* parent, Vector3 pos, int type, int color )
+	: GameObject( parent, pos )
+{
+	legType = type;
+	this->color = color;
+	addChild( new CubeSolid( this,
+		Vector3( 0, -8, 0 ),
+		Vector3( 6, 8, 6 ),
+		YELLOW, 2 ) );
+	//addChild(new LionUnderLeg(this, Vector3(0, -10), legType, color ));
+	rotationV = Vector3( -1, 0, 0 );
+	//drawRectFill(-3,0, 6, 13);
+}
+
+void LionUnderLeg::update()
+{
+	LionLeg* parent = static_cast<LionLeg*>( getParent() );
+	int tick = parent->tick;
+
+	this->color = parent->color;
+
+	switch(legType%2){
+	case 0: // ¾Õ´Ù¸®
+		if(parent->jump)
+			rotation = 0;
+		else
+			rotation = 40 * cos( tick*3.14/30 ) - 40;
+		break;
+	case 1: // µÞ´Ù¸®
+		if(parent->jump)
+			rotation = 0;
+		else
+			rotation = -30 * cos( tick*3.14/30 ) - 30;
+		break;
+	}
+}
+
+void LionUnderLeg::draw()
+{
+	setColor( static_cast<COLOR>(color) );
+	//drawRectFill(-3,0, 6, 13);
+}
+LionTail::LionTail( GameObject* parent, Vector3 pos )
+	: GameObject( parent, pos )
+{
+}
+void LionTail::update()
+{
+	Lion* parent = static_cast<Lion*>( getParent() );
+	int tick = -parent->walk_state - 5;
+	rotation = 30 * cos( tick*3.14/30 ) + 15;
+}
+void LionTail::draw()
+{
+	setColor( BROWN );
+	setLineWidth( 3 );
+	drawLine( -2, 0, -10, 0 );
+}
+LionBody::LionBody( GameObject* parent, Vector3 pos )
+	: GameObject( parent, pos )
+{
+	addChild( new SphereWire( this, Vector3( 0, 20, 20 ), Vector3( 15, 15, 15 ), YELLOW, 2 ) );
+
+	addChild( new SphereWire( this, Vector3( 0, 15, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+	addChild( new SphereWire( this, Vector3( -12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+	addChild( new SphereWire( this, Vector3( +12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+	addChild( new SphereWire( this, Vector3( -12, 30, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+	addChild( new SphereWire( this, Vector3( +12, 30, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+	addChild( new SphereWire( this, Vector3( 0, 35, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+
+	
+	addChild( new CubeSolid( this,
+		Vector3( 0, 0, -5 ),
+		Vector3( 20, 20, 40 ),
+		YELLOW ) );
+}
 Lion::Lion( GameObject* parent )
-	: GameObject( parent, Vector3( 0, 310, LION_DEFAULT ) )
+	: GameObject( parent, Vector3( 0, 0, LION_DEFAULT ) )
 {
 	life = LIFE_DEFAULT;
 	lionJumpSpeed = 0;
 	lionJumpHeight = 0;
 	crash = 0;
 	walk_state = 0;
+	addChild( new LionLeg(this, Vector3(-10, 30, 10), 3, YELLOW_DARK) );
+	addChild( new LionLeg(this, Vector3(-10, 30, -20), 1, YELLOW_DARK) );
+	addChild( new LionLeg(this, Vector3(10, 30, -20), 0, YELLOW) );
+	addChild( new LionLeg(this, Vector3(10, 30, 10), 2, YELLOW) );
+	/*
+	addChild( new LionLeg(this, Vector2(+10, 40), 3, YELLOW_DARK) );
+	addChild( new LionLeg(this, Vector2(-20, 40), 1, YELLOW_DARK) );
+	addChild( new LionLeg(this, Vector2(-20, 40), 0, YELLOW) );
+	addChild( new LionLeg(this, Vector2(+10, 40), 2, YELLOW) );
+	*/
+	addChild( new LionBody( this, Vector3(0, 25, 0) ) );
+	//addChild( new LionTail( this, Vector3(-20, 36) ) );
 }
 void Lion::update()
 {
 	Game* parent = static_cast<Game*>( getParent() );
 	if( parent->game_state == GAME_ING )
 	{
+		if( crash > 0 ) crash--;
 		moveLion();
 		jumpLion();
 		checkJars();
@@ -27,21 +184,21 @@ void Lion::update()
 void Lion::moveLion()
 {
 	Game* parent = static_cast<Game*>( getParent() );
-	bool& keyLeft = parent->keyLeft;
-	bool& keyRight = parent->keyRight;
+	bool& keyDown = parent->keyDown;
+	bool& keyUp = parent->keyUp;
 
-	if( keyLeft && !keyRight )
+	if( keyDown && !keyUp )
 		pos().z -= LION_SPEED;
-	if( !keyLeft && keyRight )
+	if( !keyDown && keyUp )
 		pos().z += LION_SPEED;
 
 	if( lionJumpHeight == 0 &&
-		( keyLeft || keyRight ))
+		( keyDown || keyUp ))
 		walk_state++;
 	else
 		walk_state = 9;
 
-	if( walk_state > 40 )
+	if( walk_state > 120 )
 		walk_state = 0;
 
 	if( pos().z  < 0 )
@@ -59,178 +216,25 @@ void Lion::jumpLion()
 	{
 		lionJumpHeight = 0;
 		lionJumpSpeed = 0;
-		if( parent->keyUp )
+		if( parent->keySpace )
 		{
 			lionJumpSpeed = LION_JUMP_SPEED;
 		}
 	}
-}
-void Lion::draw()
-{
-	COLOR my_yellow_dark;
-	COLOR my_yellow;
-	COLOR my_brown;
-	COLOR my_black;
-	COLOR my_red;
-	if(crash > 0){
-		switch(crash%4){
-		case 0:
-			my_yellow_dark = YELLOW_DARK;
-			my_yellow = YELLOW;
-			my_brown = BROWN;
-			my_black = BLACK;
-			my_red = RED;
-			break;
-		default:
-			my_yellow_dark = YELLOW_DARK_TRANS;
-			my_yellow = YELLOW_TRANS;
-			my_brown = BROWN_TRANS;
-			my_black = BLACK_TRANS;
-			my_red = RED_TRANS;
-			break;
-		}
-		crash--;
-	}
-	else{
-		my_yellow_dark = YELLOW_DARK;
-		my_yellow = YELLOW;
-		my_brown = BROWN;
-		my_black = BLACK;
-		my_red = RED;
-	}
-	int head = 24;
-	if(walk_state < 10){
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 10, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 45, 5, 12 );
-		setColor(my_brown);
-		drawRectFill( -30 + 10, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow);
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		drawRectFill( -30 + 19, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 19, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 41, -30 + 9, -lionJumpHeight + 38);
-	}
-	else if(walk_state < 20){
-		head--;
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 16, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 37, -lionJumpHeight + 45, 5, 12 );
-		setColor(my_brown);
-		drawRectFill( -30 + 16, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 37, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow);
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		drawRectFill( -30 + 18, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 39, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 18, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 39, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 41, -30 + 9, -lionJumpHeight + 38);
-	}
-	else if(walk_state < 30){
-		setColor(my_yellow);
-		drawRectFill( -30 + 10, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		setColor(my_brown);
-		drawRectFill( -30 + 10, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 32, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 19, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 19, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 41, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 35, -30 + 9, -lionJumpHeight + 38);
-	}
-	else{
-		head++;
-		setColor(my_yellow_dark);
-		drawRectFill( -30 + 18, -lionJumpHeight + 45, 5, 12 );
-		drawRectFill( -30 + 37, -lionJumpHeight + 45, 5, 12 );
-		setColor(my_brown);
-		drawRectFill( -30 + 15, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 34, -lionJumpHeight + 57, 8, 3 );
-		setColor(my_yellow);
-		drawRectFill( -30 + 8, -lionJumpHeight + 27, 41, 18 );
-		drawRectFill( -30 + 15, -lionJumpHeight + 45, 5, 15 );
-		drawRectFill( -30 + 34, -lionJumpHeight + 45, 5, 15 );
-		setColor(my_brown);
-		drawRectFill( -30 + 18, -lionJumpHeight + 57, 8, 3 );
-		drawRectFill( -30 + 39, -lionJumpHeight + 57, 8, 3 );
-		drawCircleFill( -30 + 39, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 58, -lionJumpHeight + head, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head-10, 6);
-		drawCircleFill( -30 + 45, -lionJumpHeight + head+10, 6);
-		drawCircleFill( -30 + 53, -lionJumpHeight + head+10, 6);
-		setColor(my_yellow);
-		drawCircleFill( -30 + 49, -lionJumpHeight + head, 9);
-		setColor(my_black);
-		drawElipseFill( -30 + 53, -lionJumpHeight + head-3, 2, 5);
-		setColor(my_brown);
-		setLineWidth(3);
-		drawLine( -30 + 2, -lionJumpHeight + 35, -30 + 9, -lionJumpHeight + 38);
-	}
-	setColor(my_black);
-	drawRectFill( -30 + 45, -lionJumpHeight + head - 25, 10, 16 );
-	drawRectFill( -30 + 40, -lionJumpHeight + head - 11, 19, 3);
-	setColor(my_red);
-	drawRectFill( -30 + 44, -lionJumpHeight + head - 14, 11, 2);
-	//drawRectFill( 30, -lionJumpHeight, 60, 60 );
+
+	pos().y = lionJumpHeight;
 }
 void Lion::checkJars()
 {
-	return;
-
 	Game* parent = static_cast<Game*>( getParent() );
 	auto rockLayer = parent->rockLayer->getChildren();
 	for( auto rockIter = rockLayer->begin(); rockIter != rockLayer->end(); ++rockIter ){
 		GameObject* rock = *rockIter;
 		float z = absPos().z;
-		float rockZ = rock->absPos().z;
-		if( z - 45 <= rockZ && rockZ <= z + 45 )
+		float rockZ = rock->absPos().z - 20;
+		if( z - 50 <= rockZ && rockZ <= z + 50 )
+		//float rockZ = rock->absPos().z;
+		//if( z - 45 <= rockZ && rockZ <= z + 45 )
 		{
 			if( lionJumpHeight <= JAR_HEIGHT )
 			{
