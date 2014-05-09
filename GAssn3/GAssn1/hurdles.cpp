@@ -1,57 +1,39 @@
 #include "hurdles.h"
 #include "frame.h"
 #include "Game.h"
+#include "ObjLoader.h"
 
-Jar::Jar( GameObject* parent, float x )
-	: GameObject( parent, Vector2( x, 0 ) )
+Rock::Rock( GameObject* parent, float z)
+	: GameObject( parent, Vector3( 0, 0, z))
 {
 }
-void Jar::draw()
+
+void Rock::draw()
 {
-	setColor( GOLD );
-	drawRectFill( -15, -30, 30, 30 );
+	setColor( RED );
+	model myLoader;
+	myLoader.Load("tri_rock.obj", "tri_rock.mtl");
+	myLoader.draw();
 }
-RingLeft::RingLeft( GameObject* parent, float x )
-	: GameObject( parent, Vector2( x, 0 ) )
+
+Ring::Ring( GameObject* parent, float z)
+	: GameObject( parent, Vector3( 0, RING_HEIGHT, z))
 {
 }
-void RingLeft::update()
+
+void Ring::draw()
+{
+	drawRing3D(RING_RADIUS);
+}
+
+void Ring::update()
 {
 	Game* parent = static_cast<Game*>( getAncestor() );
 	if( parent->game_state == GAME_ING )
 	{
-		float& x = pos().x;
-		x -= RING_SPEED;
-		if( x < RING_REMOVE )
-			x = RING_REGEN;
+		float& z = pos().z;
+		z -= RING_SPEED;
+		if( z < RING_REMOVE )
+			z = RING_REGEN;
 	}
-}
-void RingLeft::draw()
-{
-	setLineWidth( 5 );
-	setColor( RED );
-	drawElipseLeft( -25, 0, 50, 200, false );
-	setColor( BLACK );
-	drawLine( 0, -10, 0, 5 );
-}
-RingRight::RingRight( GameObject* parent, float x )
-	: GameObject( parent, Vector2( x, 0 ) )
-{
-}
-void RingRight::update()
-{
-	Game* parent = static_cast<Game*>( getAncestor() );
-	if( parent->game_state == GAME_ING )
-	{
-		float& x = pos().x;
-		x -= RING_SPEED;
-		if( x < RING_REMOVE )
-			x = RING_REGEN;
-	}
-}
-void RingRight::draw()
-{
-	setLineWidth( 5 );
-	setColor( RED );
-	drawElipseRight( -25, 0, 50, 200, false );
 }

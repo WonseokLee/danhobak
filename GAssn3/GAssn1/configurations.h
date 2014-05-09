@@ -41,4 +41,7 @@ const int RING_DIST_MAX = 640;
 const int RING_REMOVE = -100;
 const int RING_REGEN = RING_GEN_MAX + RING_REMOVE;
 
+const int RING_HEIGHT = 100;
+const int RING_RADIUS = 100;
+
 const float RING_SPEED = 1.0f;

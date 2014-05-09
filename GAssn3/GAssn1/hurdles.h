@@ -1,25 +1,18 @@
 #pragma once
 #include "GameObject.h"
 
-class Jar : public GameObject
+class Rock : public GameObject
 {
 public:
-	Jar( GameObject* parent, float x );
-	void draw();
+	Rock( GameObject* parent, float z);
+	virtual void draw();
 };
 
-class RingLeft : public GameObject
+class Ring : public GameObject
 {
 public:
-	RingLeft( GameObject* parent, float x );
-	void update();
-	void draw();
+	Ring( GameObject* parent, float z);
+	virtual void draw();
+	virtual void update();
 };
 
-class RingRight : public GameObject
-{
-public:
-	RingRight( GameObject* parent, float x );
-	void update();
-	void draw();
-};
