@@ -3,7 +3,7 @@
 #include "Game.h"
 
 Rock::Rock( GameObject* parent, float z)
-	: GameObject( parent, Vector3(0, 0, z))
+	: GameObject( parent, Vector3(0, -40, z))
 {
 	myLoader.Load("tri_rock.obj", "tri_rock.mtl");
 }
@@ -12,7 +12,7 @@ void Rock::draw()
 {
 	setColor( LIGHT_GRAY );
 	setLineWidth( 0.5 );
-	myLoader.Draw(30);
+	myLoader.Draw(10);
 }
 
 Ring::Ring( GameObject* parent, float z)

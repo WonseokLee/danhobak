@@ -25,8 +25,8 @@ public:
 		: GameObject( parent )
 	{
 		addChild( new CubeSolid( parent,
-			Vector3( 0, -5, 5000),
-			Vector3( 20, 1, 10000 ),
+			Vector3( 0, -50, 5000),
+			Vector3( 200, 1, 10000 ),
 			TAN ) );
 
 		addChild( new CubeSolid( parent,
