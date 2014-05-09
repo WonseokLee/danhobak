@@ -11,9 +11,9 @@ Rock::Rock( GameObject* parent, float z)
 void Rock::draw()
 {
 	setColor( RED );
-	model myLoader;
+	CObjLoader myLoader;
 	myLoader.Load("tri_rock.obj", "tri_rock.mtl");
-	myLoader.draw();
+	myLoader.Draw(1.0f);
 }
 
 Ring::Ring( GameObject* parent, float z)
