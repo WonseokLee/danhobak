@@ -52,4 +52,5 @@ public:
 	float lionJumpSpeed;
 	float lionJumpHeight;
 	int walk_state;
+	float jumpDirection;
 };

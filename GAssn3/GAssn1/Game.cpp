@@ -141,7 +141,7 @@ void Game::moveState()
 			game_state = GAME_ING;
 		break;
 	case GAME_ING:
-		if( lion->pos().z > FINISH &&
+		if( lion->pos().z > FINISH+50 &&
 			lion->lionJumpHeight == 0 &&
 			lion->crash == 0 )
 			game_state = GAME_CLEAR;

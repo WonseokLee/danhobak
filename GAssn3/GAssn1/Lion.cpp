@@ -191,10 +191,17 @@ void Lion::moveLion()
 	bool& keyDown = parent->keyDown;
 	bool& keyUp = parent->keyUp;
 
-	if( keyDown && !keyUp )
-		pos().z -= LION_SPEED;
-	if( !keyDown && keyUp )
-		pos().z += LION_SPEED;
+	if( lionJumpHeight > 0 )
+	{
+		pos().z += jumpDirection;
+	}
+	else
+	{
+		if( keyDown && !keyUp )
+			pos().z -= LION_SPEED;
+		if( !keyDown && keyUp )
+			pos().z += LION_SPEED;
+	}
 
 	if( lionJumpHeight == 0 &&
 		( keyDown || keyUp ))
@@ -223,6 +230,11 @@ void Lion::jumpLion()
 		if( parent->keySpace )
 		{
 			lionJumpSpeed = LION_JUMP_SPEED;
+			jumpDirection = 0;
+			if( parent->keyDown && !parent->keyUp )
+				jumpDirection = -LION_SPEED;
+			if( !parent->keyDown && parent->keyUp )
+				jumpDirection = LION_SPEED;
 		}
 	}
 
@@ -236,9 +248,8 @@ void Lion::checkJars()
 		GameObject* rock = *rockIter;
 		float z = absPos().z;
 		float rockZ = rock->absPos().z - 20;
-		if( z - 50 <= rockZ && rockZ <= z + 50 )
 		//float rockZ = rock->absPos().z;
-		//if( z - 45 <= rockZ && rockZ <= z + 45 )
+		if( z - 45 <= rockZ && rockZ <= z + 45 )
 		{
 			if( lionJumpHeight <= JAR_HEIGHT )
 			{
