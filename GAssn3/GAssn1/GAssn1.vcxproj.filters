@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\CORE">
+      <UniqueIdentifier>{dc753b39-2d45-420a-b313-12f877259923}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GAME">
+      <UniqueIdentifier>{13a16793-4483-4ab1-b434-b3c2681df16d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\FRAME">
+      <UniqueIdentifier>{9c62088c-90d1-4ec3-ad86-1d8268f35399}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일\CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="GL.cpp">
+      <Filter>소스 파일\CORE</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="hurdles.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="Lion.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpText.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeContainer.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GL.h">
+      <Filter>소스 파일\CORE</Filter>
+    </ClInclude>
+    <ClInclude Include="configurations.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTemplate.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="colors.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="frame.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="functions.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="hurdles.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Lion.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpText.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeContainer.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="BG.hpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
