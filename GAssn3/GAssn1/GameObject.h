@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Vector2.h"
+#include "Vector3.h"
 
 class GameObject
 {
@@ -11,11 +11,11 @@ private:
 	virtual void draw(){}
 
 protected:
-	Vector2 position;
+	Vector3 position;
 	double rotation;
 
 public:
-	GameObject( GameObject* parent = NULL, Vector2& pos = Vector2(), double rot = 0 );
+	GameObject( GameObject* parent = NULL, Vector3& pos = Vector3(), double rot = 0 );
 	virtual ~GameObject();
 
 	void updateAll();
@@ -30,8 +30,8 @@ public:
 	GameObject* getAncestor();
 	std::vector<GameObject*>* getChildren();
 
-	Vector2& pos();
-	Vector2 absPos();
+	Vector3& pos();
+	Vector3 absPos();
 	double& rot();
 	double absRot();
 };

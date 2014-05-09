@@ -1,7 +1,7 @@
 #include "GameObject.h"
 #include <GL/freeglut.h>
 
-GameObject::GameObject( GameObject* parent, Vector2& position, double rotation )
+GameObject::GameObject( GameObject* parent, Vector3& position, double rotation )
 	: parent( parent ), position( position ), rotation( rotation )
 {
 	
@@ -26,8 +26,8 @@ void GameObject::drawAll()
 {
 	glMatrixMode( GL_MODELVIEW );
 	glPushMatrix();
-	glTranslated( pos().x, pos().y, 0 );
-	glRotated( rotation, 0, 0, -1 );
+	glTranslated( pos().x, pos().y, pos().z);
+	//glRotated( rotation, 0, 0, -1 );
 	this->draw();
 	for( auto objectIter = children.begin(); objectIter != children.end(); ++objectIter )
 	{
@@ -84,13 +84,13 @@ std::vector<GameObject*>* GameObject::getChildren()
 {
 	return &children;
 }
-Vector2& GameObject::pos()
+Vector3& GameObject::pos()
 {
 	return position;
 }
-Vector2 GameObject::absPos()
+Vector3 GameObject::absPos()
 {
-	Vector2 abs = position;
+	Vector3 abs = position;
 	if( parent != NULL )
 		abs += parent->absPos();
 	return abs;
