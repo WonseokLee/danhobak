@@ -6,7 +6,6 @@
 #include "Lion.h"
 #include "HelpText.h"
 #include "LifeContainer.h"
-#include "BG.hpp"
 #include "BG3D.hpp"
 
 Game::Game()
@@ -28,8 +27,9 @@ Game::~Game()
 }
 void Game::update()
 {
-	moveState();
 	moveCamera();
+	moveState();
+	
 }
 void Game::special( int key )
 {
@@ -58,7 +58,6 @@ void Game::resetMap()
 	deleteChildren();
 	
 	addChild( new BG3D( this ) );
-	addChild( new BG2D( this ) );
 
 	rockLayer = makeRocks();
 	addChild( rockLayer );
