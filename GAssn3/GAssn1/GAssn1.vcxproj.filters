@@ -54,6 +54,9 @@
     <ClCompile Include="ObjLoader.cpp">
       <Filter>소스 파일\FRAME</Filter>
     </ClCompile>
+    <ClCompile Include="polygons.hpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL.h">
