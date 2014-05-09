@@ -51,6 +51,9 @@
     <ClCompile Include="LifeContainer.cpp">
       <Filter>소스 파일\GAME</Filter>
     </ClCompile>
+    <ClCompile Include="Vector3.cpp">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GL.h">
@@ -94,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="BG.hpp">
       <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>소스 파일\FRAME</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
