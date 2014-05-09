@@ -59,8 +59,8 @@ void Game::resetMap()
 	addChild( new BG( this ) );
 	addChild( new LifeContainer( this ) );
 	addChild( new HelpText( this ) );
-	jarLayer = makeRocks();
-	addChild( jarLayer );
+	rockLayer = makeRocks();
+	addChild( rockLayer );
 	ringLayer = makeRings();
 	lion = new Lion( this );
 	addChild( lion );
@@ -78,12 +78,12 @@ GameObject* Game::makeRocks()
 		rockLayer->addChild( new Rock(rockLayer, currentDistance) );
 		currentDistance += (float)((JAR_DIST_MAX - JAR_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + JAR_DIST_MIN);
 	}
-	return jarLayer;
+	return rockLayer;
 }
 GameObject* Game::makeRings()
 {
 	GameObject* ringLayer= new GameObject( this, Vector3( 0, 0, 120 ) );
-	addChild( ringLayer );
+	//addChild( ringLayer );
 
 	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < RING_GEN_MAX){

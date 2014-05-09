@@ -223,12 +223,12 @@ void Lion::draw()
 void Lion::checkJars()
 {
 	Game* parent = static_cast<Game*>( getParent() );
-	auto jarLayer = parent->jarLayer->getChildren();
-	for( auto jarIter = jarLayer->begin(); jarIter != jarLayer->end(); ++jarIter ){
-		GameObject* jar = *jarIter;
+	auto rockLayer = parent->rockLayer->getChildren();
+	for( auto rockIter = rockLayer->begin(); rockIter != rockLayer->end(); ++rockIter ){
+		GameObject* rock = *rockIter;
 		float x = absPos().x;
-		float jarX = jar->absPos().x;
-		if( x - 45 <= jarX && jarX <= x + 45 )
+		float rockX = rock->absPos().x;
+		if( x - 45 <= rockX && rockX <= x + 45 )
 		{
 			if( lionJumpHeight <= JAR_HEIGHT )
 			{

@@ -1,18 +1,16 @@
 #include "hurdles.h"
 #include "frame.h"
 #include "Game.h"
-#include "ObjLoader.h"
 
 Rock::Rock( GameObject* parent, float z)
 	: GameObject( parent, Vector3( 0, 0, z))
 {
+	myLoader.Load("tri_rock.obj", "tri_rock.mtl");
 }
 
 void Rock::draw()
 {
 	setColor( RED );
-	CObjLoader myLoader;
-	myLoader.Load("tri_rock.obj", "tri_rock.mtl");
 	myLoader.Draw(1.0f);
 }
 

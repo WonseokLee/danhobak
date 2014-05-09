@@ -24,7 +24,7 @@ public:
 	bool keyF1;
 	
 	GameObject* ringLayer;
-	GameObject* jarLayer;
+	GameObject* rockLayer;
 	Lion* lion;
 
 private:
