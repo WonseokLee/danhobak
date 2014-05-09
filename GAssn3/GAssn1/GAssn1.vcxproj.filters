@@ -95,5 +95,8 @@
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\FRAME</Filter>
     </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
