@@ -12,7 +12,7 @@ void Rock::draw()
 {
 	setColor( LIGHT_GRAY );
 	setLineWidth( 0.5 );
-	myLoader.Draw(10);
+	myLoader.Draw(30);
 }
 
 Ring::Ring( GameObject* parent, float z)
