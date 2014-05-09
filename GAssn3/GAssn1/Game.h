@@ -29,6 +29,8 @@ public:
 	bool keyF3;
 	bool keyF4;
 	bool keyF5;
+	bool keyF6;
+	bool keyF7;
 	
 	GameObject* ringLayer;
 	GameObject* rockLayer;

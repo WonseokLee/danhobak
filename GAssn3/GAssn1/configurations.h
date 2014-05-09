@@ -48,5 +48,7 @@ const float RING_SPEED = 1.0f;
 
 const int VIEW_FIRST = 2;
 const int VIEW_THIRD = 3;
-const int VIEW_TOP = 4;
-const int VIEW_RIGHT = 5;
+const int VIEW_TOP_MAP = 4;
+const int VIEW_RIGHT_MAP = 5;
+const int VIEW_TOP = 6;
+const int VIEW_RIGHT = 7;

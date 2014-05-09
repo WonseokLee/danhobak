@@ -22,6 +22,9 @@ Game::Game()
 	keyF3 = false;
 	keyF4 = false;
 	keyF5 = false;
+	keyF6 = false;
+	keyF7 = false;
+	view_state = VIEW_FIRST;
 
 	resetMap();
 }
@@ -61,6 +64,10 @@ void Game::special( int key )
 		keyF4 = true;
 	if ( key == GLUT_KEY_F5 )
 		keyF5 = true;
+	if ( key == GLUT_KEY_F6 )
+		keyF6 = true;
+	if ( key == GLUT_KEY_F7 )
+		keyF7 = true;
 }
 void Game::specialUp( int key )
 {
@@ -78,6 +85,10 @@ void Game::specialUp( int key )
 		keyF4 = false;
 	if ( key == GLUT_KEY_F5 )
 		keyF5 = false;
+	if ( key == GLUT_KEY_F6 )
+		keyF6 = false;
+	if ( key == GLUT_KEY_F7 )
+		keyF7 = false;
 }
 void Game::resetMap()
 {
@@ -97,7 +108,6 @@ void Game::resetMap()
 
 	camera = CAMERA_DEFAULT;
 	game_state = GAME_START;
-	view_state = VIEW_FIRST;
 }
 GameObject* Game::makeRocks()
 {
@@ -162,8 +172,12 @@ void Game::moveCamera()
 	if( keyF3 ) 
 		view_state = VIEW_THIRD;
 	if( keyF4 )
-		view_state = VIEW_TOP;
+		view_state = VIEW_TOP_MAP;
 	if( keyF5 )
+		view_state = VIEW_RIGHT_MAP;
+	if( keyF6 )
+		view_state = VIEW_TOP;
+	if( keyF7 )
 		view_state = VIEW_RIGHT;
 
 	switch(view_state){
@@ -180,6 +194,15 @@ void Game::moveCamera()
 		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 2000 );
 		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
 		glTranslated(0, -150, -camera + 200);
+		break;
+	case VIEW_TOP_MAP:
+		glOrtho( 4000, -4000, -3000, 3000 , 0.0f, 2000 );
+		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f , -1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+		glTranslated( 0, -1000, -2900 );
+		break;
+	case VIEW_RIGHT_MAP:glOrtho( 3200, -3200, -2400, 2400 , 0.0f, 2000 );
+		gluLookAt( 0.0f, 0.0f, 0.0f, -1.0f , 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+		glTranslated( 0, -1000, -2500 );
 		break;
 	case VIEW_TOP:
 		//glOrtho(-SCREEN_WIDTH/2, SCREEN_WIDTH/2, 0, 5500, 0, 400);
