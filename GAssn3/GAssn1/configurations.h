@@ -19,6 +19,11 @@ const int GAME_ING = 1;
 const int GAME_OVER = 2;
 const int GAME_CLEAR = 3;
 
+const int VIEW_FIRST = 2;
+const int VIEW_THIRD = 3;
+const int VIEW_TOP = 4;
+const int VIEW_RIGHT = 5;
+
 const int LIFE_DEFAULT = 3;
 
 const int CAMERA_DEFAULT = 0;

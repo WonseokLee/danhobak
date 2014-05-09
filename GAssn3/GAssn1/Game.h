@@ -16,12 +16,18 @@ public:
 	void specialUp( int key );
 	
 	int game_state;
+	int view_state;
 	float camera;
 
 	bool keyLeft;
 	bool keyRight;
 	bool keyUp;
 	bool keyF1;
+
+	bool keyF2;
+	bool keyF3;
+	bool keyF4;
+	bool keyF5;
 	
 	GameObject* ringLayer;
 	GameObject* rockLayer;

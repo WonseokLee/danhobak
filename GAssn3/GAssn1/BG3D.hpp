@@ -11,12 +11,12 @@ public:
 	{
 		addChild( new CubeSolid( parent,
 			Vector3( 0, 0, 5000),
-			Vector3( 200, 1, 10000 ),
+			Vector3( 200, 5, 10000 ),
 			TAN ) );
 
 		addChild( new CubeSolid( parent,
 			Vector3(0, 0, FINISH+200),
-			Vector3( 400, 2, 400 ),
+			Vector3( 400, 5, 400 ),
 			YELLOW ) );
 	}
 };

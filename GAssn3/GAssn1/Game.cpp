@@ -19,6 +19,10 @@ Game::Game()
 	keyUp = false;
 	keyF1 = false;
 
+	keyF2 = false;
+	keyF3 = false;
+	keyF4 = false;
+	keyF5 = false;
 	resetMap();
 }
 Game::~Game()
@@ -41,6 +45,14 @@ void Game::special( int key )
 		keyUp = true;
 	if ( key == GLUT_KEY_F1 )
 		keyF1 = true;
+	if ( key == GLUT_KEY_F2 )
+		keyF2 = true;
+	if ( key == GLUT_KEY_F3 )
+		keyF3 =true;
+	if ( key == GLUT_KEY_F4 )
+		keyF4 = true;
+	if ( key == GLUT_KEY_F5 )
+		keyF5 = true;
 }
 void Game::specialUp( int key )
 {
@@ -52,6 +64,14 @@ void Game::specialUp( int key )
 		keyUp = false;
 	if ( key == GLUT_KEY_F1 )
 		keyF1 = false;
+	if ( key == GLUT_KEY_F2 )
+		keyF2 = false;
+	if ( key == GLUT_KEY_F3 )
+		keyF3 = false;
+	if ( key == GLUT_KEY_F4 )
+		keyF4 = false;
+	if ( key == GLUT_KEY_F5 )
+		keyF5 = false;
 }
 void Game::resetMap()
 {
@@ -71,6 +91,7 @@ void Game::resetMap()
 
 	camera = CAMERA_DEFAULT;
 	game_state = GAME_START;
+	view_state = VIEW_FIRST;
 }
 GameObject* Game::makeRocks()
 {
@@ -131,14 +152,44 @@ void Game::moveCamera()
 		camera = z - LION_CAMERA_MIN;
 	}
 
+	if( keyF2 )
+		view_state = VIEW_FIRST;
+	if( keyF3 ) 
+		view_state = VIEW_THIRD;
+	if( keyF4 )
+		view_state = VIEW_TOP;
+	if( keyF5 )
+		view_state = VIEW_RIGHT;
+
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
-	gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 100 );
-	//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
+	switch(view_state){
+	case VIEW_FIRST:
+	default:
+		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 100 );
+		//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
 	
-	//µ¥Çò
-	gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f , 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
-	glTranslated( 0, -100, -camera );
+		//µ¥Çò
+		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f , 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
+		glTranslated( 0, -100, -camera );
+		break;
+	case VIEW_THIRD:
+		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 100 );
+		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
+		glTranslated(0, -100, -camera + 200);
+		break;
+	case VIEW_TOP:
+		glOrtho(-SCREEN_WIDTH/2, SCREEN_WIDTH/2, 0, 5500, 0, 400);
+		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
+		//glTranslated(0, -200, 5000);
+		break;
+	case VIEW_RIGHT:
+		//glOrtho(0, 5500, -SCREEN_WIDTH/2, SCREEN_WIDTH/2,0, 400);
+		glOrtho(-100, 5500, -300, 500, 0, 400);
+		gluLookAt( 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		//glTranslated(0, 2000, 0);
+		break;
+	}
 	
 	/*
 	if( camera < 0 )
