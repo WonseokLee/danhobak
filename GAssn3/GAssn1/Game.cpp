@@ -134,15 +134,14 @@ void Game::moveCamera()
 
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
-	gluPerspective( 90, -1.0 * SCREEN_WIDTH / SCREEN_HEIGHT, 0, SCREEN_HEIGHT );
+	gluPerspective( 90, 1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 100 );
 	//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
-	gluLookAt( 0.0f , 0.0f, -SCREEN_HEIGHT/2.f, 0.0f , 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
-	glRotated( 0.1, 0, 1, 0 );
+	gluLookAt( 0.0f , 0.0f, -50.0f, 0.0f , 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
+	//glRotated( 0.1, 0, 1, 0 );
 	glTranslated( 0, 0, -camera );
-	glTranslated( 0, -SCREEN_HEIGHT/3.f, 0 );
+	//glTranslated( 0, -SCREEN_HEIGHT/3.f, 0 );
 	//glTranslated( -SCREEN_WIDTH/2.f, -SCREEN_HEIGHT/2.f, 0 );
 	glTranslated( 0, 0, -1 );
-
 	
 	/*
 	if( camera < 0 )

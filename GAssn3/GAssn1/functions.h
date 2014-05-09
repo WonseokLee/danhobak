@@ -37,6 +37,7 @@ inline void setColor( COLOR c );
 inline void setCamera( float x, float y );
 
 inline void drawRing3D(float rad );
+inline void drawXYPlane3D(float x, float z);
 
 ///////////////////////////////////////////////////////////////
 
@@ -164,4 +165,14 @@ inline void setCamera( float x, float y )
 	glLoadIdentity( );
 	glOrtho(  -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, 1.0f);
 	gluLookAt( SCREEN_WIDTH/2.f + x , SCREEN_HEIGHT/2.f + y, 0.0f, SCREEN_WIDTH/2.f + x , SCREEN_HEIGHT/2.f + y, -1.0f, 0.0f, 1.0f, 0.0f );
+}
+
+inline void drawXYPlane3D( float x, float z )
+{
+	drawBegin( GL_QUADS );
+	glVertex3f(x, 0, 0);
+	glVertex3f(-x, 0, 0);
+	glVertex3f(-x, 0, z);
+	glVertex3f(x, 0, z);
+	drawEnd();
 }
