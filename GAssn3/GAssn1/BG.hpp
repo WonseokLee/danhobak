@@ -1,10 +1,10 @@
 #pragma once
 #include "GameObject.h"
 
-class BG : public GameObject
+class BG2D : public GameObject
 {
 public:
-	BG( GameObject* parent )
+	BG2D( GameObject* parent )
 		: GameObject( parent, Vector3( -400, -80, 0 ) )
 	{
 	}

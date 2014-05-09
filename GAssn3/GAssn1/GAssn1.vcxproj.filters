@@ -101,5 +101,8 @@
     <ClInclude Include="ObjLoader.h">
       <Filter>소스 파일\FRAME</Filter>
     </ClInclude>
+    <ClInclude Include="BG3D.hpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

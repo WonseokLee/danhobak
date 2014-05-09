@@ -7,6 +7,7 @@
 #include "HelpText.h"
 #include "LifeContainer.h"
 #include "BG.hpp"
+#include "BG3D.hpp"
 
 Game::Game()
 {
@@ -55,8 +56,9 @@ void Game::specialUp( int key )
 void Game::resetMap()
 {
 	deleteChildren();
-
-	addChild( new BG( this ) );
+	
+	addChild( new BG3D( this ) );
+	addChild( new BG2D( this ) );
 
 	rockLayer = makeRocks();
 	addChild( rockLayer );
@@ -103,7 +105,7 @@ void Game::moveState()
 			game_state = GAME_ING;
 		break;
 	case GAME_ING:
-		if( lion->pos().x > FINISH &&
+		if( lion->pos().z > FINISH &&
 			lion->lionJumpHeight == 0 &&
 			lion->crash == 0 )
 			game_state = GAME_CLEAR;

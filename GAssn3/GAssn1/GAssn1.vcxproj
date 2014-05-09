@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BG.hpp" />
+    <ClInclude Include="BG3D.hpp" />
     <ClInclude Include="hurdles.h" />
     <ClInclude Include="colors.h" />
     <ClInclude Include="configurations.h" />
