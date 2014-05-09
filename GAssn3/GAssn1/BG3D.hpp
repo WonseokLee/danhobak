@@ -15,7 +15,7 @@ public:
 			TAN ) );
 
 		addChild( new CubeSolid( parent,
-			Vector3(0, -5, FINISH+250),
+			Vector3(0, -5, 5250),
 			Vector3( 400, 5.1, 400 ),
 			YELLOW ) );
 	}

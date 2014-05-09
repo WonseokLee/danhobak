@@ -92,6 +92,8 @@ void Game::specialUp( int key )
 }
 void Game::resetMap()
 {
+	FINISH = 4000 + 1000.f * rand() / RAND_MAX;
+
 	deleteChildren();
 	
 	addChild( new BG3D( this ) );

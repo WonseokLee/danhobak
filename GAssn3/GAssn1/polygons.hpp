@@ -12,7 +12,7 @@ public:
 	}
 	void draw()
 	{
-		setLineWidth( drawWidth );
+		setLineWidth( (float)drawWidth );
 		setColor( static_cast<COLOR>(color) );
 		glutWireCube( 1 );
 	}
@@ -47,7 +47,7 @@ public:
 	}
 	void draw()
 	{
-		setLineWidth( drawWidth );
+		setLineWidth( (float)drawWidth );
 		setColor( static_cast<COLOR>(color) );
 		glutWireSphere( 1, 16, 16 );
 	}

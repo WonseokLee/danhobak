@@ -20,6 +20,7 @@ public:
 	int game_state;
 	int view_state;
 	float camera;
+	float FINISH;
 	
 	bool keyUp;
 	bool keyDown;
@@ -35,7 +36,6 @@ public:
 	GameObject* ringLayer;
 	GameObject* rockLayer;
 	Lion* lion;
-
 private:
 	void resetMap();
 	GameObject* makeRocks();
