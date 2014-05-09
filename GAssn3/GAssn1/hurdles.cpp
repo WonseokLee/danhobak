@@ -10,9 +10,9 @@ Rock::Rock( GameObject* parent, float z)
 
 void Rock::draw()
 {
-	setColor( GRAY );
-	setLineWidth( 0.1 );
-	myLoader.Draw(1.0f);
+	setColor( LIGHT_GRAY );
+	setLineWidth( 0.5 );
+	myLoader.Draw(30);
 }
 
 Ring::Ring( GameObject* parent, float z)

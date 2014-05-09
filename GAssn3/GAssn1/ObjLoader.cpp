@@ -228,11 +228,12 @@ void CObjLoader::Draw (float scale)
 		}
 		else {
 		*/
-			glColor3f (0.7f, 0.7f, 0.7f);
+			//glColor3f (0.7f, 0.7f, 0.7f);
 		//}
 
 		for (unsigned int i=0, ip=faces.size (); i<ip; ++i) {
-			glBegin (GL_POLYGON);
+			glBegin (GL_LINE_LOOP);
+			//glBegin (GL_POLYGON);
 			for (int j=0, jn=faces[i].n; j<jn; ++j) {
 				int &v  = faces[i].v[j];
 				int &vt = faces[i].vt[j];

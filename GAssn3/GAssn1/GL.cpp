@@ -75,12 +75,12 @@ bool GL::initGL()
 }
 void GL::mainLoop( int val )
 {
+	//Run frame one more time
+	glutTimerFunc( 1000 / SCREEN_FPS, mainLoopF, val );
+
 	//Frame logic
 	update( );
 	display( );
-	
-	//Run frame one more time
-	glutTimerFunc( 1000 / SCREEN_FPS, mainLoopF, val );
 }
 void GL::update()
 {

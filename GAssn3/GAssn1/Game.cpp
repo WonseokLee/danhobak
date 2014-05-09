@@ -75,7 +75,7 @@ void Game::resetMap()
 }
 GameObject* Game::makeRocks()
 {
-	GameObject* rockLayer = new GameObject( this, Vector3( 0, 0, 370 ) );
+	GameObject* rockLayer = new GameObject( this, Vector3( 0, 0, 0 ) );
 
 	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < JAR_GEN_MAX){
@@ -86,7 +86,7 @@ GameObject* Game::makeRocks()
 }
 GameObject* Game::makeRings()
 {
-	GameObject* ringLayer= new GameObject( this, Vector3( 0, 0, 120 ) );
+	GameObject* ringLayer= new GameObject( this, Vector3( 0, 0, 0 ) );
 
 	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < RING_GEN_MAX){
@@ -134,10 +134,9 @@ void Game::moveCamera()
 
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );
-	gluPerspective( 90, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0, SCREEN_HEIGHT );
+	gluPerspective( 90, -1.0 * SCREEN_WIDTH / SCREEN_HEIGHT, 0, SCREEN_HEIGHT );
 	//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
 	gluLookAt( 0.0f , 0.0f, -SCREEN_HEIGHT/2.f, 0.0f , 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
-	glRotated( 180, 0, 0, 1 );
 	glRotated( 0.1, 0, 1, 0 );
 	glTranslated( 0, 0, -camera );
 	glTranslated( 0, -SCREEN_HEIGHT/3.f, 0 );
