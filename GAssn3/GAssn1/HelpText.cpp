@@ -13,11 +13,11 @@ void HelpText::update()
 	switch(parent->game_state){
 	case GAME_START:
 	case GAME_ING:
-		position = Vector2( 220, 140 );
+		position = Vector3( 220, 140 );
 		break;
 	case GAME_CLEAR:
 	case GAME_OVER:
-		position = Vector2( 220 + camera, 140 );
+		position = Vector3( 220 + camera, 140 );
 		break;
 	}
 }

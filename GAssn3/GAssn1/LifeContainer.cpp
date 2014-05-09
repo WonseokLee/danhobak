@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Lion.h"
 
-Heart::Heart( GameObject* parent, Vector2 position )
+Heart::Heart( GameObject* parent, Vector3 position )
 	: GameObject( parent, position )
 {
 	fill = true;
@@ -31,7 +31,7 @@ LifeContainer::LifeContainer( GameObject* parent )
 {
 	for( int i = 0; i < LIFE_DEFAULT; ++i )
 	{
-		Heart* heart = new Heart( this, Vector2( -i * 40, 0 ) );
+		Heart* heart = new Heart( this, Vector3( -i * 40, 0 ) );
 		hearts.push_back( heart );
 		addChild( heart );
 	}
@@ -39,7 +39,7 @@ LifeContainer::LifeContainer( GameObject* parent )
 void LifeContainer::update()
 {
 	Game* game = static_cast<Game*>( getAncestor() );
-	position = Vector2( SCREEN_WIDTH - 45 + game->camera, 30 );
+	position = Vector3( SCREEN_WIDTH - 45 + game->camera, 30 );
 	
 	Lion* lion = game->lion;
 	for( int i = 0; i < LIFE_DEFAULT; ++i )

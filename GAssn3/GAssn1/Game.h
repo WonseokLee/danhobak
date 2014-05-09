@@ -29,7 +29,7 @@ public:
 
 private:
 	void resetMap();
-	GameObject* makeJars();
+	GameObject* makeRocks();
 	GameObject* makeRings();
 	
 	void moveState();

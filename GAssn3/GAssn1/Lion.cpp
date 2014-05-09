@@ -4,7 +4,7 @@
 #include "configurations.h"
 
 Lion::Lion( GameObject* parent )
-	: GameObject( parent, Vector2( LION_DEFAULT, 310 ) )
+	: GameObject( parent, Vector3( 0, 310, LION_DEFAULT ) )
 {
 	life = LIFE_DEFAULT;
 	lionJumpSpeed = 0;
@@ -31,9 +31,9 @@ void Lion::moveLion()
 	bool& keyRight = parent->keyRight;
 
 	if( keyLeft && !keyRight )
-		pos().x -= LION_SPEED;
+		pos().z -= LION_SPEED;
 	if( !keyLeft && keyRight )
-		pos().x += LION_SPEED;
+		pos().z += LION_SPEED;
 
 	if( lionJumpHeight == 0 &&
 		( keyLeft || keyRight ))
@@ -44,10 +44,10 @@ void Lion::moveLion()
 	if( walk_state > 40 )
 		walk_state = 0;
 
-	if( pos().x - 30 < 0 )
-		pos().x = 30;
-	if( pos().x + 30 > 11000 )
-		pos().x = 11000 - 30;
+	if( pos().z - 30 < 0 )
+		pos().z = 30;
+	if( pos().z + 30 > 11000 )
+		pos().z = 11000 - 30;
 }
 void Lion::jumpLion()
 {

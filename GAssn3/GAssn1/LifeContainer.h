@@ -5,7 +5,7 @@
 class Heart : public GameObject
 {
 public:
-	Heart( GameObject* parent, Vector2 position );
+	Heart( GameObject* parent, Vector3 position );
 	void draw();
 	bool fill;
 };

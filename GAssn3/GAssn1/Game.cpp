@@ -59,7 +59,7 @@ void Game::resetMap()
 	addChild( new BG( this ) );
 	addChild( new LifeContainer( this ) );
 	addChild( new HelpText( this ) );
-	jarLayer = makeJars();
+	jarLayer = makeRocks();
 	addChild( jarLayer );
 	ringLayer = makeRings();
 	lion = new Lion( this );
@@ -69,31 +69,30 @@ void Game::resetMap()
 	camera = CAMERA_DEFAULT;
 	game_state = GAME_START;
 }
-GameObject* Game::makeJars()
+GameObject* Game::makeRocks()
 {
-	GameObject* jarLayer = new GameObject( this, Vector2( 0, 370 ) );
+	GameObject* rockLayer = new GameObject( this, Vector3( 0, 0, 370 ) );
 
 	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < JAR_GEN_MAX){
-		jarLayer->addChild( new Jar(jarLayer, currentDistance) );
+		rockLayer->addChild( new Rock(rockLayer, currentDistance) );
 		currentDistance += (float)((JAR_DIST_MAX - JAR_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + JAR_DIST_MIN);
 	}
 	return jarLayer;
 }
 GameObject* Game::makeRings()
 {
-	GameObject* ringLayerLeft = new GameObject( this, Vector2( 0, 120 ) );
-	GameObject* ringLayerRight = new GameObject( this, Vector2( 0, 120 ) );
-	addChild( ringLayerLeft );
+	GameObject* ringLayer= new GameObject( this, Vector3( 0, 0, 120 ) );
+	addChild( ringLayer );
 
 	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < RING_GEN_MAX){
 		currentDistance += (float)((RING_DIST_MAX - RING_DIST_MIN + 1) * rand() / (RAND_MAX + 1) + RING_DIST_MIN);
-		ringLayerLeft->addChild( new RingLeft(ringLayerLeft, currentDistance) );
-		ringLayerRight->addChild( new RingRight(ringLayerRight, currentDistance) );
+		ringLayer->addChild( new Ring(ringLayer, currentDistance) );
+		ringLayer->addChild( new Ring(ringLayer, currentDistance) );
 	}
 
-	return ringLayerRight;
+	return ringLayer;
 }
 void Game::moveState()
 {
