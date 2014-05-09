@@ -107,15 +107,19 @@ void LionUnderLeg::update()
 		break;
 	}
 }
-
 void LionUnderLeg::draw()
 {
-	setColor( static_cast<COLOR>(color) );
+	//setColor( static_cast<COLOR>(color) );
 	//drawRectFill(-3,0, 6, 13);
 }
 LionTail::LionTail( GameObject* parent, Vector3 pos )
 	: GameObject( parent, pos )
 {
+	addChild( new CubeSolid( this,
+		Vector3( 0, 0, -10 ),
+		Vector3( 6, 6, 12 ),
+		BROWN, 1 ) );
+	rotationV = Vector3( -1, 0, 0 );
 }
 void LionTail::update()
 {
@@ -125,9 +129,9 @@ void LionTail::update()
 }
 void LionTail::draw()
 {
-	setColor( BROWN );
-	setLineWidth( 3 );
-	drawLine( -2, 0, -10, 0 );
+	//setColor( BROWN );
+	//setLineWidth( 3 );
+	//drawLine( -2, 0, -10, 0 );
 }
 LionBody::LionBody( GameObject* parent, Vector3 pos )
 	: GameObject( parent, pos )
@@ -166,7 +170,7 @@ Lion::Lion( GameObject* parent )
 	addChild( new LionLeg(this, Vector2(+10, 40), 2, YELLOW) );
 	*/
 	addChild( new LionBody( this, Vector3(0, 25, 0) ) );
-	//addChild( new LionTail( this, Vector3(-20, 36) ) );
+	addChild( new LionTail( this, Vector3(0, 36, -20) ) );
 }
 void Lion::update()
 {
