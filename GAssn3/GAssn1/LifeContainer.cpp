@@ -39,7 +39,7 @@ LifeContainer::LifeContainer( GameObject* parent )
 void LifeContainer::update()
 {
 	Game* game = static_cast<Game*>( getAncestor() );
-	position = Vector3( SCREEN_WIDTH - 45 + game->camera, 30 );
+	position = Vector3( 250, -50, game->camera );
 	
 	Lion* lion = game->lion;
 	for( int i = 0; i < LIFE_DEFAULT; ++i )

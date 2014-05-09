@@ -44,10 +44,10 @@ void Lion::moveLion()
 	if( walk_state > 40 )
 		walk_state = 0;
 
-	if( pos().z - 30 < 0 )
-		pos().z = 30;
-	if( pos().z + 30 > 11000 )
-		pos().z = 11000 - 30;
+	if( pos().z  < 0 )
+		pos().z = 0;
+	if( pos().z  > 11000 )
+		pos().z = 11000;
 }
 void Lion::jumpLion()
 {
@@ -222,13 +222,15 @@ void Lion::draw()
 }
 void Lion::checkJars()
 {
+	return;
+
 	Game* parent = static_cast<Game*>( getParent() );
 	auto rockLayer = parent->rockLayer->getChildren();
 	for( auto rockIter = rockLayer->begin(); rockIter != rockLayer->end(); ++rockIter ){
 		GameObject* rock = *rockIter;
-		float x = absPos().x;
-		float rockX = rock->absPos().x;
-		if( x - 45 <= rockX && rockX <= x + 45 )
+		float z = absPos().z;
+		float rockZ = rock->absPos().z;
+		if( z - 45 <= rockZ && rockZ <= z + 45 )
 		{
 			if( lionJumpHeight <= JAR_HEIGHT )
 			{
@@ -249,9 +251,9 @@ void Lion::checkRings()
 	auto ringLayer = parent->ringLayer->getChildren();
 	for(auto ringIter = ringLayer->begin(); ringIter != ringLayer->end(); ++ringIter ){
 		GameObject* ring = *ringIter;
-		float x = absPos().x;
-		float ringX = ring->absPos().x;
-		if( x - 30 <= ringX && ringX <= x + 30 ){
+		float z = absPos().z;
+		float ringZ = ring->absPos().z;
+		if( z - 30 <= ringZ && ringZ <= z + 30 ){
 			if( lionJumpHeight < RING_BOTTOM || lionJumpHeight > RING_TOP )
 			{
 				if( crash == 0 )

@@ -5,15 +5,15 @@ class BG : public GameObject
 {
 public:
 	BG( GameObject* parent )
-		: GameObject( parent )
+		: GameObject( parent, Vector3( -400, -80, 0 ) )
 	{
 	}
 	void draw()
 	{
-		drawColor( TAN );
+		drawColor( LIME_GREEN );
 
-		setColor( LIME_GREEN );
-		drawRectFill( 0, 110, 11000, 370 );
+		setColor( TAN );
+		drawRectFill( 0, 0, 11000, 110 );
 
 		setColor( YELLOW );
 		drawRectFill( FINISH-30.f, 370, 10, 110 );
@@ -23,9 +23,9 @@ public:
 		drawLine( 0, 94, 11000, 94 );
 		drawLine( 0, 102, 11000, 102 );
 		setColor( BLACK );
-		drawLine( 0, 370, 11000, 370 );
+		drawLine( 0, 440, 11000, 370 );
 		
 		setLineWidth( 1 );
-		drawLine( 0, 375, 11000, 375 );
+		drawLine( 0, 445, 11000, 375 );
 	}
 };

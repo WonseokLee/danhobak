@@ -57,14 +57,16 @@ void Game::resetMap()
 	deleteChildren();
 
 	addChild( new BG( this ) );
-	addChild( new LifeContainer( this ) );
-	addChild( new HelpText( this ) );
+
 	rockLayer = makeRocks();
 	addChild( rockLayer );
 	ringLayer = makeRings();
+	addChild( ringLayer );
 	lion = new Lion( this );
 	addChild( lion );
-	addChild( ringLayer );
+	
+	addChild( new LifeContainer( this ) );
+	addChild( new HelpText( this ) );
 
 	camera = CAMERA_DEFAULT;
 	game_state = GAME_START;
@@ -83,7 +85,6 @@ GameObject* Game::makeRocks()
 GameObject* Game::makeRings()
 {
 	GameObject* ringLayer= new GameObject( this, Vector3( 0, 0, 120 ) );
-	//addChild( ringLayer );
 
 	float currentDistance = JAR_GEN_MIN;
 	while(currentDistance < RING_GEN_MAX){
@@ -121,18 +122,33 @@ void Game::moveState()
 
 void Game::moveCamera()
 {
-	float x = lion->pos().x;
-	if( x - LION_CAMERA > camera )
+	float z = lion->pos().z;
+	if( z - LION_CAMERA > camera )
 	{
-		camera = x - LION_CAMERA;
-	} else if( x - LION_CAMERA_MIN < camera ){
-		camera = x - LION_CAMERA_MIN;
+		camera = z - LION_CAMERA;
+	} else if( z - LION_CAMERA_MIN < camera ){
+		camera = z - LION_CAMERA_MIN;
 	}
 
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity( );
+	gluPerspective( 90, (float) SCREEN_WIDTH / SCREEN_HEIGHT, 0, SCREEN_HEIGHT );
+	//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
+	gluLookAt( 0.0f , 0.0f, -SCREEN_HEIGHT/2.f, 0.0f , 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
+	glRotated( 180, 0, 0, 1 );
+	glRotated( 0.1, 0, 1, 0 );
+	glTranslated( 0, 0, -camera );
+	glTranslated( 0, -SCREEN_HEIGHT/3.f, 0 );
+	//glTranslated( -SCREEN_WIDTH/2.f, -SCREEN_HEIGHT/2.f, 0 );
+	glTranslated( 0, 0, -1 );
+
+	
+	/*
 	if( camera < 0 )
 		camera = 0;
 
 	if( camera + SCREEN_WIDTH > FINISH + 120 )
 		camera = FINISH + 120 - SCREEN_WIDTH;
 	setCamera( camera, 0 );
+	*/
 }

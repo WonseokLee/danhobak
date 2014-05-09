@@ -13,17 +13,17 @@ void HelpText::update()
 	switch(parent->game_state){
 	case GAME_START:
 	case GAME_ING:
-		position = Vector3( 220, 140 );
+		position = Vector3( -89, 140, 0 );
 		break;
 	case GAME_CLEAR:
 	case GAME_OVER:
-		position = Vector3( 220 + camera, 140 );
+		position = Vector3( -89, 140, camera );
 		break;
 	}
 }
 void HelpText::draw()
 {
-	setColor( BLACK );
+	setColor( WHITE );
 	Game* parent = static_cast<Game*>( getAncestor() );
 	switch(parent->game_state){
 	case GAME_START:

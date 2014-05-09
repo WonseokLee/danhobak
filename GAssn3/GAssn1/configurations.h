@@ -6,12 +6,12 @@ const int SCREEN_FPS = 60;
 
 const int FINISH = 5000;
 
-const int LION_DEFAULT = 100;
+const int LION_DEFAULT = 0;
 const float LION_SPEED = 2.5f;
 const float LION_JUMP_SPEED = 8.f;
 const float LION_JUMP_GRAVITY = -0.2f;
-const int LION_CAMERA = 150;
-const int LION_CAMERA_MIN = 100;
+const int LION_CAMERA = 0;
+const int LION_CAMERA_MIN = 0;
 const int LION_FLASH_TIME = 100;
 
 const int GAME_START = 0;
@@ -42,6 +42,6 @@ const int RING_REMOVE = -100;
 const int RING_REGEN = RING_GEN_MAX + RING_REMOVE;
 
 const int RING_HEIGHT = 100;
-const int RING_RADIUS = 100;
+const int RING_RADIUS = 300;//100;
 
 const float RING_SPEED = 1.0f;
