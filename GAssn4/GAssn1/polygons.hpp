@@ -32,6 +32,7 @@ public:
 	{
 		setColor( static_cast<COLOR>(color) );
 		glutSolidCube( size );
+		glShadeModel(GL_FLAT);
 	}
 	COLOR color;
 	double size;
