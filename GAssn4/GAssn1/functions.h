@@ -2,6 +2,9 @@
 #include <GL/freeglut.h>
 #include "configurations.h"
 #include "colors.h"
+#include <opencv/cv.h>
+#include <opencv/cxcore.h>
+#include <opencv/highgui.h>
 
 #define setWindowTitle(x) glutSetWindowTitle(x)
 
@@ -51,6 +54,23 @@ inline void drawString( float x, float y, char* textString )
 		glRasterPos2f(glX, glY);
 		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, textString[count]);
 	}
+}
+
+inline bool loadTexture (char *fileName, unsigned int *texture)
+{
+	IplImage *img = cvLoadImage (fileName);
+	if (!img) return false;
+
+	cvFlip (img, img);
+
+	glGenTextures (1, texture);
+	glBindTexture (GL_TEXTURE_2D, *texture);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D (GL_TEXTURE_2D, 0, 3, img->width, img->height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, img->imageData);
+
+	cvReleaseImage (&img);
+	return true;
 }
 
 inline void drawLine( float x1, float y1, float x2, float y2 )

@@ -76,7 +76,7 @@ LionUnderLeg::LionUnderLeg( GameObject* parent, Vector3 pos, int type, int color
 {
 	legType = type;
 	this->color = color;
-	addChild( new CubeSolid( this,
+	addChild( new CubeSolidT( this,
 		Vector3( 0, -8, 0 ),
 		Vector3( 6, 8, 6 ),
 		YELLOW, 2 ) );
