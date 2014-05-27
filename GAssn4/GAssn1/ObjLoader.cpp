@@ -1,7 +1,12 @@
+#pragma once
+#include "stdafx.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <gl\freeglut.h>
+#include <gl/gl.h>
+#include <opencv/cv.h>
+#include <opencv/cxcore.h>
+#include <opencv/highgui.h>
 
 #include "ObjLoader.h"
 
@@ -107,7 +112,7 @@ bool CObjLoader::loadObjects (char *fileName)
 		else if (!strcmp ("mtllib", buffer)) {
 			fscanf (fp, "%s", buffer);
 
-			char path[1024];
+			char path[MAX_PATH];
 			_makepath (path, NULL, _work_path, buffer, NULL);
 
 			loadMaterials (path);
@@ -117,7 +122,6 @@ bool CObjLoader::loadObjects (char *fileName)
 	fclose (fp);
 	return true;
 }
-
 
 bool CObjLoader::loadMaterials (char *fileName)
 {
@@ -197,24 +201,50 @@ int CObjLoader::findMaterialIndex(char *name)
 	return -1;
 }
 
+bool CObjLoader::loadTexture (char *fileName, unsigned int *texture)
+{
+	IplImage *img = cvLoadImage (fileName);
+	if (!img) return false;
+
+	cvFlip (img, img);
+
+	glGenTextures (1, texture);
+	glBindTexture (GL_TEXTURE_2D, *texture);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexImage2D (GL_TEXTURE_2D, 0, 3, img->width, img->height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, img->imageData);
+
+	cvReleaseImage (&img);
+	return true;
+}
+
+void CObjLoader::loadMaterialsTexture ()
+{
+	for (unsigned int i=0; i<materials.size (); ++i) {
+		if (materials[i].map_Kd[0] && !materials[i].texture) {
+			char path[MAX_PATH];
+			_makepath (path, NULL, _work_path, materials[i].map_Kd, NULL);
+
+			loadTexture (path, &materials[i].texture);
+		}
+	}
+}
 
 void CObjLoader::Draw (float scale)
 {
-	/*
 	if (!_loaded) {
 		loadMaterialsTexture ();
 		_loaded = true;
 	}
-	*/
+
 	int vt_size = vertexes.size ();
 	int tc_size = texcoords.size ();
 	int no_size = normals.size ();
 
 	for (unsigned int h=0; h<parts.size (); ++h) {
-		//int index = findMaterialIndex(parts[h].name);
+		int index = findMaterialIndex(parts[h].name);
 		vector<sFace> &faces = parts[h].faces;
 		
-		/*
 		if (0 <= index) {
 			sMaterial &material = materials[index];
 
@@ -227,13 +257,11 @@ void CObjLoader::Draw (float scale)
 			}
 		}
 		else {
-		*/
-			//glColor3f (0.7f, 0.7f, 0.7f);
-		//}
+			glColor3f (0.7f, 0.7f, 0.7f);
+		}
 
 		for (unsigned int i=0, ip=faces.size (); i<ip; ++i) {
-			glBegin (GL_LINE_LOOP);
-			//glBegin (GL_POLYGON);
+			glBegin (GL_POLYGON);
 			for (int j=0, jn=faces[i].n; j<jn; ++j) {
 				int &v  = faces[i].v[j];
 				int &vt = faces[i].vt[j];
@@ -258,3 +286,4 @@ void CObjLoader::Draw (float scale)
 		glDisable (GL_TEXTURE_2D);
 	}
 }
+

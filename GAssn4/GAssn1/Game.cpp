@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "frame.h"
+#include "MLion.h"
 #include "hurdles.h"
 #include "Lion.h"
 #include "HelpText.h"
@@ -97,6 +98,7 @@ void Game::resetMap()
 	deleteChildren();
 	
 	addChild( new BG3D( this ) );
+	addChild( new MLion(this, 100));
 	
 	ringLayer = makeRings();
 	addChild( ringLayer );

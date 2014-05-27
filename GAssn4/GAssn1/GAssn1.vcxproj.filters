@@ -51,10 +51,16 @@
     <ClCompile Include="Vector3.cpp">
       <Filter>소스 파일\FRAME</Filter>
     </ClCompile>
+    <ClCompile Include="polygons.hpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
     <ClCompile Include="ObjLoader.cpp">
       <Filter>소스 파일\FRAME</Filter>
     </ClCompile>
-    <ClCompile Include="polygons.hpp">
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClCompile>
+    <ClCompile Include="MLion.cpp">
       <Filter>소스 파일\GAME</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,11 +104,23 @@
     <ClInclude Include="Vector3.h">
       <Filter>소스 파일\FRAME</Filter>
     </ClInclude>
-    <ClInclude Include="ObjLoader.h">
-      <Filter>소스 파일\FRAME</Filter>
-    </ClInclude>
     <ClInclude Include="BG3D.hpp">
       <Filter>소스 파일\GAME</Filter>
     </ClInclude>
+    <ClInclude Include="ObjLoader.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>소스 파일\FRAME</Filter>
+    </ClInclude>
+    <ClInclude Include="MLion.h">
+      <Filter>소스 파일\GAME</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenCV.props" />
   </ItemGroup>
 </Project>

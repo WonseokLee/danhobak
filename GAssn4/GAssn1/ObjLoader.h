@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 
 using namespace std;
@@ -76,7 +77,7 @@ private:
 	bool loadMaterials (char *fileName);
 
 	int findMaterialIndex(char *name);
-	//bool loadTexture (char *fileName, unsigned int *texture);
+	bool loadTexture (char *fileName, unsigned int *texture);
 
 private:	
 	char _work_path[_MAX_DIR];
