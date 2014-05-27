@@ -132,3 +132,36 @@ public:
 	COLOR color;
 	double drawWidth;
 };
+
+class SphereSolidT : public GameObject
+{
+public:
+	SphereSolidT( GameObject* parent, Vector3 position, Vector3 scale, COLOR color, char* textureName )
+		: GameObject( parent, position, scale ),
+		color( color )
+	{
+		loadTexture(textureName, &texture);
+	}
+	void draw()
+	{
+		setColor( static_cast<COLOR>(color) );
+		GLUquadricObj *sphere = gluNewQuadric();
+		gluQuadricDrawStyle(sphere, GLU_FILL);
+		gluQuadricTexture(sphere, GL_TRUE);
+		gluQuadricNormals(sphere, GLU_SMOOTH);
+
+		if (texture) {
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture (GL_TEXTURE_2D, texture);
+				
+		}
+		gluSphere(sphere, 1, 16, 16);
+		if (texture){
+			glDisable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+	}
+	COLOR color;
+	double drawWidth;
+	unsigned int texture;
+};
