@@ -9,10 +9,10 @@ public:
 	BG3D( GameObject* parent )
 		: GameObject( parent )
 	{
-		addChild( new CubeSolid( parent,
+		addChild( new CubeSolidT( parent,
 			Vector3( 0, -5, 4500),
 			Vector3( 200, 5, 11000 ),
-			TAN ) );
+			TAN, "lion_body.jpg" ) );
 		/*
 		addChild( new CubeSolid( parent,
 			Vector3(0, -5, 5250),
