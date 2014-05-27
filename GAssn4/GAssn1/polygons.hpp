@@ -55,3 +55,20 @@ public:
 	COLOR color;
 	double drawWidth;
 };
+
+class SphereSolid : public GameObject
+{
+public:
+	SphereSolid( GameObject* parent, Vector3 position, Vector3 scale, COLOR color )
+		: GameObject( parent, position, scale ),
+		color( color )
+	{
+	}
+	void draw()
+	{
+		setColor( static_cast<COLOR>(color) );
+		glutSolidSphere( 1, 16, 16 );
+	}
+	COLOR color;
+	double drawWidth;
+};

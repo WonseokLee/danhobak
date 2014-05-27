@@ -57,10 +57,10 @@
     <ClCompile Include="ObjLoader.cpp">
       <Filter>소스 파일\FRAME</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>소스 파일\FRAME</Filter>
-    </ClCompile>
     <ClCompile Include="MLion.cpp">
+      <Filter>소스 파일\GAME</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일\GAME</Filter>
     </ClCompile>
   </ItemGroup>

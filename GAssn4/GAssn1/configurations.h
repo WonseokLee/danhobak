@@ -44,9 +44,17 @@ const int RING_RADIUS = 100;//100;
 
 const float RING_SPEED = 1.0f;
 
-const int VIEW_FIRST = 2;
-const int VIEW_THIRD = 3;
-const int VIEW_TOP_MAP = 4;
-const int VIEW_RIGHT_MAP = 5;
-const int VIEW_TOP = 6;
-const int VIEW_RIGHT = 7;
+const int VIEW_FIRST = 0;
+const int VIEW_THIRD = 1;
+const int VIEW_TOP_MAP = 2;
+const int VIEW_RIGHT_MAP = 3;
+const int VIEW_TOP = 4;
+const int VIEW_RIGHT = 5;
+
+const int LIGHT_DIRECT = 0;
+const int LIGHT_POINT = 1;
+
+const int SHADE_WIRE = 0;
+const int SHADE_FLAT = 1;
+const int SHADE_GOURAUD = 2;
+const int SHADE_PHONG = 3;

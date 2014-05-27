@@ -19,6 +19,9 @@ public:
 	
 	int game_state;
 	int view_state;
+	int light_state;
+	int shade_state;
+
 	float camera;
 	float FINISH;
 	

@@ -23,8 +23,8 @@ Ring::Ring( GameObject* parent, float z)
 void Ring::draw()
 {
 	setColor( RED );
-	setLineWidth( 0.1 );
-	glutWireTorus( 20.0f, RING_RADIUS, 16, 32 );
+	//setLineWidth( 0.1f );
+	glutSolidTorus( 20.0f, RING_RADIUS, 16, 32 );
 }
 
 void Ring::update()

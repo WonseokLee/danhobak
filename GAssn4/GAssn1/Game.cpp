@@ -25,6 +25,8 @@ Game::Game()
 	keyF6 = false;
 	keyF7 = false;
 	view_state = VIEW_FIRST;
+	light_state = LIGHT_DIRECT;
+	shade_state = SHADE_WIRE;
 
 	resetMap();
 }
@@ -169,23 +171,64 @@ void Game::moveCamera()
 	
 	//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
 	
-	if( keyF2 )
-		view_state = VIEW_FIRST;
-	if( keyF3 ) 
-		view_state = VIEW_THIRD;
-	if( keyF4 )
-		view_state = VIEW_TOP_MAP;
-	if( keyF5 )
-		view_state = VIEW_RIGHT_MAP;
-	if( keyF6 )
-		view_state = VIEW_TOP;
-	if( keyF7 )
-		view_state = VIEW_RIGHT;
+	if( keyF2 ){
+		keyF2 = false;
+		view_state++;
+		if( view_state > VIEW_RIGHT )
+			view_state = VIEW_FIRST;
+	}
+ 
+	if( keyF3 ){
+		keyF3 = false;
+		light_state++;
+		if( light_state > LIGHT_POINT )
+			light_state = LIGHT_DIRECT;
+
+		switch( light_state ){
+		case LIGHT_DIRECT:
+			
+			break;
+		case LIGHT_POINT:
+
+			break;
+		}
+	}
+
+	if( keyF4 ){
+		keyF4 = false;
+		shade_state++;
+		if( shade_state > SHADE_PHONG )
+			shade_state = SHADE_WIRE;
+
+		switch( shade_state ){
+		case SHADE_WIRE:
+			glDisable(GL_LIGHTING);
+			glPolygonMode(GL_FRONT, GL_LINE);
+			glPolygonMode(GL_BACK, GL_LINE);
+			break;
+		case SHADE_FLAT:
+			glEnable(GL_LIGHTING);
+			glShadeModel( GL_FLAT );
+			glPolygonMode(GL_FRONT, GL_FILL);
+			glPolygonMode(GL_BACK, GL_FILL);
+			break;
+		case SHADE_GOURAUD:
+			glEnable(GL_LIGHTING);
+			glShadeModel( GL_SMOOTH );
+			glPolygonMode(GL_FRONT, GL_FILL);
+			glPolygonMode(GL_BACK, GL_FILL);
+			break;
+		case SHADE_PHONG:
+			glEnable(GL_LIGHTING);
+			break;
+		}
+	}
+	
 
 	switch(view_state){
 	case VIEW_FIRST:
 	default:
-			gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 2000 );
+			gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 1, 1500 );
 		//glOrtho( -SCREEN_WIDTH/2.f, SCREEN_WIDTH/2.f, SCREEN_HEIGHT/2.f, -SCREEN_HEIGHT/2.f , 0.0f, SCREEN_HEIGHT);
 
 		//µ¥Çò
@@ -193,7 +236,7 @@ void Game::moveCamera()
 		glTranslated( 0, -lion->lionJumpHeight-45, -camera-45 );
 		break;
 	case VIEW_THIRD:
-		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 0, 2000 );
+		gluPerspective( 90, -1.0f * SCREEN_WIDTH / SCREEN_HEIGHT, 1, 1500 );
 		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f );
 		glTranslated(0, -150, -camera + 200);
 		break;
@@ -202,7 +245,8 @@ void Game::moveCamera()
 		gluLookAt( 0.0f, 0.0f, 0.0f, 0.0f , -1.0f, 0.0f, 0.0f, 0.0f, 1.0f );
 		glTranslated( 0, -1000, -2900 );
 		break;
-	case VIEW_RIGHT_MAP:glOrtho( 3200, -3200, -2400, 2400 , 0.0f, 2000 );
+	case VIEW_RIGHT_MAP:
+		glOrtho( 3200, -3200, -2400, 2400 , 0.0f, 2000 );
 		gluLookAt( 0.0f, 0.0f, 0.0f, -1.0f , 0.0f, 0.0f, 0.0f, 1.0f, 0.0f );
 		glTranslated( 0, -1000, -2500 );
 		break;

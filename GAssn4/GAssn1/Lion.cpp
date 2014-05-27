@@ -136,14 +136,14 @@ void LionTail::draw()
 LionBody::LionBody( GameObject* parent, Vector3 pos )
 	: GameObject( parent, pos )
 {
-	addChild( new SphereWire( this, Vector3( 0, 20, 20 ), Vector3( 15, 15, 15 ), YELLOW, 2 ) );
+	addChild( new SphereSolid( this, Vector3( 0, 20, 20 ), Vector3( 15, 15, 15 ), YELLOW ) );
 
-	addChild( new SphereWire( this, Vector3( 0, 15, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
-	addChild( new SphereWire( this, Vector3( -12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
-	addChild( new SphereWire( this, Vector3( +12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
-	addChild( new SphereWire( this, Vector3( -12, 30, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
-	addChild( new SphereWire( this, Vector3( +12, 30, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
-	addChild( new SphereWire( this, Vector3( 0, 35, 20 ), Vector3( 10, 10, 10 ), BROWN, 2 ) );
+	addChild( new SphereSolid( this, Vector3( 0, 15, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
+	addChild( new SphereSolid( this, Vector3( -12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
+	addChild( new SphereSolid( this, Vector3( +12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
+	addChild( new SphereSolid( this, Vector3( -12, 30, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
+	addChild( new SphereSolid( this, Vector3( +12, 30, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
+	addChild( new SphereSolid( this, Vector3( 0, 35, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
 
 	
 	addChild( new CubeSolid( this,

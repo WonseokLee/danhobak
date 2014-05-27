@@ -61,10 +61,13 @@ bool GL::initGL()
 	glLoadIdentity( );
 
 	//Initialize clear color
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	//glEnable(GL_DEPTH_TEST); 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST); 
 	glClearColor( 0.f, 0.f, 0.f, 1.f );
 	glShadeModel( GL_FLAT );
+
+	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_BACK, GL_LINE);
 
 	//Check for error
 	GLenum error = glGetError( );
@@ -89,7 +92,7 @@ void GL::update()
 void GL::display()
 {
 	//Clear color buffer
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glEnable (GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
