@@ -136,7 +136,7 @@ void LionTail::draw()
 LionBody::LionBody( GameObject* parent, Vector3 pos )
 	: GameObject( parent, pos )
 {
-	addChild( new SphereSolidT( this, Vector3( 0, 20, 20 ), Vector3( 15, 15, 15 ), YELLOW , "lion_head.jpg") );
+	addChild( new SphereSolidT( this, Vector3( 0, 20, 20 ), Vector3( 15, 15, 15 ), YELLOW , "lion_tail.jpg") );
 
 	addChild( new SphereSolidT( this, Vector3( 0, 15, 20 ), Vector3( 10, 10, 10 ), BROWN , "lion_hair.jpg") );
 	addChild( new SphereSolidT( this, Vector3( -12, 20, 20 ), Vector3( 10, 10, 10 ), BROWN , "lion_hair.jpg") );

@@ -62,18 +62,22 @@ const int SHADE_PHONG = 3;
 const float lightd0_position[] = { 0, 100, 0, 0 };
 const float lightd0_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f };
 const float lightd0_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+const float lightd0_exponent = 127;
 
 const float lightd1_position[] = { -80, 100, 60, 0 };
 const float lightd1_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f };
 const float lightd1_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+const float lightd1_exponent = 127;
 
 const float lightp0_position[] = { 0, 100, 0, 1 };
 const float lightp0_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f };
 const float lightp0_diffuse[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+const float lightp0_exponent = 0;
 
 const float lightp1_position[] = { 0, 100, 1000, 1 };
 const float lightp1_ambient[] = {0.1f, 0.1f, 0.1f, 1.0f };
 const float lightp1_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+const float lightp1_exponent = 0;
 
 const float mat_ambient[] = { 0.5f, 0.4f, 0.3f, 1.0f };
 const float mat_diffuse[] = { 0.5f, 0.4f, 0.3f, 1.0f };
