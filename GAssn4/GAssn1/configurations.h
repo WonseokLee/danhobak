@@ -58,3 +58,22 @@ const int SHADE_WIRE = 0;
 const int SHADE_FLAT = 1;
 const int SHADE_GOURAUD = 2;
 const int SHADE_PHONG = 3;
+
+const float lightd0_position[] = { 0, 100,0, 0.0f, 0 };
+const float lightd0_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f };
+const float lightd0_diffuse[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+
+const float lightd1_position[] = { 0, 1000,0, 0.0f, 0 };
+const float lightd1_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f };
+const float lightd1_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+
+const float lightp0_position[] = { 0, 100,0, 0.0f, 1 };
+const float lightp0_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f };
+const float lightp0_diffuse[] = { 0.7f, 0.7f, 0.7f, 1.0f };
+
+const float lightp1_position[] = { 0, 1000,0, 0.0f, 1 };
+const float lightp1_ambient[] = {0.3f, 0.3f, 0.3f, 1.0f };
+const float lightp1_diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+
+const float mat_ambient[] = { 0.5f, 0.4f, 0.3f, 1.0f };
+const float mat_diffuse[] = { 0.5f, 0.4f, 0.3f, 1.0f };

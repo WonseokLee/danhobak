@@ -69,6 +69,16 @@ bool GL::initGL()
 	glPolygonMode(GL_FRONT, GL_LINE);
 	glPolygonMode(GL_BACK, GL_LINE);
 
+	glEnable(GL_COLOR_MATERIAL);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, lightd0_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightd0_diffuse);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightd0_position);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, lightd1_ambient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightd1_diffuse);
+	glLightfv(GL_LIGHT1, GL_POSITION, lightd1_position);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+
 	//Check for error
 	GLenum error = glGetError( );
 	if( error != GL_NO_ERROR )

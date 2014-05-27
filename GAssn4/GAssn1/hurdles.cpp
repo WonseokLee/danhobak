@@ -2,10 +2,15 @@
 #include "frame.h"
 #include "Game.h"
 
+static CObjLoader myLoader;
+static bool loaded = false;
+
 Rock::Rock( GameObject* parent, float z)
 	: GameObject( parent, Vector3(0, 30, z), Vector3(1,1,1), -90, Vector3(1, 0, 0))
 {
-	myLoader.Load("tri_rock.obj", "tri_rock.mtl");
+	if( !loaded )
+		myLoader.Load("tri_rock.obj", "tri_rock.mtl");
+	loaded = true;
 }
 
 void Rock::draw()
@@ -24,7 +29,7 @@ void Ring::draw()
 {
 	setColor( RED );
 	//setLineWidth( 0.1f );
-	glutSolidTorus( 20.0f, RING_RADIUS, 16, 32 );
+	glutSolidTorus( 20.0f, RING_RADIUS, 8, 16 );
 }
 
 void Ring::update()
