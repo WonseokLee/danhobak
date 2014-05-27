@@ -32,7 +32,6 @@ public:
 	{
 		setColor( static_cast<COLOR>(color) );
 		glutSolidCube( size );
-		glShadeModel(GL_FLAT);
 	}
 	COLOR color;
 	double size;
@@ -88,7 +87,6 @@ public:
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);  // Top Right Of The Texture and Quad
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);  // Top Left Of The Texture and Quad
 		glEnd();
-		glShadeModel(GL_FLAT);
 	}
 	COLOR color;
 	double size;
