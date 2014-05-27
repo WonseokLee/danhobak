@@ -212,6 +212,7 @@ void Game::moveCamera()
 
 		switch( shade_state ){
 		case SHADE_WIRE:
+			glUseProgram(0);
 			glDisable(GL_LIGHTING);
 			glPolygonMode(GL_FRONT, GL_LINE);
 			glPolygonMode(GL_BACK, GL_LINE);
@@ -229,7 +230,9 @@ void Game::moveCamera()
 			glPolygonMode(GL_BACK, GL_FILL);
 			break;
 		case SHADE_PHONG:
-
+			GLuint program = set_shader("shader/Shader.vert", "shader/Shader.frag");
+			glUseProgram(program);
+			glUniform1i(glGetUniformLocation(program, "tex_base"), 0);
 			//Æþ
 
 			glEnable(GL_LIGHTING);

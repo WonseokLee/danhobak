@@ -1,3 +1,4 @@
+#include <glew.h>
 #include "GL.h"
 #include <GL/freeglut.h>
 #include "configurations.h"
@@ -52,6 +53,9 @@ GL::~GL()
 }
 bool GL::initGL()
 {
+
+	if (glewInit() != GLEW_OK)
+		printf("glew is not supported\n%s\n", glewGetErrorString(glewInit()));
 	//Initialize Projection Matrix
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity( );

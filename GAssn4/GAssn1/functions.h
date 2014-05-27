@@ -1,4 +1,5 @@
 #pragma once
+#include <glew.h>
 #include <GL/freeglut.h>
 #include "configurations.h"
 #include "colors.h"
@@ -71,6 +72,72 @@ inline bool loadTexture (char *fileName, unsigned int *texture)
 
 	cvReleaseImage (&img);
 	return true;
+}
+
+
+inline char *textFileRead(char *fn) {
+    FILE *fp;
+    char *content = NULL;
+
+    int count=0;
+
+    if (fn != NULL) {
+        fopen_s(&fp, fn,"rt");
+
+        if (fp != NULL) {
+            fseek(fp, 0, SEEK_END);
+            count = ftell(fp);
+            rewind(fp);
+
+            if (count > 0) {
+                content = (char *)malloc(sizeof(char) * (count+1));
+                count = fread(content,sizeof(char),count,fp);
+                content[count] = '\0';
+            }
+            fclose(fp);
+        }
+    }
+    return content;
+}
+
+inline GLuint set_shader(char * vert, char *frag) {
+    char *vs,*fs;
+
+    vs = textFileRead(vert);
+    fs = textFileRead(frag);
+    if (vs == NULL || fs == NULL) {
+        printf("No shader files\n");
+        return 0;
+    }
+
+    GLuint vert_shader = glCreateShader(GL_VERTEX_SHADER);
+    GLuint frag_shader = glCreateShader(GL_FRAGMENT_SHADER);
+
+    const char * vv = vs;
+    const char * ff = fs;
+
+    glShaderSource(vert_shader, 1, &vv, NULL);
+	glShaderSource(frag_shader, 1, &ff, NULL);
+
+    free(vs);
+    free(fs);
+
+    glCompileShader(vert_shader);
+    glCompileShader(frag_shader);
+
+    GLuint shader_program = glCreateProgram();
+
+    glAttachShader(shader_program, vert_shader);
+
+    glAttachShader(shader_program, frag_shader);
+
+    glLinkProgram(shader_program);
+
+    //printShaderInfoLog(vert_shader);
+    //printShaderInfoLog(frag_shader);
+    //printProgramInfoLog(shader_program);
+
+    return shader_program;
 }
 
 inline void drawLine( float x1, float y1, float x2, float y2 )
