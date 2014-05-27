@@ -10,10 +10,10 @@ LionLeg::LionLeg( GameObject* parent, Vector3 pos, int type, int color )
 	legType = type;
 	this->color = color;
 	jump = false;
-	addChild( new CubeSolid( this,
+	addChild( new CubeSolidT( this,
 		Vector3( 0, -8, 0 ),
 		Vector3( 6, 8, 6 ),
-		YELLOW, 2 ) );
+		YELLOW, "lion_under_leg.jpg", 2 ) );
 	addChild(new LionUnderLeg(this, Vector3(0, -15, 0), legType, color ));
 	rotationV = Vector3( -1, 0, 0 );
 }
@@ -79,7 +79,7 @@ LionUnderLeg::LionUnderLeg( GameObject* parent, Vector3 pos, int type, int color
 	addChild( new CubeSolidT( this,
 		Vector3( 0, -8, 0 ),
 		Vector3( 6, 8, 6 ),
-		YELLOW, 2 ) );
+		YELLOW,"lion_under_leg.jpg", 2) );
 	//addChild(new LionUnderLeg(this, Vector3(0, -10), legType, color ));
 	rotationV = Vector3( -1, 0, 0 );
 	//drawRectFill(-3,0, 6, 13);
@@ -115,10 +115,10 @@ void LionUnderLeg::draw()
 LionTail::LionTail( GameObject* parent, Vector3 pos )
 	: GameObject( parent, pos )
 {
-	addChild( new CubeSolid( this,
+	addChild( new CubeSolidT( this,
 		Vector3( 0, 0, -10 ),
 		Vector3( 6, 6, 12 ),
-		BROWN, 1 ) );
+		BROWN, "lion_tail.jpg", 1 ) );
 	rotationV = Vector3( -1, 0, 0 );
 }
 void LionTail::update()
@@ -146,10 +146,10 @@ LionBody::LionBody( GameObject* parent, Vector3 pos )
 	addChild( new SphereSolid( this, Vector3( 0, 35, 20 ), Vector3( 10, 10, 10 ), BROWN ) );
 
 	
-	addChild( new CubeSolid( this,
+	addChild( new CubeSolidT( this,
 		Vector3( 0, 0, -5 ),
-		Vector3( 20, 20, 40 ),
-		YELLOW ) );
+		Vector3( 10, 10, 20 ),
+		YELLOW, "lion_body.jpg" ) );
 }
 Lion::Lion( GameObject* parent )
 	: GameObject( parent, Vector3( 0, 0, LION_DEFAULT ) )

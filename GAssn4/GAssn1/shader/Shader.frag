@@ -19,5 +19,6 @@ float Ka = 0.0;
 vec4 diffuse = Kd * gl_FrontLightProduct[0].diffuse;
 vec4 specular = Ks * gl_FrontLightProduct[0].specular;
 vec4 ambient = Ka * gl_FrontLightProduct[0].ambient;
-gl_FragColor = ambient + diffuse + specular + Texture;
+vec4 lighting = diffuse + specular + ambient;
+gl_FragColor = lighting + Texture;
 }

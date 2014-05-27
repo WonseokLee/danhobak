@@ -40,11 +40,11 @@ public:
 class CubeSolidT : public GameObject
 {
 public:
-	CubeSolidT( GameObject* parent, Vector3 position, Vector3 scale, COLOR color, double size = 1 )
+	CubeSolidT( GameObject* parent, Vector3 position, Vector3 scale, COLOR color, char* textureName, double size = 1)
 		: GameObject( parent, position, scale ),
 		color( color ), size( size )
 	{
-		loadTexture("Rock-Texture-Surface.jpg", &texture);
+		loadTexture(textureName, &texture);
 	}
 	void draw()
 	{
@@ -88,8 +88,10 @@ public:
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);  // Top Right Of The Texture and Quad
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);  // Top Left Of The Texture and Quad
 		glEnd();
-		if (texture)
+		if (texture){
 			glDisable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
 	}
 	COLOR color;
 	double size;
