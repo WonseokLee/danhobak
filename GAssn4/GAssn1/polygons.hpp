@@ -51,7 +51,7 @@ public:
 		setColor( static_cast<COLOR>(color) );
 		
 		if (texture) {
-				//glEnable(GL_TEXTURE_2D);
+				glEnable(GL_TEXTURE_2D);
 				glBindTexture (GL_TEXTURE_2D, texture);
 		}
 		
@@ -87,6 +87,8 @@ public:
 			glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f,  1.0f,  1.0f);  // Top Right Of The Texture and Quad
 			glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f,  1.0f, -1.0f);  // Top Left Of The Texture and Quad
 		glEnd();
+		if (texture)
+			glDisable(GL_TEXTURE_2D);
 	}
 	COLOR color;
 	double size;
