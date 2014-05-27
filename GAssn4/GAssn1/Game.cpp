@@ -192,8 +192,6 @@ void Game::moveCamera()
 			glLightfv(GL_LIGHT1, GL_AMBIENT, lightd1_ambient);
 			glLightfv(GL_LIGHT1, GL_DIFFUSE, lightd1_diffuse);
 			glLightfv(GL_LIGHT1, GL_POSITION, lightd1_position);
-			glEnable(GL_LIGHT0);
-			glEnable(GL_LIGHT1);
 			break;
 		case LIGHT_POINT:
 			glLightfv(GL_LIGHT0, GL_AMBIENT, lightp0_ambient);
@@ -202,8 +200,6 @@ void Game::moveCamera()
 			glLightfv(GL_LIGHT1, GL_AMBIENT, lightp1_ambient);
 			glLightfv(GL_LIGHT1, GL_DIFFUSE, lightp1_diffuse);
 			glLightfv(GL_LIGHT1, GL_POSITION, lightp1_position);
-			glEnable(GL_LIGHT0);
-			glEnable(GL_LIGHT1);
 			break;
 		}
 	}

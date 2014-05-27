@@ -51,7 +51,7 @@ public:
 		setColor( static_cast<COLOR>(color) );
 		
 		if (texture) {
-				glEnable(GL_TEXTURE_2D);
+				//glEnable(GL_TEXTURE_2D);
 				glBindTexture (GL_TEXTURE_2D, texture);
 		}
 		
